@@ -1,0 +1,121 @@
+::-webkit-input-placeholder{
+	color:#C7C7CC;
+	font-size:10px;
+	text-align: center;
+	letter-spacing: 10px;
+}
+
+body{
+	overflow-y:hidden; 
+}
+
+.blackTitle{
+	margin-top: 20%;
+}
+
+.logoTitle{
+	position: relative;
+	margin: auto;
+	margin-bottom: 20px;
+	height: 40px;
+	width: 300px;
+}
+.logoImg{
+	width: 40px;
+	height: 100%;
+	margin-left: 20%;
+	float: left; 
+	display: block;
+	
+}
+
+#logoText{
+	width: 120px;
+	height: 100%;
+	margin-left: 10px;
+	float: left;
+}
+
+#accountContainer{
+	margin-top: 10px;
+	border-radius:20px;border:1px solid #F2F2F2;
+	height: 40px;
+	width: 250px;
+	position: relative;
+	margin: auto;
+}
+
+#pwdContainer{
+	border-radius:20px;border:1px solid #F2F2F2;
+	height: 40px;
+	width: 250px;
+	position: relative;
+	margin: auto;
+	margin-top: 10px;
+}
+
+#account{
+	background-color: #FAFAFA;
+	border: none;
+}
+#password{
+	background-color: #FAFAFA;
+	border: none;
+}
+
+#codeLoginDiv{
+	width:100px;
+	height: 20px;
+	float: right;
+	margin-right: 25%;
+	margin-top: 5px;
+}
+
+#codeLogin{
+	font-size: 15px;
+}
+
+#btnLogin{
+	border-radius: 50px;
+	height: 40px;
+	width: 100px;
+	padding: 10px;
+	position: relative;
+	margin: auto;
+	margin-top: 50px;
+	
+}
+
+.loginLog{
+	width: 30px;
+	height: 30px;
+}
+
+.otherLogin{
+	position: fixed;
+	bottom: 25px;
+	margin: auto;
+	width: 140px;
+	height: 50px;
+	left: 0px;
+	right: 0px;
+}
+
+#WechatLogo{
+	
+}
+
+#QQLogo{
+	margin-left: 60px;
+}
+
+#wordLink{
+	position: fixed;
+	bottom: 10px;
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 140px;
+	height: 20px;
+	font-size: 15px;
+}
