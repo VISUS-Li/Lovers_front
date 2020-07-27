@@ -1,6 +1,13 @@
 
+html{
+	height: 100%;
+	width: 100%;
+}
+
 #homeBody{
 	background-color: #FBCECE;
+	height: 100%-20px;
+	width: 100%;
 }
 
 .tabBarImg{
@@ -26,7 +33,89 @@
 	text-align: center;
 }
 
+/*动态tabbar图片*/
 #newsImg{
 	width: 20px;
 	height: 20px;
+}
+
+/*和tabbar垂直分隔body的container*/
+.contaniner{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	bottom: 50px;
+}
+
+/*桃树*/
+#peachTreeDiv{
+	height: 100%;
+	width: 100%;
+}
+#peachTreeImg{
+
+	max-width: 120%;
+	max-height: 120%;
+	position: fixed;
+	bottom: 50px;
+	right: 40%;
+}
+
+/*每日一句*/
+.dayWords{
+	height: auto;
+	width: 25px;
+	position: fixed;
+	right: 15px;
+	top: 100px;
+}
+
+.pWords{
+	width: 100%;
+	height: auto;
+	margin: 0px;
+}
+#firstWord{
+	position: relative;
+	height: auto;
+	
+}
+
+#lastWord{
+	position: relative;
+	right: 20px;
+	bottom: 20px;
+}
+
+/*牛郎织女*/
+#ppleDiv{
+	width: 120px;
+	height: 120px;
+	position: fixed;
+	bottom: 50px;
+}
+
+.ppleImgDiv{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+.ppleImg{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	left: -10px;
+}
+
+/*上拉滑动条*/
+
+#upperBarImg{
+	width: 130px;
+	height: 5px;
+	position: absolute;
+	bottom: 20px;
+	left: 35%;
+	border-radius: 70px; border:0.3px solid #F2F2F2;
+	opacity: 0.7;	
 }
