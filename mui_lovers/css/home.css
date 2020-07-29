@@ -110,33 +110,58 @@ html{
 
 /*侧拉滑动条*/
 /*https://blog.csdn.net/qq_35393869/article/details/90175356*/
-#upperBarImg{
-	width: 130px;
-	height: 5px;
+.grid-Title{
+	width: 100%;
+	height: 20px;
 	position: absolute;
-	bottom: 20px;
-	left: 35%;
-	border-radius: 70px; border:0.3px solid #F2F2F2;
-	opacity: 0.7;	
+	z-index: 10;
+	margin: auto;
 }
 
-.mui-table-view.mui-grid-9{
-	background-color:#FFFFFF;
-	border: none;
+.grid-titleText{
+	width: 60px;
+	height: 20px;
+	margin: auto;
+	margin-top: 10px;
+	font-size: 15px;
 }
-li{
-	border: none;
+
+.grid-titleLine{
+	width: 150px;
+	border:0.3px solid #CCC;
+	margin: auto;
+	margin-top: 2px;
 }
-.mui-table-view.mui-grid-9.mui-table-view-cell.mui-active{
-	border: none;
-	background-color: #2AC845;
-}
-.mui-table-view:after{ height:0}
-.mui-table-view:before{ height:0}
+
 .slide-Grid{
 	width: 100%;
 	height: auto;
 	position: absolute;
 	top: 50px;
-	background-color: #007AFF;
+}
+
+.mui-row{
+	width: 100%;
+	height: auto;
+	position: absolute;
+	display: block;
+	top: 20px;
+	border: none;
+}
+.mui-col-xs-6.mui-col-sm-6{
+	display: block;
+
+}
+
+.mui-grid-view.mui-grid-9{
+	background-color: #000000;
+	border: none;
+	border-right: none;
+	border-bottom: none;
+}
+
+
+.mui-grid-view.mui-grid-9 .mui-table-view-cell{
+	border-right: none;
+	border-bottom: none;
 }
