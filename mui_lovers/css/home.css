@@ -108,8 +108,8 @@ html{
 	left: -10px;
 }
 
-/*上拉滑动条*/
-
+/*侧拉滑动条*/
+/*https://blog.csdn.net/qq_35393869/article/details/90175356*/
 #upperBarImg{
 	width: 130px;
 	height: 5px;
@@ -118,4 +118,25 @@ html{
 	left: 35%;
 	border-radius: 70px; border:0.3px solid #F2F2F2;
 	opacity: 0.7;	
+}
+
+.mui-table-view.mui-grid-9{
+	background-color:#FFFFFF;
+	border: none;
+}
+li{
+	border: none;
+}
+.mui-table-view.mui-grid-9.mui-table-view-cell.mui-active{
+	border: none;
+	background-color: #2AC845;
+}
+.mui-table-view:after{ height:0}
+.mui-table-view:before{ height:0}
+.slide-Grid{
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 50px;
+	background-color: #007AFF;
 }

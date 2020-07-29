@@ -9,34 +9,107 @@
 			<link href="../../css/style.css" rel="stylesheet" />
 			<link href="../../css/home.css" rel="stylesheet" />
 			<link href="../../css/gobal.css" rel="stylesheet" />
-			<style>
-			</style>
+
+			<!--引入JS-->
+			<script src="../../js/mui.min.js"></script>
 
 		</head>
 	</head>
+
 	<body id="homeBody">
 		<div class="contaniner">
-			<div id="homePicDiv">
-				<div id="peachTreeDiv">
-					<img id="peachTreeImg" src="../../images/taoshu_color.png" />
-				</div>
-				<div id="ppleDiv">
-					<div class="ppleImgDiv" id="ppleMan">
-						<img id="ppleManImg" class="ppleImg" src="../../images/niulang.png" />
+
+			<!-- 主界面不动、菜单移动 -->
+			<!-- 侧滑导航根容器 -->
+			<div class="mui-off-canvas-wrap mui-draggable mui-slide-in">
+				<!-- 菜单容器 -->
+				<aside class="mui-off-canvas-left" id="offCanvasSide">
+					<div class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!-- 菜单具体展示内容 -->
+							<div class="slide-Grid">
+								<div class="grid-Title">
+									<p>常用工具</p>
+								</div><!--grid-Title-->
+								<ul class="mui-table-view mui-grid-view mui-grid-9 ">
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-home"></span>
+											<div class="mui-media-body">Home</div>
+										</a>
+									</li>
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-email"><span class="mui-badge mui-badge-red">5</span></span>
+											<div class="mui-media-body">Email</div>
+										</a>
+									</li>
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-chatbubble"></span>
+											<div class="mui-media-body">Chat</div>
+										</a>
+									</li>
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-location"></span>
+											<div class="mui-media-body">Location</div>
+										</a>
+									</li>
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-search"></span>
+											<div class="mui-media-body">Search</div>
+										</a>
+									</li>
+									<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+										<a href="#">
+											<span class="mui-icon mui-icon-phone"></span>
+											<div class="mui-media-body">Phone</div>
+										</a>
+									</li>
+								</ul>
+
+							</div>
+							<!--slide-grid-->
+
+						</div>
 					</div>
-					<div class="ppleImgDiv" id="ppleWoman">
-						<img id="ppleWomanImg" class="ppleImg" src="../../images/zhinv.png" />
+				</aside>
+				<!-- 主页面容器 -->
+				<div class="mui-inner-wrap">
+					<!-- 主页面标题 -->
+					<div class="mui-content mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<!-- 主界面具体展示内容 -->
+							<div id="homePicDiv">
+								<div id="peachTreeDiv">
+									<img id="peachTreeImg" src="../../images/taoshu_color.png" />
+								</div>
+								<div id="ppleDiv">
+									<div class="ppleImgDiv" id="ppleMan">
+										<img id="ppleManImg" class="ppleImg" src="../../images/niulang.png" />
+									</div>
+									<div class="ppleImgDiv" id="ppleWoman">
+										<img id="ppleWomanImg" class="ppleImg" src="../../images/zhinv.png" />
+									</div>
+								</div>
+							</div>
+
+							<div class="dayWords">
+								<p style="writing-mode:tb-rl" class="pWords" id="firstWord">因为有你</p>
+								<p style="writing-mode: tb-rl" class="pWords" id="lastWord">世界美丽</p>
+							</div>
+
+							<img id="upperBarImg" src="../../images/huadongtiao.png" />
+						</div>
 					</div>
+					<div class="mui-off-canvas-backdrop"></div>
 				</div>
 			</div>
 
-			<div class="dayWords">
-				<p style="writing-mode:tb-rl" class="pWords" id="firstWord">因为有你</p>
-				<p style="writing-mode: tb-rl" class="pWords" id="lastWord">世界美丽</p>
-			</div>
 
-			<img id="upperBarImg" src="../../images/huadongtiao.png" />
-			
+
 		</div>
 
 
@@ -57,5 +130,52 @@
 
 		</nav>
 	</body>
-	<script type="text/javascript" src="../../js/home/home.js"></script>
+	<script>
+		/*----变量声明----*/
+		var subPages = ['UpperMenu.html'];
+		/*----初始化页面----*/
+		mui.init({
+			gestureConfig: {
+				swipe: true
+			}
+
+		})
+
+		/*plusReady*/
+		mui.plusReady(function() {
+			//    setTimeout(function(){
+			// 	menu = mui.preload({
+			// 		url:"../../pages/home/UpperMenu.html",
+			// 		id:"../../pages/home/UpperMenu.html",
+			// 		styles: {
+			// 		    left: '30%',
+			// 		    width: '70%',
+			// 		    zindex: 999
+			// 		}
+			// 	});
+			// },300);
+
+			document.getElementById('contaniner').addEventListener("swipeup", function() {
+				mui.toast('Ok');
+				console.log("你正在向左滑动");
+			});
+			console.log("你正在向左滑动");
+		})
+
+		//var mainMask = mui.createMask(_closeMenu);
+
+		/*显示上拉菜单*/
+		function openMenu() {
+			menu.show('none', 0, function() {
+				menu.setStyle({
+					left: '30%',
+					transition: {
+						duration: 150
+					}
+				});
+			})
+
+			mainMask.show();
+		}
+	</script>
 </html>
