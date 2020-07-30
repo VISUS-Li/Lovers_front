@@ -41,10 +41,9 @@ html{
 
 /*和tabbar垂直分隔body的container*/
 .contaniner{
-	position: absolute;
 	width: 100%;
 	height: 100%;
-	bottom: 50px;
+
 }
 
 /*桃树*/
@@ -110,6 +109,26 @@ html{
 
 /*侧拉滑动条*/
 /*https://blog.csdn.net/qq_35393869/article/details/90175356*/
+
+.slidePanel-flex-box{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+.menuPanel-flex-box{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 50px;
+	width: 100%;
+}
+
+.menuUlDiv{
+	width: 100%;
+	min-height: 100px;
+	flex:1;
+}
+
 .grid-Title{
 	width: 100%;
 	height: 20px;
@@ -122,7 +141,6 @@ html{
 	width: 60px;
 	height: 20px;
 	margin: auto;
-	margin-top: 10px;
 	font-size: 15px;
 }
 
@@ -133,35 +151,24 @@ html{
 	margin-top: 2px;
 }
 
-.slide-Grid{
-	width: 100%;
-	height: auto;
-	position: absolute;
-	top: 50px;
+.box{
+	display: flex;
+	
 }
-
-.mui-row{
-	width: 100%;
-	height: auto;
-	position: absolute;
-	display: block;
-	top: 20px;
-	border: none;
+.item{
+	display: flex;
+	height: 200px;
+	width: 200px;
+	background-color: #0062CC;
+	border:1px solid #F2F2F2;
+	
+	z-index: 222;
 }
-.mui-col-xs-6.mui-col-sm-6{
-	display: block;
-
-}
-
-.mui-grid-view.mui-grid-9{
-	background-color: #000000;
-	border: none;
-	border-right: none;
-	border-bottom: none;
-}
-
-
-.mui-grid-view.mui-grid-9 .mui-table-view-cell{
-	border-right: none;
-	border-bottom: none;
+.item2{
+	height: 40px;
+	width: 40px;
+	background-color: #CF2D28;
+	border:1px solid #4CD964;
+	
+	z-index: 223;
 }
