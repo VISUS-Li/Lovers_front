@@ -19,14 +19,6 @@ html{
 }
 
 
-.tabBarSubDiv{
-
-}
-
-#tabBarHome{
-
-}
-
 .tabBarLabel{
 	display: block;
 	font-size: 10px;
@@ -43,7 +35,6 @@ html{
 .contaniner{
 	width: 100%;
 	height: 100%;
-
 }
 
 /*桃树*/
@@ -110,15 +101,23 @@ html{
 /*侧拉滑动条*/
 /*https://blog.csdn.net/qq_35393869/article/details/90175356*/
 
+.mui-grid-view.mui-grid-9{
+	background-color: #0062CC;
+	border: none;
+}
+.mui-table-view-cell.mui-media.mui-col-xs-4.mui-col-sm-3{
+	border-right: none;
+	border-bottom: none;
+}
+
 .slidePanel-flex-box{
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
+
 }
 .menuPanel-flex-box{
 	display: flex;
 	flex-direction: column;
-	flex: 1;
 	min-height: 50px;
 	width: 100%;
 }
@@ -129,11 +128,12 @@ html{
 	flex:1;
 }
 
+/*侧滑菜单栏菜单标题*/
 .grid-Title{
 	width: 100%;
-	height: 20px;
-	position: absolute;
-	z-index: 10;
+	height: 25px;
+	display: flex;
+	flex-direction: column;
 	margin: auto;
 }
 
@@ -148,27 +148,5 @@ html{
 	width: 150px;
 	border:0.3px solid #CCC;
 	margin: auto;
-	margin-top: 2px;
-}
-
-.box{
-	display: flex;
-	
-}
-.item{
-	display: flex;
-	height: 200px;
-	width: 200px;
-	background-color: #0062CC;
-	border:1px solid #F2F2F2;
-	
-	z-index: 222;
-}
-.item2{
-	height: 40px;
-	width: 40px;
-	background-color: #CF2D28;
-	border:1px solid #4CD964;
-	
-	z-index: 223;
+	margin-bottom: 10px;
 }
