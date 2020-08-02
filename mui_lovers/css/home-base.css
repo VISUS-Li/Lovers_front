@@ -1,0 +1,220 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
+p {
+	margin: 0 0 0 0;
+}
+
+#homeBody {
+	background-color: #FFFFFF;
+}
+
+/****TabBar选项卡****/
+.tabBarImg {
+	top: 3px;
+	height: 24px;
+	width: 24px;
+	padding-top: 0px;
+
+}
+
+
+.tabBarLabel {
+	display: block;
+	font-size: 10px;
+	text-align: center;
+}
+
+
+/*和tabbar垂直分隔body的container*/
+.contaniner {
+	width: 100%;
+	height: 100%;
+}
+/*end****TabBar选项卡****/
+
+/****主界面****/
+.mainDiv{
+	position: fixed;
+	min-height: 500px;
+	min-width: 300px;
+	bottom: 50px;
+}
+.homePicDiv{
+	height: 100%;
+	width: 350px;
+}
+
+/*我们相爱天数*/
+.weInfoDiv{
+	position: fixed;
+	top: 50px;
+	left: 50px;
+}
+.weInfoImg{
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	border: #FFFFFF 1px solid;
+	box-shadow: 1px 1px 3px #000000;
+	position: absolute;
+}
+.weInfoText{
+	position: absolute;
+	width: auto;
+	height: 25px;
+}
+
+#peachTreeImg {
+	position: absolute;
+	bottom: 10px;
+	left: -165px;
+	height: 470px;
+	width: 400px;
+}
+/*牛郎织女*/
+.ppleDiv {
+	position: absolute;
+	bottom: 0px;
+	left: 20px;
+	height: 100px;
+	width: 100px;
+}
+.ppleImg {
+	position: absolute;
+	height: 100px;
+	width: 100px;
+}
+/*end****主界面图片****/
+/*每日一句*/
+.wordsLine{
+	position: relative;	
+	bottom: 5px;
+	height: 7px;
+	background-color: #007AFF;
+	border: #007AFF 1px solid;
+}
+.wordBorderLine{
+	border: #000000 1px solid;
+	height: auto;
+}
+
+.dayWords {
+	height: auto;
+	position: fixed;
+	width: 55px;
+	right: 20px;
+	top: 120px;
+}
+
+.pWords {
+	height: auto;
+	margin: 0px;
+	font-size: 17px;
+}
+
+#firstWord{
+	right: 0px;
+	margin-top: 6px;
+	margin-left: 25px;
+}
+#lastWord {
+	position: relative;
+	bottom: 20px;
+}
+
+
+	/*****侧拉滑动条*****/
+.mui-scroll-wrapper{
+	background-color: #FFFFFF;
+}
+	.slidePanel-flex-box {
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF
+	}
+
+	.menuPanel-flex-box {
+		display: flex;
+		flex-direction: column;
+		min-height: 50px;
+		width: 100%;
+	}
+
+	.menuUlDiv {
+		display: flex;
+		flex-wrap: wrap;
+
+		width: 90%;
+		min-height: 100px;
+		flex: 1;
+		border-radius: 20px;
+		border: 1px solid #F2F2F2;
+		margin: 10 10 10 10;
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 10px;
+	}
+
+
+	/*侧滑菜单栏菜单标题*/
+	.grid-Title {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 30px;
+		padding-bottom: 5px;
+	}
+
+	.grid-titleText {
+		width: 60px;
+		height: 20px;
+		margin: 0 0 0 0;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.grid-titleLine {
+		width: 50px;
+		height: 1px;
+		border: 0.3px solid #CCCCCC;
+	}
+
+	/*侧滑菜单项*/
+	.menu-item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 65px;
+		height: 75px;
+	}
+
+	.img-border {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		width: 35px;
+		height: 35px;
+		background-color: #DD524D;
+		border-radius: 50px;
+
+		box-shadow: 1px 1px 3px #909090;
+	}
+
+	.menu-item-img {
+		width: 23px;
+		height: 23px;
+
+	}
+
+	.menu-item-text {
+		font-size: 10px;
+		text-align: justify;
+		text-align: center;
+	}
+
+

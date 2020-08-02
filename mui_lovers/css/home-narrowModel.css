@@ -1,0 +1,17 @@
+
+@media screen and (max-width: 500px) {
+
+	
+	/*侧滑菜单项*/
+	.menu-item {
+		width: 65px;
+		height: 70px;
+	}
+	.menu-item-text {
+		font-size: 5px;
+	}
+}
+
+/***适配width<380px的机型***/
+
+

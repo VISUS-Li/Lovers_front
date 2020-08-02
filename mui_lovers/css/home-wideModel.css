@@ -1,0 +1,27 @@
+@media screen and (min-width: 390px) {
+/****TabBar选项卡****/
+.tabBarImg {
+	top: 3px;
+	height: 30px;
+	width: 30px;
+	padding-top: 0px;
+
+}
+
+.tabBarLabel {
+	font-size: 15px;
+}
+
+
+	/*****侧拉滑动条*****/
+
+	/*侧滑菜单项*/
+	.menu-item {
+		width: 80px;
+		height: 95px;
+	}
+}
+
+/***适配380px<width<980px的机型***/
+
+
