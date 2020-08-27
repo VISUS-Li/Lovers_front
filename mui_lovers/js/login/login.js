@@ -16,20 +16,21 @@
 			home_loaded_flag = true;
 		});
 
-
-		//监听事件
-		var btnLogin = doc.getElementById('btnLogin');
-		var accountBox = doc.getElementById('account');
-		var pwdBox = doc.getElementById('password');
-		btnLogin.addEventListener('tap', function(event) {
-			var account = accountBox.value;
-			var password = pwdBox.value;
-			if (account.length < 0 || password.length < 0) {
-				plus.nativeUI.toast("请输入用户名或密码");
-				return;
-			}
-		})
-
+	})
+	
+	
+	//监听事件
+	var btnLogin = doc.getElementById('btnLogin');
+	var accountBox = doc.getElementById('account');
+	var pwdBox = doc.getElementById('password');
+	btnLogin.addEventListener('tap', function(event) {
+		var account = accountBox.value;
+		var password = pwdBox.value;
+		if (account.length <= 0 || password.length <= 0) {
+			$.toast("请输入用户名或密码");
+			return;
+		}
+		
 		var reqUrl = "http://60.205.211.241:20050/api/client/user/login";
 		$.ajax({
 			url: reqUrl,
@@ -44,10 +45,10 @@
 				'Content-Type': 'application/json'
 			},
 			beforeSend: function() {
-				plus.nativeUI.showWaiting("正在请求数据..."); //开启加载提示
+				//$.showWaiting()("正在请求数据..."); //开启加载提示
 			},
 			complete: function() {
-				plus.nativeUI.closeWaiting(); //关于加载提示
+				//$.hideLoading(); //关于加载提示
 			},
 			success: function(data) {
 				//处理成功逻辑
@@ -64,7 +65,7 @@
 				});
 			},
 			error: function(xhr, type, errorThrown) {
-				plus.nativeUI.closeWaiting();
+				//plus.nativeUI.closeWaiting();
 				var _error = "";
 				switch (type) {
 					case "timeout":
