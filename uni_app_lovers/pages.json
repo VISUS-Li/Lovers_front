@@ -5,6 +5,18 @@
 		"style":{
 			"navigationStyle":"custom"
 		}
+	},
+	{
+		"path":"pages/index/index",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path":"pages/notelist/notelist",
+		"style":{
+			"navigationStyle":"custom"
+		}
 	}
 	],
 	"globalStyle": {

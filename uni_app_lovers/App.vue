@@ -127,7 +127,7 @@
 </script>
 
 <style lang='scss'>
-	@import "css/iconfont.css";
+	@import "./static/css/iconfont.css";
 	
     .rong-icon {
       width: 64upx;

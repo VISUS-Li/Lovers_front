@@ -1,28 +1,337 @@
 <template>
-	<view class="container">
-		<view class="intro">本项目已包含uni ui组件，无需import和注册，可直接使用。在代码区键入字母u，即可通过代码助手列出所有可用组件。光标置于组件名称处按F1，即可查看组件文档。</view>
-		<text class="intro">详见：</text>
-		<uni-link :href="href" :text="href"></uni-link>
+	<view calss="page">
+		<view class="barbox" :style="'bottom:'+menuBarMoveY+'rpx'" @touchstart="startDragBar" @touchmove.prevent="moveBar"
+		 @touchend="">
+			<view class="popup-bar"></view>
+		</view>
+		<uni-pop-up ref="showpopup" type="bottom" @change="popupClosed">
+			<view class="content">
+				<view class="header" style="">
+					<text class="header-text">功能列表</text>
+					<view class="header-text-line">
+					</view>
+				</view>
+				<view class="uni-list" style="flex: 1;" show-scrollbar="false">
+					<view class="uni-list-cell" v-for="(cellItem,index) in funcCell" :key="index">
+
+						<view class="grid-Title">
+							<view class="grid-titleLine"></view>
+							<p class="grid-titleText">{{cellItem.cellName}}</p>
+							<view class="grid-titleLine"></view>
+						</view>
+
+						<view class="s-grids" style="padding-bottom: 20upx;background: white">
+							<view class="is-col-1-4 is-center" style="margin-top: 16upx;" v-for="(Item, i) in cellItem.itemData" :key="i">
+
+								<view class="menu-item" @tap="toFuncPage(Item.pageUrl)">
+									<view class="img-border"><img :src="Item.imgUrl" class="menu-item-img" /></view>
+									<p class="menu-item-text">{{Item.name}}</p>
+								</view>
+
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</uni-pop-up>
 	</view>
 </template>
 
 <script>
+	import uniPopUp from '../../components/uni-popup/uni-popup.vue'
+
 	export default {
+		onLoad: function(option) {
+			//console.log(option.id);
+			this.$nextTick(() => {
+				//this.$refs.showpopup.open();
+			})
+		},
+		onShow() {
+			const {
+				windowWidth,
+				windowHeight
+			} = uni.getSystemInfoSync();
+			this.windowHeight = windowHeight
+		},
+		components: {
+			uniPopUp,
+		},
+
 		data() {
 			return {
-				href: 'https://uniapp.dcloud.io/component/README?id=uniui'
+				menuBarMoveY: 20,
+				menuBarStart: 20,
+				windowHeight: '',
+				bMenuOpened: false, //上滑菜单是否打开状态
+				funcCell: [{
+						cellName: "一见钟情",
+						itemData: [{
+								name: "事情清单",
+								imgUrl: "../../static/images/list.png",
+								pageUrl: "../notelist/notelist",
+							},
+							{
+								name: "纪念日",
+								imgUrl: "../../static/images/books.png",
+							},
+							{
+								name: "日记",
+								imgUrl: "../../static/images/diary.png",
+							},
+							{
+								name: "留言板",
+								imgUrl: "../../static/images/blackboard.png",
+							},
+							{
+								name: "闹钟",
+								imgUrl: "../../static/images/alarm.png",
+							},
+							{
+								name: "姨妈来了",
+								imgUrl: "../../static/images/dayima.png",
+							}
+						]
+					},
+					{
+						cellName: "天荒地老",
+						itemData: [{
+								name: "运动运动",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "看看电影",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "旅游旅游",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "学习学习",
+								imgUrl: "../../static/images/list.png",
+							}
+						],
+					}
+				],
 			}
 		},
 		methods: {
+			startDragBar(event) {
+				this.menuBarStart = event.touches[0].clientX - event.target.offsetLeft;
+			},
+			endDragBar(event) {
+				this.menuBarMoveY = 20;
+			},
+			moveBar(event) {
+				//if (!this.bMenuOpened) {
+				let tag = event.touches;
+				if (tag[0].clientY < 0) {
+					tag[0].clientY = 0;
+				}
+				if (tag[0].clientY > 900) {
+					tag[0].clientY = 900;
+				}
+				if (tag[0].clientY > this.windowHeight) {
+					tag[0].clientY = this.windowHeight;
+				}
+				this.menuBarMoveY = tag[0].clientY - this.menuBarStart;
+				if (this.menuBarMoveY - this.menuBarStart > 200) {
+					this.$nextTick(() => {
+						this.$refs.showpopup.open();
+					})
+					this.menuBarMoveY = 20;
+					this.bMenuOpened = true;
+					//}
+				}
+			},
+
+			popupClosed(event) {
+				this.bMenuOpened = false;
+			},
+
+			toFuncPage(pageUrl) {
+				if (pageUrl != "") {
+					console.log(pageUrl);
+					
+					uni.navigateTo({
+					  url:pageUrl,
+					  events: {
+					    // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+					    acceptDataFromOpenedPage: function(data) {
+					      console.log(data)
+					    },
+					    someEvent: function(data) {
+					      console.log(data)
+					    }
+					  },
+					  success: function(res) {
+					    // 通过eventChannel向被打开页面传送数据
+					    res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'test' })
+					  },
+					  
+					  fail:function(res){
+					  	console.log(res)
+					  }
+					})
+					
+				}
+			}
 
 		}
 	}
 </script>
 
 <style>
-	.container {
-		padding: 20px;
-		font-size: 14px;
-		line-height: 24px;
+	.barbox {
+		position: fixed;
+		bottom: 20rpx;
+		left: 24%;
+		height: 50rpx;
+		width: 400rpx;
+
+	}
+
+	.popup-bar {
+		height: 10rpx;
+		width: 200rpx;
+		background-color: #4399FC;
+		border-radius: 50rpx;
+		margin: auto;
+		margin-top: 20rpx;
+	}
+
+	.opendBar {
+		position: fixed;
+
+	}
+
+	.content {
+		height: 850rpx;
+		width: 750rpx;
+		background-color: #FFFFFF;
+		border-top-left-radius: 35rpx;
+		border-top-right-radius: 35rpx;
+	}
+
+	.header {
+		flex-direction: row;
+		height: 80rpx;
+
+		border-bottom-color: rgba(0, 0, 0, .1);
+		border-bottom-width: 1rpx;
+	}
+
+	.header-text {
+		font-size: 26rpx;
+		margin-left: 30rpx;
+	}
+
+	.header-text-line {
+		width: 100%;
+		height: 2rpx;
+		margin-top: 10rpx;
+		background-color: #BBBBBB;
+	}
+
+	/* 宫格 */
+	.s-grids {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.is-col-1,
+	.is-col-2,
+	.is-col-3,
+	.is-col-4,
+	.is-col-5,
+	.is-col-6,
+	.is-col-7,
+	.is-col-1-5,
+	.is-col-1-4,
+	.is-col-1-8 {
+		float: left;
+		-webkit-box-flex: 0;
+		-ms-flex: 0 0 auto;
+		flex: 0 0 auto;
+	}
+
+	.is-col-1-5 {
+		display: block;
+		width: 20%;
+	}
+
+	.is-col-1-4 {
+		display: block;
+		width: 25%;
+	}
+
+	.func-cell {
+		padding: 0 20rpx;
+		height: 80rpx;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+
+
+
+
+	/*侧滑菜单栏菜单标题*/
+	.grid-Title {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-top: 10rpx;
+		padding-bottom: 0rpx;
+	}
+
+	.grid-titleText {
+		width: 60px;
+		height: 20px;
+		margin: 0 0 0 0;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.grid-titleLine {
+		width: 50px;
+		height: 1px;
+		border: 0.3px solid #CCCCCC;
+	}
+
+	/*侧滑菜单项*/
+	.menu-item {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 150rpx;
+		height: 150rpx;
+	}
+
+	.img-border {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		width: 85rpx;
+		height: 85rpx;
+		background-color: #DD524D;
+		border-radius: 50rpx;
+		box-shadow: 5rpx 5rpx 5rpx #909090;
+	}
+
+	.menu-item-img {
+		width: 60rpx;
+		height: 60rpx;
+	}
+
+	.menu-item-text {
+		padding-top: 10rpx;
+		font-size: 30rpx;
+		text-align: justify;
+		text-align: center;
 	}
 </style>

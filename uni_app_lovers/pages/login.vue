@@ -42,109 +42,23 @@
 	export default {
 		data() {
 			return {
-				phone: "",
-				pwd: "",
-				getCodeBtnColor: "#ffffff",
+				phone: "15002326234",
+				pwd: "123",
 				getCodeisWaiting: false,
 			}
 		},
 		onLoad() {
-			this.checkGuide();
+			
 		},
 		methods: {
-			checkGuide() {
-				// 思路： 检测是否有启动缓存，如果没有，就是第一次启动，第一次启动就去 启动介绍页面
-				const launchFlag = uni.getStorageSync('launchFlag');
-				if (launchFlag) {
-					this.isLogin();
-				} else {
-					uni.redirectTo({
-						url: '/pages/guide/list'
-					});
-				}
-			},
-
-			isLogin() {
-				// 判断缓存中是否登录过，直接登录
-				try {
-					const value = uni.getStorageSync('access_token');
-					if (value) {
-						//有登录信息
-						console.log("已登录用户：", value);
-						uni.switchTab({
-							url: '/pages/index/index'
-						});
-					}
-				} catch (e) {
-
-				}
-			},
-
-
-			Timer() {},
-			getCode() {
-				let _this = this;
-				uni.hideKeyboard()
-				if (_this.getCodeisWaiting) {
-					return;
-				}
-				if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(_this.phone))) {
-					uni.showToast({
-						title: '请填写正确手机号码',
-						icon: "none"
-					});
-					return false;
-				}
-				_this.getCodeText = "发送中..."
-				_this.getCodeisWaiting = true;
-				_this.getCodeBtnColor = "rgba(255,255,255,0.5)"
-
-				uni.request({
-					url: _this.websiteUrl + '/sms/notification-sms/codes',
-					data: {
-						'phone': _this.phone
-					},
-					method: 'POST',
-					header: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-						//自定义请求头信息
-					},
-					success: (res) => {
-						_this.key = res.data.data.key;
-						//TODO 开发模式
-						_this.code = res.data.data.code;
-					}
-				});
-				//示例用定时器模拟请求效果
-				setTimeout(() => {
-					//uni.showToast({title: '验证码已发送',icon:"none"});
-					_this.setTimer();
-				}, 1000)
-			},
-			setTimer() {
-				let holdTime = 59,
-					_this = this;
-				_this.getCodeText = "重新获取(60)"
-				_this.Timer = setInterval(() => {
-					if (holdTime <= 0) {
-						_this.getCodeisWaiting = false;
-						_this.getCodeBtnColor = "#ffffff";
-						_this.getCodeText = "获取验证码"
-						clearInterval(_this.Timer);
-						return;
-					}
-					_this.getCodeText = "重新获取(" + holdTime + ")"
-					holdTime--;
-				}, 1000)
-			},
 			doLogin() {
 				let _this = this;
 				uni.hideKeyboard()
 				//模板示例部分验证规则
-				// if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){ 
-				// 	uni.showToast({title: '请填写正确手机号码',icon:"none"});
-				// 	return false; 
-				// } 
+				if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phone))){ 
+					uni.showToast({title: '请填写正确手机号码',icon:"none"});
+					return false; 
+				} 
 
 				uni.request({
 					url: _this.websiteUrl + '/api/client/user/login',
@@ -158,15 +72,26 @@
 					},
 					success: (res) => {
 						if (res.data.code == 1000) {
-							var realName = res.data.data.UserInfo.RealName;
-							var Phone = res.data.data.UserInfo.Phone;
+							_this.UserInfo.Phone = res.data.data.UserInfo.Phone;
+							_this.UserInfo.RealName = res.data.data.UserInfo.RealName;
+							_this.UserInfo.Birth = res.data.data.UserInfo.Birth;
+							_this.UserInfo.HomeTown = res.data.data.UserInfo.HomeTown;
+							_this.UserInfo.LoverId = res.data.data.UserInfo.LoverId;
+							_this.UserInfo.LoverNickName = res.data.data.UserInfo.LoverNickName;
+							_this.UserInfo.LoverPhone = res.data.data.UserInfo.LoverPhone;
+							_this.UserInfo.Sculpture = res.data.data.UserInfo.Sculpture;
+							_this.UserInfo.Sex = res.data.data.UserInfo.Sex;
 							uni.showToast({
-								title:"登录请求成功:realName" + realName + ",Phone:" + Phone,
+								title:"登录成功",
 								icon:"none"
 							})
+							uni.reLaunch({
+								url:'index/index?id=1'
+							})
 						} else {
+							var error = res.data.data.LoginRes;
 							uni.showToast({
-								title: '验证码不正确',
+								title: "登录失败:" + error,
 								icon: "none"
 							});
 							return false;
