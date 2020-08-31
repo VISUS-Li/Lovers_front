@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import App from './App'
 
-import aLoadMore from "components/a_LoadMore/a_loadMore.vue";
-Vue.component("aLoadMore", aLoadMore);
-
 Vue.prototype.websiteUrl = 'http://60.205.211.241:2001'; 
+
+// 引入全局uView
+import uView from 'components/uview-ui'
+Vue.use(uView);
 
 Vue.prototype.UserInfo = {
 		RealName:"",
