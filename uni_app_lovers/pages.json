@@ -20,6 +20,12 @@
 		"style":{
 			"navigationStyle":"custom"
 		}
+	},
+	{
+		"path":"pages/notelist/noteItem",
+		"style":{
+			"navigationStyle":"custom"
+		}
 	}
 	],
 	"globalStyle": {

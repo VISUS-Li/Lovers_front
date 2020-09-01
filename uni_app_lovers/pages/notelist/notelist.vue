@@ -5,26 +5,25 @@
 		 :title="navTitle" :title-color="navTitleColor" :title-size="navTitleSize"
 		 :back-text="navBackText" :back-text-style="navBackTextStyle"></u-navbar>
 		 <u-collapse  :head-style="collapseStyle">
-		 	<u-collapse-item :open="item.show" :index="index" @change="itemChange" :title="item.head" v-for="(item, index) in collapseList" :key="index">
-		 		<u-cell-group title="读万卷书">
-					<u-cell-item center :is-link="true" :label="label" value="铁马冰河入梦来" i ndex="index" @click="click" :hover-class="hoverClass"
-					 :arrow="arrow" :title="title" :icon="icon">
-						<u-badge :absolute="false" v-if="rightSlot == 'badge'" count="105" slot="right-icon"></u-badge>
-						<u-switch v-if="rightSlot == 'switch'" slot="right-icon" v-model="checked"></u-switch>
-					</u-cell-item>
-					<u-cell-item :border-bottom="false" value="" title="铁马冰河入梦来" value="行万里路" :arrow="false">
-						<u-icon slot="icon" size="34" name="calendar" style="margin-right: 5px;"></u-icon>
-						<u-icon slot="right-icon" size="34" name="calendar"></u-icon>
-						<u-field slot="value"></u-field>
+		 	<u-collapse-item :open="collapseItem.show" :index="collapseIndex" :title="collapseItem.head" v-for="(collapseItem, collapseIndex) in collapseList" :key="collapseIndex">
+		 		<u-cell-group >
+					<u-cell-item v-if="listItem.status == collapseItem.caseFlag" v-for = "(listItem,listIndex) in caseList" :index="listIndex" @click="cellItemClickHandle" 
+					 :arrow='true' :title="listItem.title" :icon="listItem.leftImg">
+						
 					</u-cell-item>
 				</u-cell-group>
 		 	</u-collapse-item>
 		 </u-collapse>
 		 
+		 <!-- <view class="addButton">
+			 <u-icon class="addButtonIcon" name="close" size="70" color="#fff" ></u-icon>
+		 </view> -->
+		 <sa-hover-menu :top="200"></sa-hover-menu>
 	</view>
 </template>
 
 <script>
+	import hoverMenu from "../../components/sa-hover-menu/sa-hover-menu.vue"
 	export default {
 		components: {
 
@@ -52,12 +51,14 @@
 					"margin-top":"10rpx"
 				},
 				
-				//时间清单折叠菜单数据
+				//事件清单折叠菜单数据
 				collapseList: [{
 					head: "· 未完成",
+					caseFlag:false,
 					show: true,
 				}, {
 					head: "· 已完成",
+					caseFlag:true,
 					show: false,
 				}],
 				collapseStyle:{
@@ -65,21 +66,51 @@
 					"font-size":"40rpx",
 					"font-weight":"bold",
 					"margin-left":"30rpx"
-				}
+				},
+				
+				caseList:[{
+					"title":"一起做飞机",
+					"leftImg":"close",
+					"abstract":"想和你一起做飞机环游世界",
+					"status":false //完成状态，true已完成,false未完成
+				},
+				{
+					"title":"一起做做爱做的事",
+					"leftImg":"close",
+					"abstract":"想和你一起做爱",
+					"status":true //完成状态，true已完成,false未完成
+				}]
 			}
 		},
 		methods: {
-
+				cellItemClickHandle(index){
+					var path = "/pages/notelist/noteItem";
+					this.$u.route({
+						url: path,
+						params:{
+							index:index
+						}
+					})
+					
+				}
 		}
 
 	}
 </script>
 
 <style>
-	@import "../../static/css/common.css";
-
-	.nav-bar {
-		height: 100rpx;
-		width: 85%;
+	@import "../../common/css/common.css";
+	.addButton{
+		width: 120rpx;
+		height: 120rpx;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		background-color: #DD524D;
+		border-radius: 60rpx;
+		box-shadow: 5rpx 5rpx 5rpx #909090;
+	}
+	.addButtonIcon{
+		
 	}
 </style>
