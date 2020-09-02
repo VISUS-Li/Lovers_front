@@ -18,7 +18,15 @@
 		 <!-- <view class="addButton">
 			 <u-icon class="addButtonIcon" name="close" size="70" color="#fff" ></u-icon>
 		 </view> -->
-		 <sa-hover-menu :top="200"></sa-hover-menu>
+		 <view @touchstart="openMenu" v-model="iconRotation">
+		 <sa-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></sa-hover-menu>
+		 </view>
+		 <u-popup border-radius="10" v-model="upPopShow"
+			:mode=bottom 
+		 	length="50%" :mask="true"
+		 	:closeable="true"
+		 	:close-icon-pos="closeIconPos"
+		 ></u-popup>
 	</view>
 </template>
 
@@ -79,7 +87,11 @@
 					"leftImg":"close",
 					"abstract":"想和你一起做爱",
 					"status":true //完成状态，true已完成,false未完成
-				}]
+				}],
+				
+				//悬浮菜单
+				iconRotation:45,
+				upPopShow:false,
 			}
 		},
 		methods: {
@@ -91,7 +103,12 @@
 							index:index
 						}
 					})
-					
+				},
+				
+				openMenu:function(e){
+					console.log("打开按钮");
+					this.iconRotation = 0;
+					this.upPopShow = true;
 				}
 		}
 

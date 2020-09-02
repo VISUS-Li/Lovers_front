@@ -22,9 +22,9 @@
 		</view>
 	</view>
 	<view v-else>
-		<view class="major-box" :class="{show: show}" :style="{bottom:bottom + 'rpx',left:left + 'rpx'}" >
+		<view class="major-box" :v-if="show" :style="{bottom:bottom + 'rpx',left:left + 'rpx'}" >
 			<view class="click-btn" @tap="show = !show"   :style="{width:width + 'rpx', height:height + 'rpx'}">
-				<u-icon name="close" class="menu-icon" :size="50"></u-icon>
+				<u-icon name="close" class="menu-icon" :size="50" :style="{transform:'rotate('+Rotation+'deg)'}"></u-icon>
 			</view>
 		</view>
 	</view>
@@ -35,11 +35,7 @@ export default {
 	data() {
 		return {
 			mStyle:'def',
-			show: false ,// 是否显示
-			bottom: 100,	// 顶端距离 
-			left:570, //左边距离
-			width:120,
-			height:120,
+			
 			deviationTop: 0,	// 偏移量
 			windowHeight: uni.getSystemInfoSync().windowHeight,	// 视图高度 
 			btnList: [		// 所有按钮 
@@ -77,10 +73,33 @@ export default {
 		};
 	},
 	props:{
-		// top:{
-		// 	type:integer,
-		// 	default:1000
-		// }
+		//菜单离底部距离
+		bottom:{
+			type:[Number, String],
+			default:1000
+		},
+		// 菜单离左边距离
+		left:{
+			type:[Number, String],
+			default:570
+		},
+		//菜单的宽，高
+		width:{
+			type:[Number, String],
+			default:120
+		},
+		height:{
+			type:[Number, String],
+			default:120
+		},
+		Rotation:{
+			type:[Number,String],
+			default:45
+		},
+		show:{
+			type:Boolean,
+			default:true
+		}
 	},
 	methods: {
 		// 点击按钮 
