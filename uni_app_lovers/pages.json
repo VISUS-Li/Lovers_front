@@ -26,6 +26,12 @@
 		"style":{
 			"navigationStyle":"custom"
 		}
+	},
+	{
+		"path":"pages/notelist/addNote",
+		"style":{
+			"navigationStyle":"custom"
+		}
 	}
 	],
 	"globalStyle": {

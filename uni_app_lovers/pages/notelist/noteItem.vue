@@ -1,4 +1,5 @@
 <template>
+	
 	<view>aaaa</view>
 </template>
 

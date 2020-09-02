@@ -22,8 +22,8 @@
 		</view>
 	</view>
 	<view v-else>
-		<view class="major-box" :v-if="show" :style="{bottom:bottom + 'rpx',left:left + 'rpx'}" >
-			<view class="click-btn" @tap="show = !show"   :style="{width:width + 'rpx', height:height + 'rpx'}">
+		<view class="major-box" :v-if="showMenu" :style="{bottom:bottom + 'rpx',left:left + 'rpx'}" >
+			<view class="click-btn" :style="{width:width + 'rpx', height:height + 'rpx'}">
 				<u-icon name="close" class="menu-icon" :size="50" :style="{transform:'rotate('+Rotation+'deg)'}"></u-icon>
 			</view>
 		</view>
@@ -96,7 +96,7 @@ export default {
 			type:[Number,String],
 			default:45
 		},
-		show:{
+		showMenu:{
 			type:Boolean,
 			default:true
 		}
