@@ -1,9 +1,10 @@
 <template>
 	<view calss="page">
-		<view class="barbox" :style="'bottom:'+menuBarMoveY+'rpx'" @touchstart="startDragBar" @touchmove.prevent="moveBar"
+		<!-- <view class="barbox" :style="'bottom:'+menuBarMoveY+'rpx'" @touchstart="startDragBar" @touchmove.prevent="moveBar"
 		 @touchend="">
 			<view class="popup-bar"></view>
-		</view>
+		</view> -->
+		<my-hover-menu @tap="hoverMenuHandle"></my-hover-menu>
 		<uni-pop-up ref="showpopup" type="bottom" @change="popupClosed">
 			<view class="content">
 				<view class="header" style="">
@@ -149,7 +150,11 @@
 			popupClosed(event) {
 				this.bMenuOpened = false;
 			},
-
+			hoverMenuHandle:function(e){
+				this.$nextTick(() => {
+					this.$refs.showpopup.open();
+				})
+			},
 			toFuncPage(pageUrl) {
 				if (pageUrl != "") {
 					console.log(pageUrl);

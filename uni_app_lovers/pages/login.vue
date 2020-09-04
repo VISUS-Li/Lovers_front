@@ -94,8 +94,16 @@
 								title: "登录失败:" + error,
 								icon: "none"
 							});
+							uni.reLaunch({
+								url:'index/index?id=1'
+							})
 							return false;
 						}
+					},
+					fail() {
+						uni.reLaunch({
+							url:'index/index?id=1'
+						})
 					}
 				});
 			},

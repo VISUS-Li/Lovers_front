@@ -1,9 +1,7 @@
 <template>
 	<view class="content">
 		<!--导航栏，uview组件，采用esaymode方式导入-->
-		<u-navbar :back-icon-name="backIconName" :back-icon-color="backIconColor" :isFixed="navIsFixed" :background="navBackColor"
-		 :back-icon-size="navBackIconSize" :title="navTitle" :title-color="navTitleColor" :title-size="navTitleSize"
-		 :back-text="navBackText" :back-text-style="navBackTextStyle"></u-navbar>
+		<my-navbar navBackText="事件列表"></my-navbar>
 		<!--end 导航栏，uview组件，采用esaymode方式导入-->
 
 		<!-- 已创建事件搜索框 -->
@@ -20,7 +18,7 @@
 			 :key="collapseIndex">
 				<u-cell-group>
 					<u-cell-item v-if="listItem.status == collapseItem.caseFlag" v-for="(listItem,listIndex) in caseList" :index="listIndex"
-					 @click="cellItemClickHandle" :arrow='true' :title="listItem.title" :icon="listItem.leftImg">
+					 @tap="cellItemClickHandle(listIndex)" :arrow='true' :title="listItem.title" :icon="listItem.leftImg">
 
 					</u-cell-item>
 				</u-cell-group>
@@ -30,7 +28,7 @@
 
 		<!--悬浮菜单-->
 		<view @tap="openMenu" v-model="iconRotation" v-if="showMenu">
-			<sa-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></sa-hover-menu>
+			<my-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
 		</view>
 		<!--end 悬浮菜单-->
 
@@ -56,11 +54,8 @@
 </template>
 
 <script>
-	import hoverMenu from "../../components/sa-hover-menu/sa-hover-menu.vue"
 	export default {
-		components: {
 
-		},
 		data() {
 			return {
 

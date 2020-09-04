@@ -7,6 +7,8 @@ Vue.prototype.websiteUrl = 'http://60.205.211.241:2001';
 import uView from 'components/uview-ui'
 Vue.use(uView);
 
+
+
 Vue.prototype.UserInfo = {
 		RealName:"",
 		Phone:"",
