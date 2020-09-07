@@ -74,7 +74,7 @@
 	export default {
 
 		onLoad() {
-			
+			this.doTmp();
 		},
 		data() {
 			return {
@@ -238,9 +238,18 @@
 					method: 'GET',
 					success: (res) => {
 						if (res.data.code == 1000) {
-							this.caseList.push()
+							for(var i in res.data.data.CaseList){
+								var caseItem = {
+									title: res.data.data.CaseList[i].title,
+									imgUrl:res.data.data.CaseList[i].imgUrl,
+									abstract: res.data.data.CaseList[i].abstract,
+									createdDate:res.data.data.CaseList[i].createdDate,
+									status:res.data.data.CaseList[i].status
+								}
+								this.caseList.push(caseItem);
+							}
 						} else {
-							var error = res.data.data.LoginRes;
+							var error = res.data.data.Error;
 							
 							return false;
 						}
@@ -251,6 +260,30 @@
 						})
 					}
 				});
+			},
+			doTmp:function(){
+				var res = {
+					data:
+						[{
+								"title": "一起做飞机",
+								"imgUrl":"../../static/images/blackboard.png",
+								"abstract": "想和你一起做飞机环游世界",
+								"CreatedDate":"20200901",
+								"status": false ,//完成状态，true已完成,false未完成
+							},
+							{
+								"title": "一起做做爱做的事",
+								"imgUrl":"../../static/images/alarm.png",
+								"abstract": "想和你一起做爱",
+								"CreatedDate":"20200901",
+								"status": false //完成状态，true已完成,false未完成
+							}
+						]
+				};
+				for(var i in res.data){
+					console.log(res.data[i]);
+					console.log(res.data[i].title);
+				}
 			}
 		}
 
