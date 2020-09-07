@@ -16,10 +16,27 @@
 		<u-collapse :head-style="collapseStyle">
 			<u-collapse-item :open="collapseItem.show" :index="collapseIndex" :title="collapseItem.head" v-for="(collapseItem, collapseIndex) in collapseList"
 			 :key="collapseIndex">
-				<u-cell-group>
+			 <!-- 以前是列表，现在采用卡片形式 -->
+				<!-- <u-cell-group>
 					<u-cell-item v-if="listItem.status == collapseItem.caseFlag" v-for="(listItem,listIndex) in caseList" :index="listIndex"
 					 @tap="cellItemClickHandle(listIndex)" :arrow='true' :title="listItem.title" :icon="listItem.leftImg">
 
+					</u-cell-item>
+				</u-cell-group> -->
+				
+				<u-cell-group>
+					<u-cell-item v-if = "listItem.status == collapseItem.caseFlag" v-for="(listItem, listIndex) in caseList" :index="listIndex"
+					 :arrow="false" :title-style="cellStyle">
+						<view class="imgView">
+							<u-image class="caseImg" :src="listItem.imgUrl" :width="imgWidth" :height="imgHeigh"  ></u-image>
+							<view class="imgMask">
+								<view class="maskTextView">
+									<text class="maskText Title">aaaaaaaa</text>
+									<text class="maskText Desc">bbbbb</text>
+									<text calss="maskText Date">20200901</text>
+								</view>
+							</view>
+						</view>
 					</u-cell-item>
 				</u-cell-group>
 			</u-collapse-item>
@@ -56,9 +73,15 @@
 <script>
 	export default {
 
+		onLoad() {
+			
+		},
 		data() {
 			return {
 
+				userId:'',
+				startIndex:0,
+				endIndex:10,
 				//标题栏相关参数
 				backIconName: "close",
 				backIconColor: "#000",
@@ -104,18 +127,31 @@
 
 				caseList: [{
 						"title": "一起做飞机",
-						"leftImg": "close",
+						"imgUrl":"../../static/images/blackboard.png",
 						"abstract": "想和你一起做飞机环游世界",
-						"status": false //完成状态，true已完成,false未完成
+						"CreatedDate":"20200901",
+						"status": false ,//完成状态，true已完成,false未完成
 					},
 					{
 						"title": "一起做做爱做的事",
-						"leftImg": "close",
+						"imgUrl":"../../static/images/alarm.png",
 						"abstract": "想和你一起做爱",
-						"status": true //完成状态，true已完成,false未完成
+						"CreatedDate":"20200901",
+						"status": false //完成状态，true已完成,false未完成
 					}
 				],
+				
+				cellStyle:{
+					height:"610rpx",
+					width:"0rpx"
+				},
 
+				imgWidth:"600rpx",
+				imgHeigh:"600rpx",
+				imgMaskStyle:{
+					width:this.imgWidth,
+					height:this.imgHeigh
+				},
 				//悬浮菜单
 				iconRotation: 45,
 				showMenu: true, //显示悬浮菜单
@@ -146,7 +182,7 @@
 
 
 			//事件清单点击每项事件，跳转页面
-			cellItemClickHandle: function(index) {
+			imgDetailHandle:function(index){
 				var path = "/pages/notelist/noteItem";
 				this.$u.route({
 					url: path,
@@ -187,6 +223,34 @@
 				this.$u.route({
 					url: path,
 				})
+			},
+			
+			
+			//获取事件列表
+			doGetCaseList:function(){
+				uni.request({
+					url: _this.websiteUrl + '/api/client/notelist/getNotelist',
+					data: {
+						'UserID':this.userId,
+						'CaseStartIndex':this.startIndex,
+						'CaseEndIndex':this.endIndex
+					},
+					method: 'GET',
+					success: (res) => {
+						if (res.data.code == 1000) {
+							this.caseList.push()
+						} else {
+							var error = res.data.data.LoginRes;
+							
+							return false;
+						}
+					},
+					fail() {
+						uni.reLaunch({
+							url:'index/index?id=1'
+						})
+					}
+				});
 			}
 		}
 
@@ -216,6 +280,36 @@
 	}
 
 	.addButtonIcon {}
+
+	.imgView{
+		width: 600rpx;
+		height: 600rpx; 
+		margin: auto; 
+	}
+	.imgMask{
+		width: 600rpx;
+		height: 590rpx;
+		position: absolute;
+		background-color: rgba(0,0,0,0.25);
+		margin-top: 6rpx;
+		z-index: 100;
+	}
+	
+	.maskTextView{
+		width: 600rpx;
+		height: 600rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-end;
+	}
+	.maskText{
+		color: #FFFFFF;
+	}
+	.caseImg{
+		position: absolute;
+		z-index: 1;
+	}
 
 	//下方弹出框相关样式
 	.upPopView {
