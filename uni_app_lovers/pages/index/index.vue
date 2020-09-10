@@ -4,14 +4,18 @@
 		 @touchend="">
 			<view class="popup-bar"></view>
 		</view> -->
-		<my-hover-menu @tap="hoverMenuHandle"></my-hover-menu>
-		<uni-pop-up ref="showpopup" type="bottom" @change="popupClosed">
+		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
+			<my-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
+		</view>
+
+		<uni-pop-up ref="showpopup" type="bottom" @change="upPopChange" v-model="bMenuOpened">
 			<view class="content">
 				<view class="header" style="">
 					<text class="header-text">功能列表</text>
 					<view class="header-text-line">
 					</view>
 				</view>
+				<scroll-view :scroll-y="true">
 				<view class="uni-list" style="flex: 1;" show-scrollbar="false">
 					<view class="uni-list-cell" v-for="(cellItem,index) in funcCell" :key="index">
 
@@ -33,14 +37,17 @@
 						</view>
 					</view>
 				</view>
+				</scroll-view>
 			</view>
+			
 		</uni-pop-up>
+		
 	</view>
 </template>
 
 <script>
 	import uniPopUp from '../../components/uni-popup/uni-popup.vue'
-
+	
 	export default {
 		onLoad: function(option) {
 			//console.log(option.id);
@@ -61,10 +68,12 @@
 
 		data() {
 			return {
-				menuBarMoveY: 20,
-				menuBarStart: 20,
-				windowHeight: '',
+				//悬浮菜单
+				iconRotation: 45,
+				showMenu: true, //显示悬浮菜单
 				bMenuOpened: false, //上滑菜单是否打开状态
+				
+				//悬浮菜单打开的内容
 				funcCell: [{
 						cellName: "一见钟情",
 						itemData: [{
@@ -111,6 +120,21 @@
 							{
 								name: "学习学习",
 								imgUrl: "../../static/images/list.png",
+							},{
+								name: "运动运动",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "看看电影",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "旅游旅游",
+								imgUrl: "../../static/images/list.png",
+							},
+							{
+								name: "学习学习",
+								imgUrl: "../../static/images/list.png",
 							}
 						],
 					}
@@ -118,39 +142,23 @@
 			}
 		},
 		methods: {
-			startDragBar(event) {
-				this.menuBarStart = event.touches[0].clientX - event.target.offsetLeft;
-			},
-			endDragBar(event) {
-				this.menuBarMoveY = 20;
-			},
-			moveBar(event) {
-				//if (!this.bMenuOpened) {
-				let tag = event.touches;
-				if (tag[0].clientY < 0) {
-					tag[0].clientY = 0;
-				}
-				if (tag[0].clientY > 900) {
-					tag[0].clientY = 900;
-				}
-				if (tag[0].clientY > this.windowHeight) {
-					tag[0].clientY = this.windowHeight;
-				}
-				this.menuBarMoveY = tag[0].clientY - this.menuBarStart;
-				if (this.menuBarMoveY - this.menuBarStart > 200) {
-					this.$nextTick(() => {
-						this.$refs.showpopup.open();
-					})
-					this.menuBarMoveY = 20;
+		
+			upPopChange:function(e){
+				if(e.show){
+					this.showMenu = false;
 					this.bMenuOpened = true;
-					//}
+					this.iconRotation = 0;
+				}else{
+					this.bMenuOpened = false;
+					this.showMenu = true;
+					this.iconRotation = 45;
 				}
 			},
-
-			popupClosed(event) {
-				this.bMenuOpened = false;
-			},
+			
 			hoverMenuHandle:function(e){
+				this.bMenuOpened = true;
+				
+				this.iconRotation = 0;
 				this.$nextTick(() => {
 					this.$refs.showpopup.open();
 				})
