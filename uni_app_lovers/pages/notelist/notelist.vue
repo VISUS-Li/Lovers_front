@@ -27,17 +27,9 @@
 				<u-cell-group>
 					<u-cell-item v-if = "listItem.status == collapseItem.caseFlag" v-for="(listItem, listIndex) in caseList" :index="listIndex"
 					 :arrow="false" :title-style="cellStyle">
-						<view class="imgView">
-							<u-image class="caseImg" :src="listItem.imgUrl" :width="imgWidth" :height="imgHeigh"  ></u-image>
-							<view class="imgMask">
-								<view class="maskTextView">
-									<text class="maskText Title">aaaaaaaa</text>
-									<text class="maskText Desc">bbbbb</text>
-									<text calss="maskText Date">20200901</text>
-								</view>
-							</view>
-						</view>
+					 <my-mask-image :imgUrl = "listItem.imgUrl"></my-mask-image>
 					</u-cell-item>
+					
 				</u-cell-group>
 			</u-collapse-item>
 		</u-collapse>
@@ -61,7 +53,7 @@
 			<u-cell-group>
 				<u-cell-item :border-bottom="true"  v-for="(listItem,listIndex) in preCaseList" :index="listIndex" @click="preCaseItemClickHandle" 
 				 :title="listItem.title" :icon="listItem.leftImg" :value="listItem.added == true ? '已添加':'添加'" 
-				 :arrow= "listItem.added == true ? false:true" :value-style="rightTextStyle" :bg-color="backgroundColor">
+				 :arrow= "listItem.added == true ? false:true" :value-style="rightTextStyle" >
 
 				</u-cell-item>
 			</u-cell-group>

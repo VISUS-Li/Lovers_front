@@ -1,13 +1,5 @@
 <template>
 	<view calss="page">
-		<!-- <view class="barbox" :style="'bottom:'+menuBarMoveY+'rpx'" @touchstart="startDragBar" @touchmove.prevent="moveBar"
-		 @touchend="">
-			<view class="popup-bar"></view>
-		</view> -->
-		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
-			<my-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
-		</view>
-
 		<uni-pop-up ref="showpopup" type="bottom" @change="upPopChange" v-model="bMenuOpened">
 			<view class="content">
 				<view class="header" style="">
@@ -18,21 +10,21 @@
 				<scroll-view :scroll-y="true">
 				<view class="uni-list" style="flex: 1;" show-scrollbar="false">
 					<view class="uni-list-cell" v-for="(cellItem,index) in funcCell" :key="index">
-
+		
 						<view class="grid-Title">
 							<view class="grid-titleLine"></view>
 							<p class="grid-titleText">{{cellItem.cellName}}</p>
 							<view class="grid-titleLine"></view>
 						</view>
-
+		
 						<view class="s-grids" style="padding-bottom: 20upx;background: white">
 							<view class="is-col-1-4 is-center" style="margin-top: 16upx;" v-for="(Item, i) in cellItem.itemData" :key="i">
-
+		
 								<view class="menu-item" @tap="toFuncPage(Item.pageUrl)">
 									<view class="img-border"><img :src="Item.imgUrl" class="menu-item-img" /></view>
 									<p class="menu-item-text">{{Item.name}}</p>
 								</view>
-
+		
 							</view>
 						</view>
 					</view>
@@ -41,6 +33,37 @@
 			</view>
 			
 		</uni-pop-up>
+		
+		<!-- 首页头部信息 -->
+		<view class="mainHead">
+			<view class="mainDate">
+				<view class="nowDate">{{nowDate}}</view>
+				<view class="today">{{todayMsg}}</view>
+			</view>
+			<view class="userPic">
+				<view id="myPic">
+					<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="myPicUrl"></u-image>
+				</view>
+				<view id = "loverPic">
+					<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="loverPicUrl"></u-image>
+				</view>
+			</view>
+		</view>
+		<!-- end 首页头部信息 -->
+		
+		<!-- 主页广告信息 -->
+		<view id="adView">
+			<scroll-view :scroll-y="true">
+				<view v-for="(adItem,adIndex) in adList">
+					<my-mask-image :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc"></my-mask-image>
+				</view>
+			</scroll-view>
+		</view>
+		<!-- end 主页广告信息 -->
+		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
+			<my-hover-menu :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
+		</view>
+
 		
 	</view>
 </template>
@@ -68,6 +91,20 @@
 
 		data() {
 			return {
+				
+				//头部信息
+				headPicWidth:100,
+				headPicHeight:100,
+				myPicUrl:"",
+				loverPicUrl:"",
+				nowDate:"",
+				todayMsg:"今天",
+				//广告图片列表
+				adList:[{
+						imgUrl:"../../static/images/list.png",
+						title:"第一个广告",
+						desc:"第一个广告"
+				}],
 				//悬浮菜单
 				iconRotation: 45,
 				showMenu: true, //显示悬浮菜单
@@ -120,21 +157,6 @@
 							{
 								name: "学习学习",
 								imgUrl: "../../static/images/list.png",
-							},{
-								name: "运动运动",
-								imgUrl: "../../static/images/list.png",
-							},
-							{
-								name: "看看电影",
-								imgUrl: "../../static/images/list.png",
-							},
-							{
-								name: "旅游旅游",
-								imgUrl: "../../static/images/list.png",
-							},
-							{
-								name: "学习学习",
-								imgUrl: "../../static/images/list.png",
 							}
 						],
 					}
@@ -142,7 +164,9 @@
 			}
 		},
 		methods: {
-		
+			onLoad() {
+				this.nowDate = new Date().toISOString().slice(0, 10);
+			},
 			upPopChange:function(e){
 				if(e.show){
 					this.showMenu = false;
@@ -196,6 +220,52 @@
 </script>
 
 <style>
+	
+	/* 首页头部信息 */
+	.mainHead{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 30rpx;
+	}
+	
+	.mainDate{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-left: 30rpx;
+	}
+	.nowDate{
+		color: #666666;
+		font-size: 20rpx;
+	}
+	.today{
+		color: #000;
+		font-size: 50rpx;
+		font-weight: 900;
+	}
+	
+	.userPic{
+
+		margin-right: 30rpx;
+		display: flex;
+	}
+	#myPic{
+		border-radius: 50rpx;
+		box-shadow: 2rpx 5rpx 15rpx #909090;
+	}
+	#loverPic{
+		border-radius: 50rpx;
+		box-shadow: 2rpx 5rpx 15rpx #909090;
+	}
+	/* end 首页头部信息 */
+	
+	
+	/* 广告列表 */
+	#adView{
+		margin-top: 40rpx;
+	}
+	/* end 广告列表 */
 	.barbox {
 		position: fixed;
 		bottom: 20rpx;
