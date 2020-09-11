@@ -55,7 +55,7 @@
 		<view id="adView">
 			<scroll-view :scroll-y="true">
 				<view v-for="(adItem,adIndex) in adList">
-					<my-mask-image :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc"></my-mask-image>
+					<my-mask-image :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc" :date="adItem.date"></my-mask-image>
 				</view>
 			</scroll-view>
 		</view>
@@ -103,7 +103,8 @@
 				adList:[{
 						imgUrl:"../../static/images/list.png",
 						title:"第一个广告",
-						desc:"第一个广告"
+						desc:"第一个广告第一个广告第一个广告第一个广告第一个广告第一个广告第一个广告第一个广告第一个广告",
+						date:"20200911"
 				}],
 				//悬浮菜单
 				iconRotation: 45,
