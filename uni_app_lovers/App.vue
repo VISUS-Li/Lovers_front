@@ -127,5 +127,9 @@
 </script>
 
 <style>
-
+	@import "common/css/moyiui/style.css";
+	@import "common/colorui/animation.css";
+	@import "common/colorui/main.css";
+	@import "common/colorui/icon.css";
+	@import "common/colorui/moyi.css";
 </style>

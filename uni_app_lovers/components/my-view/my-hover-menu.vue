@@ -8,7 +8,7 @@
 		<!-- 遮罩 -->
 		<view class="mask" v-if="show" @tap="show = false" @touchmove.stop.prevent></view>
 		<!-- 按钮 -->
-		<view class="major-box" :class="{show: show}" :style="{top: top + 'rpx'}" >
+		<view class="major-box" :class="{show: show}" :style="{top: top + 'rpx', width:width+'rpx', height:height+'rpx'}" >
 			<view class="click-btn" @tap="show = !show" draggable="true" @touchstart="touchstart" @touchmove.stop.prevent="touchmove">
 				<view>快捷</view>
 				<view>导航</view>
@@ -24,7 +24,7 @@
 	<view v-else>
 		<view class="major-box" :v-if="showMenu" :style="{bottom:bottom + 'rpx',left:left + 'rpx'}" >
 			<view class="click-btn" :style="{width:width + 'rpx', height:height + 'rpx'}">
-				<u-icon name="close" class="menu-icon" :size="50" :style="{transform:'rotate('+Rotation+'deg)'}"></u-icon>
+				<u-icon name="close" class="menu-icon" :size="width*0.4" :style="{transform:'rotate('+Rotation+'deg)'}"></u-icon>
 			</view>
 		</view>
 	</view>
@@ -130,7 +130,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 	/* 遮罩 */
 	.mask {
 		position: fixed;
@@ -170,7 +170,7 @@ export default {
 	
 	.click-btn {
 		width: 100rpx;
-		background-color: #fe6d34;
+		background-color: #ffd250;
 		color: #fff;
 		font-size: 10px;
 		text-align: center;

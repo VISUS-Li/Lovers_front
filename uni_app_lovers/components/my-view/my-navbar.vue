@@ -13,7 +13,7 @@
 			return {
 				//标题栏相关参数
 				backIconName: "close",
-				backIconColor: "#000",
+				backIconColor: "#fff",
 				navIsFixed: true,
 				navBackColor: {
 					// 'background-image': 'linear-gradient(45deg, rgb(28, 187, 180), rgb(141, 198, 63))'
@@ -24,7 +24,7 @@
 				navTitleColor: "#007AFF",
 				navTitleSize: 30,
 				navBackTextStyle: {
-					color: "#000",
+					color: "#fff",
 					width: "150rpx",
 					"margin-left": "20rpx",
 					"margin-top": "10rpx"

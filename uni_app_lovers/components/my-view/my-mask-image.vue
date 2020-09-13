@@ -1,6 +1,7 @@
 <template>
-	<view class="container">
-		<view class="imgView" v-if="imgType == 1">
+	<view >
+		<view class="OneContainer" v-if="imgType == 1">
+		<view class="imgView" >
 			<u-image class="imgOne" :src="imgUrl" :width="imgWidth" :height="imgHeigh"></u-image>
 			<view class="imgMask">
 				<view class="bottomMask">
@@ -12,16 +13,18 @@
 				</view>
 			</view>
 		</view>
-		
-		<view class="imgViewTwo" v-if="imgType == 2">
-			<u-image class="imgTwo" :src="imgUrl" :width="imgWidth" :height="imgHeigh * 0.75" mode="aspectFit"></u-image>
-			<view class="bottomMaskTwo">
-				<view class="maskTextViewTwo">
-					<text class="maskText Title">{{title}}</text>
-					<text class="maskText Desc">{{desc}}</text>
-					<!-- <text class="maskText Date">{{date}}</text> -->
-				</view>
+		</view>
+
+		<view class="TwoContainer" v-if="imgType == 2" :style="{'width':imgWidth+'rpx','height':imgHeigh + 'rpx'}">
+			<view class="imgViewTwo" :style="[GetImgTwoStyle]">
+				<u-image class="imgTwo" :src="imgUrl" :height="imgHeigh * 0.71" mode="aspectFit"></u-image>
 			</view>
+			<view class="bottomTwo" :style="[GetBottomTwoStyle]">
+				<text class="bottomTwoText Desc">{{desc}}</text>
+				<text class="bottomTwoText Title">{{title}}</text>
+				<text class="bottomTwoText Theme">{{theme}}</text>
+			</view>
+
 		</view>
 	</view>
 </template>
@@ -37,8 +40,8 @@
 			}
 		},
 		props: {
-			imgType:{
-				type:[String, Number],
+			imgType: {
+				type: [String, Number],
 				default: 2
 			},
 			imgWidth: {
@@ -61,18 +64,58 @@
 				type: String,
 				default: ""
 			},
-			date: {
+			theme: {
 				type: String,
 				default: ""
 			},
+			imgTwoStyle: {
+				type: Object,
+				default () {
+					return {
+						width: "100%",
+						height: this.imgHeigh * 0.70 + 'rpx',
+						"background-color": "#fff"
+					};
+				}
+			},
+			bottomTwoStyle: {
+				type: Object,
+				default () {
+					return {
+						width: '100%',
+						height: this.imgHeigh * 0.30 + 'rpx',
+						"background-color": "#fff"
+					};
+				}
+			}
 		},
-		computed:{
+		computed: {
+			GetImgTwoStyle:function(){
+				let style = {};
+				Object.assign(style, this.imgTwoStyle);
+				if (this.imgTwoStyle.height) {
+					style.height = this.imgTwoStyle.height;
+				} else {
+					style.height = this.imgHeigh * 0.70 + 'rpx';
+				}
+				return style;
+			},
+			GetBottomTwoStyle: function() {
+				let style = {};
+				Object.assign(style, this.bottomTwoStyle);
+				if (this.bottomTwoStyle.height) {
+					style.height = this.bottomTwoStyle.height;
+				} else {
+					style.height = this.imgHeigh * 0.30 + 'rpx';
+				}
+				return style;
+			}
 		}
 	}
 </script>
 
-<style>
-	.container {
+<style lang="scss">
+	.OneContainer {
 		width: 600rpx;
 		height: 600rpx;
 		margin: auto;
@@ -125,26 +168,66 @@
 	.maskText.Title {
 		font-size: 50rpx;
 		font-weight: 900;
-		color: ;
 	}
 
 	.imgOne {
 		position: absolute;
 		z-index: 1;
 	}
-	
-	
+
+
 	/* img Two */
-	.imgViewTwo{
+	.TwoContainer {
+		margin: auto;
+		
+		// border-radius: 50rpx 50rpx 50rpx 50rpx;
+	}
+
+	.imgViewTwo {
 		width: 100%;
-		height: 450rpx;
-		background-color: #000;
+		height: 100%;
+		margin: auto;
 		border: 10px solid #18B566;
+		border-bottom: none;
 		border-radius: 50rpx 50rpx 0rpx 0rpx;
 	}
-	
-	.maskTextViewTwo{
-		background-color: #0062CC;
+
+	.imgTwo {
+		width: 100%;
 	}
+
+	.bottomTwo {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		border: 10px solid #18B566;
+		border-top: none;
+		border-radius: 0rpx 0rpx 50rpx 50rpx;
+		/* border-top:1rpx solid #000000 ; */
+		box-shadow: inset 0 10rpx 10rpx -10rpx #18B566;
+	}
+	.bottomTwoText{
+		margin-left: 20rpx;
+		width: 300rpx;
+		white-space:nowrap;
+		height: 100%;
+	}
+	
+	.bottomTwoText.Title{
+		font-weight: 900;
+	}
+	
+	.bottomTwoText.Desc{
+		margin-top: 15rpx;
+		font-size: 30rpx;
+		color:$uni-text-color-grey;
+		align-content: center;
+	}
+	
+	.bottomTwoText.Theme{
+		font-size: 20rpx;
+		color:$uni-text-color-disable;
+	}
+	
 	/* end img Two */
 </style>
