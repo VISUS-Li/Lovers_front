@@ -74,7 +74,7 @@
 				<view class="cosmos-border"></view>
 			</view>
 			<view v-if="cosmosMode == 'video'">
-				<myRollvideo></myRollvideo>
+				<myVideoStream></myVideoStream>
 			</view>
 
 			
@@ -85,7 +85,7 @@
 
 <script>
 	import myRollvideo from '../../components/my-view/my-rollvideo/my-rollvideo.nvue'
-
+	import myVideoStream from '../../components/my-view/my-video-stream/my-video-stream.vue'
 export default {
 	components:{
 		myRollvideo,

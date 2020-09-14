@@ -27,7 +27,7 @@
 				<u-cell-group>
 					<u-cell-item v-if = "listItem.status == collapseItem.caseFlag" v-for="(listItem, listIndex) in caseList" :index="listIndex"
 					 :arrow="false" :title-style="cellStyle">
-					 <my-mask-image :imgType="1" :imgUrl = "listItem.imgUrl"></my-mask-image>
+					 <my-mask-image :imgType="2" :imgUrl = "listItem.imgUrl"></my-mask-image>
 					</u-cell-item>
 					
 				</u-cell-group>
