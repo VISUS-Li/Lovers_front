@@ -10,7 +10,7 @@
 			<my-hover-menu width="90" height="90" :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
 		</view>
 		
-		<view class="moyi-bottom-border-a moyi-top-bar moyi-bg-a" :style="'height:' + base.CustomBar + 'px'">
+		<view class="moyi-bottom-border-a moyi-top-bar moyi-bg-b" :style="'height:' + base.CustomBar + 'px'">
 			<view style="position: absolute; bottom: 10rpx; " class="  t">
 				<text class="margin-left" :class="cosmosMode=='hot'?'text-xl moyi-te-b moyi-bold-b':'moyi-te-a'"  @tap="switchMode('hot')">动态</text>
 				<text class="margin-left" :class="cosmosMode=='video'?'text-xl moyi-te-b moyi-bold-b':'moyi-te-a'" @tap="switchMode('video')">视频</text>
@@ -33,7 +33,7 @@
 				<text class="anim-text" v-for="(item, index) in base.title" :key="index" :style="'animation-delay:' + (200 + index * 100) + 'ms;'">{{ item }}</text>
 			</view>
 
-			<view @tap="cosmosOpen(index)" class="cosmos-chat text-black" v-for="(item, index) in cosmosList" :key="index">
+			<view v-if="cosmosMode == 'hot'" @tap="cosmosOpen(index)" class="cosmos-chat text-black" v-for="(item, index) in cosmosList" :key="index">
 				<view class="flex margin-tb padding-lr-xls">
 					<view @tap.stop="" @tap="userOpen(index)" class="cu-avatar round lg" :style="'background-image:url(' + item.avatar + ');'">
 						<image :src="item.frame" mode="widthFix"></image>
@@ -73,6 +73,9 @@
 				</view>
 				<view class="cosmos-border"></view>
 			</view>
+			<view v-if="cosmosMode == 'video'">
+				<myRollvideo></myRollvideo>
+			</view>
 
 			
 			<view id="more-text" class="text-center text-white margin-auto">加载中...</view>
@@ -81,7 +84,12 @@
 </template>
 
 <script>
+	import myRollvideo from '../../components/my-view/my-rollvideo/my-rollvideo.nvue'
+
 export default {
+	components:{
+		myRollvideo,
+	},
 	data() {
 		return {
 			moreData: {
@@ -130,18 +138,19 @@ export default {
 	methods: {
 		// this.cosmosGetList(this.cosmosList.length ? this.cosmosList[this.cosmosList.length - 1].id : 0);
 		
-		switchMode(mode = 'video'){
+		switchMode(mode = 'hot'){
 			if(this.cosmosMode != mode){
-				this.$api.getCosmosList({
-					mode:mode,
-				}, res => {
-					if (res.code) {
-						this.cosmosList = res.data;
-						this.cosmos.propValue = !this.cosmos.propValue;
-					} else {
-						this.$common.errorToShow('空空如也');
-					}
-				});
+				
+				// this.$api.getCosmosList({
+				// 	mode:mode,
+				// }, res => {
+				// 	if (res.code) {
+				// 		this.cosmosList = res.data;
+				// 		this.cosmos.propValue = !this.cosmos.propValue;
+				// 	} else {
+				// 		this.$common.errorToShow('空空如也');
+				// 	}
+				// });
 			}
 			this.cosmosMode = mode
 		},

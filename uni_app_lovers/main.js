@@ -52,6 +52,18 @@ Vue.component('myBar',myBar)
 import preview from './common/colorui/components/my-preview.vue';
 Vue.component('preview',preview)
 
+import loadModal from './common/moyiui/components/load-modal.vue';
+Vue.component('loadModal',loadModal)
+
+import bottomMenu from './common/moyiui/components/bottom-menu.vue';
+Vue.component('bottomMenu',bottomMenu)
+
+import moreModal from './common/moyiui/components/more-modal.vue';
+Vue.component('moreModal',moreModal)
+
+import previewModal from './common/moyiui/components/preview-modal.vue'; 
+Vue.component('previewModal',previewModal)
+
 
 Vue.prototype.websiteUrl = 'http://60.205.211.241:2001'; 
 
