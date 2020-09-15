@@ -1,9 +1,11 @@
 <template>
 	<view >
-		<home :style="PageCur=='home'?'':'display: none;'"></home>
-		<rainbow :style="PageCur=='rainbow'?'':'display: none;'"></rainbow>
-		<contacts :style="PageCur=='contacts'?'':'display: none;'"></contacts>
-		<center :style="PageCur=='center'?'':'display: none;'"></center>
+		<view :style="{'height':windowHeight + 'rpx'}">
+			<home :style="PageCur=='home'?'':'display: none;'"></home>
+			<rainbow :style="PageCur=='rainbow'?'':'display: none;'"></rainbow>
+			<contacts :style="PageCur=='contacts'?'':'display: none;'"></contacts>
+			<center :style="PageCur=='center'?'':'display: none;'"></center>
+		</view>
 
 		<view class="menu-main shadow moyi-bg-b moyi-te-a">
 			<view class="my-tab-item text-xxl" :class="[PageCur == 'home' ? 'active moyi-te-b' : '']" @tap="NavChange"
@@ -40,6 +42,8 @@
 		return {
 				PageCur: 'home',
 				userInfo: this.$common.userInfo(),
+				windowWidth:0,
+				windowHeight:0
 			}
 		},
 		methods: {
@@ -48,6 +52,9 @@
 			}
 		},
 		onLoad(){
+			const { windowWidth, windowHeight } = uni.getSystemInfoSync();
+			this.windowHeight = windowHeight;
+			this.windowWidth = windowWidth;
 			this.$socket.connect();
 			
 			// 注册打开监听

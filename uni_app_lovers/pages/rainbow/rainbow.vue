@@ -10,13 +10,21 @@
 			<my-hover-menu width="90" height="90" :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
 		</view>
 		
-		<view class="moyi-bottom-border-a moyi-top-bar moyi-bg-b" :style="'height:' + base.CustomBar + 'px'">
+		<view v-if="cosmosMode == 'hot'">
+		<view class="top-bar moyi-bottom-border-a moyi-top-bar moyi-bg-b" :style="'height:' + base.CustomBar + 'px'">
 			<view style="position: absolute; bottom: 10rpx; " class="  t">
 				<text class="margin-left" :class="cosmosMode=='hot'?'text-xl moyi-te-b moyi-bold-b':'moyi-te-a'"  @tap="switchMode('hot')">动态</text>
 				<text class="margin-left" :class="cosmosMode=='video'?'text-xl moyi-te-b moyi-bold-b':'moyi-te-a'" @tap="switchMode('video')">视频</text>
 			</view>
 		</view>
-
+		</view>
+		<view v-else-if="cosmosMode == 'video'">
+			<view class="back-icon" @tap="closeVideo">
+				<u-icon name="close" color="#fff"></u-icon>
+			</view>
+		</view>
+		
+		<view v-if="cosmosMode == 'hot'">
 		<scroll-view
 			class="scroll-view moyi-bg-a"
 			@touchstart="cosmosMod.touchstart"
@@ -33,7 +41,7 @@
 				<text class="anim-text" v-for="(item, index) in base.title" :key="index" :style="'animation-delay:' + (200 + index * 100) + 'ms;'">{{ item }}</text>
 			</view>
 
-			<view v-if="cosmosMode == 'hot'" @tap="cosmosOpen(index)" class="cosmos-chat text-black" v-for="(item, index) in cosmosList" :key="index">
+			<view @tap="cosmosOpen(index)" class="cosmos-chat text-black" v-for="(item, index) in cosmosList" :key="index">
 				<view class="flex margin-tb padding-lr-xls">
 					<view @tap.stop="" @tap="userOpen(index)" class="cu-avatar round lg" :style="'background-image:url(' + item.avatar + ');'">
 						<image :src="item.frame" mode="widthFix"></image>
@@ -73,13 +81,13 @@
 				</view>
 				<view class="cosmos-border"></view>
 			</view>
-			<view v-if="cosmosMode == 'video'">
-				<myVideoStream></myVideoStream>
-			</view>
-
 			
 			<view id="more-text" class="text-center text-white margin-auto">加载中...</view>
 		</scroll-view>
+		</view>
+		<view v-else-if="cosmosMode == 'video'" class="video-view">
+			<myVideoStream ></myVideoStream>
+		</view>
 	</view>
 </template>
 
@@ -89,6 +97,7 @@
 export default {
 	components:{
 		myRollvideo,
+		myVideoStream
 	},
 	data() {
 		return {
@@ -137,7 +146,9 @@ export default {
 	},
 	methods: {
 		// this.cosmosGetList(this.cosmosList.length ? this.cosmosList[this.cosmosList.length - 1].id : 0);
-		
+		closeVideo(){
+			this.cosmosMode = 'hot';
+		},
 		switchMode(mode = 'hot'){
 			if(this.cosmosMode != mode){
 				
@@ -363,6 +374,21 @@ module.exports = {
 </script>
 
 <style lang="less">
+	
+.top-bar {
+		top: 0;
+		width: 100%;
+		// height: 100rpx;
+		position: fixed;
+		left: 0;
+		white-space: nowrap;
+		box-sizing: border-box;
+		overflow: hidden;
+		// line-height: 100rpx;
+		z-index: 999;
+	}
+	
+	
 .cosmos-image-item-image {
 	width: 670rpx;
 }
@@ -421,4 +447,9 @@ module.exports = {
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 }
+
+// .video-view{
+// 	min-height: 92vh;
+// 	bottom: 80rpx;
+// }
 </style>
