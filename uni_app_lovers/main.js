@@ -24,6 +24,9 @@ Vue.component('home',home)
 import rainbow from './pages/rainbow/rainbow.vue'
 Vue.component('rainbow',rainbow)
 
+import message from './pages/chat/message.vue'
+Vue.component('message',message)
+
 
 
 /************/

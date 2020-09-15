@@ -6,8 +6,10 @@
 		<!-- 置顶按钮 -->
 		<!-- <view class="moyi-abs-br-btn text-center round moyi-bg-c" @tap="puls()"><text class=" text-xl moyi-te-c">+</text></view> -->
 		
-		<view @tap="hoverMenuHandle" >
-			<my-hover-menu width="90" height="90" :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
+		<view v-if="cosmosMode == 'hot'">
+			<view @tap="hoverMenuHandle" >
+				<my-hover-menu width="90" height="90" :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
+			</view>
 		</view>
 		
 		<view v-if="cosmosMode == 'hot'">
@@ -86,7 +88,7 @@
 		</scroll-view>
 		</view>
 		<view v-else-if="cosmosMode == 'video'" class="video-view">
-			<myVideoStream ></myVideoStream>
+			<myVideoStream2></myVideoStream2>
 		</view>
 	</view>
 </template>
@@ -94,10 +96,12 @@
 <script>
 	import myRollvideo from '../../components/my-view/my-rollvideo/my-rollvideo.nvue'
 	import myVideoStream from '../../components/my-view/my-video-stream/my-video-stream.vue'
+	import myVideoStream2 from '../../components/my-view/my-video-stream2/pages/index/index.nvue'
 export default {
 	components:{
 		myRollvideo,
-		myVideoStream
+		myVideoStream,
+		myVideoStream2
 	},
 	data() {
 		return {
