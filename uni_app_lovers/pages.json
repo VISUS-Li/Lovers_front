@@ -17,25 +17,35 @@
 			"navigationStyle":"custom"
 		}
 	},
+	//事件相关页面
+	{
+		"path":"pages/loverTools/notelist/notelist",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path":"pages/loverTools/notelist/noteItem",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path":"pages/loverTools/notelist/addNote",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
 	
+	//纪念日相关页面
 	{
-		"path":"pages/notelist/notelist",
+		"path":"pages/loverTools/memoryDay/memoryDay",
 		"style":{
 			"navigationStyle":"custom"
 		}
 	},
-	{
-		"path":"pages/notelist/noteItem",
-		"style":{
-			"navigationStyle":"custom"
-		}
-	},
-	{
-		"path":"pages/notelist/addNote",
-		"style":{
-			"navigationStyle":"custom"
-		}
-	},
+	
+	
 	{
 		"path":"pages/chat/chat",
 		"style":{

@@ -153,3 +153,8 @@ export const wechatLogin = (data, success, complete) => post('user/wechatLogin',
 // 退出登陆
 export const logout = () => post('user/logout');
 
+
+/***************/
+//上面的是moyi的api，后面的是自己的api
+/***************/
+export const getNoteList = (data, success, complete) => post('')

@@ -142,11 +142,12 @@
 						itemData: [{
 								name: "事情清单",
 								imgUrl: "../../static/images/list.png",
-								pageUrl: "../notelist/notelist",
+								pageUrl: "../loverTools/notelist/notelist",
 							},
 							{
 								name: "纪念日",
 								imgUrl: "../../static/images/books.png",
+								pageUrl: "../loverTools/memoryDay/memoryDay",
 							},
 							{
 								name: "日记",

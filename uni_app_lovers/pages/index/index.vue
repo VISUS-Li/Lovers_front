@@ -52,9 +52,6 @@
 			}
 		},
 		onLoad(){
-			const { windowWidth, windowHeight } = uni.getSystemInfoSync();
-			this.windowHeight = windowHeight;
-			this.windowWidth = windowWidth;
 			this.$socket.connect();
 			
 			// 注册打开监听
