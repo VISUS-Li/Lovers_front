@@ -14,11 +14,11 @@ Vue.prototype.$db = Db;
 Vue.prototype.$socket = Socket;
 Vue.prototype.$audio = Audio;
 Vue.prototype.$mysocket = mySocket;
-
+Vue.prototype.$WebDomain = "http://localhost"
 /*************/
 ////页面引入
 /*************/
-import home from './pages/index/home.vue'
+import home from './pages/home/home.vue'
 Vue.component('home',home)
 
 import rainbow from './pages/rainbow/rainbow.vue'

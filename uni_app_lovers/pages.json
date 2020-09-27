@@ -12,6 +12,18 @@
 		}
 	},
 	{
+		"path":"pages/home/home",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
+	{
+		"path":"pages/home/homeDetail",
+		"style":{
+			"navigationStyle":"custom"
+		}
+	},
+	{
 		"path":"pages/user/login",
 		"style":{
 			"navigationStyle":"custom"

@@ -55,7 +55,7 @@
 		<view id="adView">
 
 			<view v-for="(adItem,adIndex) in adList">
-				<view :style="{'margin-top':40 + 'rpx'}">
+				<view :style="{'margin-top':40 + 'rpx'}" @tap="navToDetail(detailUrl, adItem.detailData)">
 				<my-mask-image 
 				:imgTwoStyle="adItem.imgTwoStyle" 
 				:bottomTwoStyle="adItem.bottomTwoStyle" 
@@ -111,6 +111,7 @@
 				loverPicUrl: "../../static/images/8.jpg",
 				nowDate: "20200912",
 				todayMsg: "今天",
+				detailUrl:"./homeDetail",
 				//广告图片列表
 
 				adList: [{
@@ -118,12 +119,14 @@
 					title: "第一个广告",
 					desc: "第一个广告的描述",
 					theme: "第一个广告的主题",
+					detailData:"http://localhost/1/2/3.html"
 				},
 				{
 					imgUrl: "../../static/images/2.jpg",
 					title: "第二个广告",
 					desc: "第二个广告的描述",
 					theme: "第二个广告的主题",
+					detailUrl:"./homeDetail",
 				},
 				{
 					imgUrl: "../../static/images/4.jpg",
@@ -189,10 +192,31 @@
 					}
 				],
 			}
+			
+			
 		},
 		methods: {
 			onLoad() {
 				this.nowDate = new Date().toISOString().slice(0, 10);
+			},
+			navToDetail:function(url,paramData){
+				uni.navigateTo({
+				  url: url,
+				  events: {
+				    // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+				    acceptDataFromOpenedPage: function(data) {
+				      console.log(data)
+				    },
+				    someEvent: function(data) {
+				      console.log(data)
+				    }
+				    
+				  },
+				  success: function(res) {
+				    // 通过eventChannel向被打开页面传送数据
+				    res.eventChannel.emit('acceptDataFromOpenerPage', { data: paramData })
+				  }
+				})
 			},
 			upPopChange: function(e) {
 				if (e.show) {
