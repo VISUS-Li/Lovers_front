@@ -3,8 +3,9 @@
 // export const apiUrl = 'http://modi.com/api/moyicosmic/'
 // api调用目录
 // export const apiUrl = 'https://api.mymoyi.cn/api/moyichat/'
-export const apiUrl = 'https://api.mymoyi.cn/api/moyicosmic/'
+ //export const apiUrl = 'https://api.mymoyi.cn/api/moyicosmic/'
 // export const apiUrl = 'http://192.168.43.15/api/moyicosmic/'
+ export const apiUrl = 'http://localhost/'
 
 
 // cnd域名。没有就填写后端域名

@@ -85,10 +85,7 @@
 
 
 		onLoad: function(option) {
-			//console.log(option.id);
-			this.$nextTick(() => {
-				//this.$refs.showpopup.open();
-			})
+			this.GetHomeMainCardList();
 		},
 		onShow() {
 			const {
@@ -199,6 +196,19 @@
 			onLoad() {
 				this.nowDate = new Date().toISOString().slice(0, 10);
 			},
+			
+			//获取HomeMainCard
+			GetHomeMainCardList:function(){
+				this.$api.getHomeMainCard("", res=>{
+					if(res.Data){
+						this.adList.clear();
+						this.adList = res.Data;
+					}
+				})
+			},
+			
+			
+			
 			navToDetail:function(url,paramData){
 				uni.navigateTo({
 				  url: url,

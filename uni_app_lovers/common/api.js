@@ -55,6 +55,58 @@ const post = (method, data, success = () => {}, complete = () => {}) => {
 	});
 }
 
+
+/******
+封装的通用Get请求
+******/
+const get = (method, data, success = () => {}, complete = () => {}) => {
+	let userToken = '';
+	let auth = db.get("userInfo");
+	if (auth) {
+		if (auth.expiretime > (new Date()) / 1000) {
+			userToken = auth.token;
+		}
+	}
+	uni.request({
+		url: apiUrl + method,
+		data: data,
+		header: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'token': userToken,
+		},
+		method: 'GET',
+		success: (response) => {
+			const result = response.data
+			switch (result.Code) {
+				case 1000:
+				case 200:
+					success(result);
+					break;
+				case 1016: //token过期，需重新登录
+					db.del("userInfo");
+					//console.log('pluse login',getCurrentPages()[getCurrentPages().length - 1].route);
+					//
+					if(getCurrentPages()[getCurrentPages().length - 1].route != 'pages/user/index'){
+						uni.reLaunch({
+							url:'/pages/user/login'
+						})
+					}
+					break;
+				default:
+					uni.showToast({
+						title: result.msg,
+						icon: 'none',
+						duration: 2000,
+					});
+					break;
+			}
+		},
+		complete: () => {
+			complete();
+		}
+	});
+}
 /**
  * 
  */
@@ -157,4 +209,5 @@ export const logout = () => post('user/logout');
 /***************/
 //上面的是moyi的api，后面的是自己的api
 /***************/
-export const getNoteList = (data, success, complete) => post('')
+//export const getNoteList = (data, success, complete) => post('');
+export const getHomeMainCard = (data, success,complete) => get('/api/home/GetMainCard',data,success,complete);
