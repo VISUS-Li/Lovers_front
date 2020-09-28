@@ -86,6 +86,7 @@
 
 		onLoad: function(option) {
 			this.GetHomeMainCardList();
+			this.nowDate = new Date().toISOString().slice(0, 10);
 		},
 		onShow() {
 			const {
@@ -193,16 +194,13 @@
 			
 		},
 		methods: {
-			onLoad() {
-				this.nowDate = new Date().toISOString().slice(0, 10);
-			},
-			
+						
 			//获取HomeMainCard
 			GetHomeMainCardList:function(){
 				this.$api.getHomeMainCard("", res=>{
-					if(res.Data){
-						this.adList.clear();
-						this.adList = res.Data;
+					if(res.data.content){
+						this.adList = res.data.content.MainCardInfo;
+						console.log(adList)
 					}
 				})
 			},

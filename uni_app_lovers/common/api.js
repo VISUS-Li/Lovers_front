@@ -73,12 +73,12 @@ const get = (method, data, success = () => {}, complete = () => {}) => {
 		header: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json',
-			'token': userToken,
+			'Token': userToken,
 		},
 		method: 'GET',
 		success: (response) => {
 			const result = response.data
-			switch (result.Code) {
+			switch (result.code) {
 				case 1000:
 				case 200:
 					success(result);
@@ -99,6 +99,7 @@ const get = (method, data, success = () => {}, complete = () => {}) => {
 						icon: 'none',
 						duration: 2000,
 					});
+					console.log("GET,FAIL:"+result.msg);
 					break;
 			}
 		},
