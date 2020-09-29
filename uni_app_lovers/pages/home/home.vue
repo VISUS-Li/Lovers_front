@@ -36,15 +36,15 @@
 
 		<scroll-view scroll-y="true">
 			<!-- 首页头部信息 -->
-			<view class="mainHead">
+			<view class="my-flex my-flex-between my-margin-bottom-sm my-margin-top-sm">
         <!--头部日期信息-->
 				<view class="my-flex my-flex-align-end">
-					<view class="my-flex my-flex-col my-flex-align-end my-margin-left-m my-margin-right-s">
+					<view class="my-flex my-flex-col my-flex-align-end my-margin-left-mm my-margin-right-sm">
 						<view class="text-xxl text-bold my-color-theme">{{todayWeek}}</view>
 						<view class="my-text-font-s my-color-gray-1">星期</view>
 					</view>
-					<u-line direction="col" length="70rpx"></u-line>
-					<view class="my-flex my-flex-col  my-margin-left-s my-margin-right-m">
+					<u-line direction="col" length="70rpx" margin="1rpx 0rpx 1rpx 0rpx"></u-line>
+					<view class="my-flex my-flex-col  my-margin-left-sm my-margin-right-mm">
 						<view class="text-xxl text-bold my-color-theme">{{this.todayDate}}</view>
 						<view class="my-text-font-s my-color-gray-1">{{this.todayMonth}}月</view>
 					</view>
@@ -52,7 +52,7 @@
         <!--end 头部日期信息-->
         
         <!--头部头像-->
-				<view class="my-flex my-margin-right-m">
+				<view class="my-flex my-margin-right-mm">
 					<view class="my-radius-top-100 my-border-width-sm my-border-solid my-border-color-theme">
 						<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="myPicUrl"></u-image>
 					</view>
@@ -66,10 +66,27 @@
 			<u-line></u-line>
 			<!-- end 首页头部信息 -->
 
+
+			<!-- 首页主卡片 -->
+			<view class="my-margin-top-s my-height-900rpx">
+				<swiper class="my-height-900rpx" :current="currentTab" @change="swiperTab">
+					<swiper-item v-for="(listItem,listIndex) in mainCardList" :key="listIndex">
+						<scroll-view style="height: 100%;" scroll-y="false" @scrolltolower="lower1" scroll-with-animation :scroll-into-view="toView">
+							<!--  主卡片的图片-->
+						
+								<u-image height="500rpx" mode="aspectFit" :src="listItem.imgUrl"></u-image>
+	
+							
+						</scroll-view>
+					</swiper-item>
+				</swiper>
+				
+			</view>
+			<!-- end 首页主卡片 -->
 			<!-- 主页广告信息 -->
 			<view id="adView">
 
-				<view v-for="(adItem,adIndex) in adList">
+				<view v-for="(adItem,adIndex) in mainCardList">
 					<view :style="{'margin-top':40 + 'rpx'}" @tap="navToDetail(detailUrl, adItem.detailData)">
 						<my-mask-image :imgTwoStyle="adItem.imgTwoStyle" :bottomTwoStyle="adItem.bottomTwoStyle" :imgWidth="650"
 						 :imgHeigh="650" :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc" :theme="adItem.theme"></my-mask-image>
@@ -96,7 +113,11 @@
 		onLoad: function(option) {
 			
 		},
-		onShow() {
+		onShow:function() {
+
+		},
+		
+		created:function(){
 			this.GetHomeMainCardList();
 			this.nowDate = new Date().toISOString().slice(0, 10);
 			this.todayWeek = this.GetWeekDay();
@@ -110,6 +131,14 @@
 		data() {
 			return {
 
+currentPage:'index',
+			toView:'',//回到顶部id
+			currentTab: 0, //sweiper所在页
+			
+
+
+
+
 				//头部信息
 				headPicWidth: 100,
 				headPicHeight: 100,
@@ -121,8 +150,9 @@
 				todayMonth:"",
 				detailUrl: "./homeDetail",
 				//广告图片列表
-
-				adList: [{
+				currentMainCardImgUrl:"", //主卡片url
+				//mainCardList:[],
+				mainCardList: [{
 						imgUrl: "../../static/images/1.jpg",
 						title: "第一个广告",
 						desc: "第一个广告的描述",
@@ -210,8 +240,8 @@
 			GetHomeMainCardList: function() {
 				this.$api.getHomeMainCard("", res => {
 					if (res.data.content) {
-						this.adList = res.data.content.MainCardInfo;
-						console.log(adList)
+						this.mainCardList = res.data.content.MainCardInfo;
+						console.log(this.mainCardList)
 					}
 				})
 			},
