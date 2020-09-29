@@ -31,45 +31,54 @@
 					</view>
 				</scroll-view>
 			</view>
-
 		</uni-pop-up>
+
+
 		<scroll-view scroll-y="true">
-		<!-- 首页头部信息 -->
-		<view class="mainHead">
-			<view class="mainDate">
-				<view class="nowDate">{{nowDate}}</view>
-				<view class="today">{{todayMsg}}</view>
-			</view>
-			<view class="userPic">
-				<view id="myPic">
-					<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="myPicUrl"></u-image>
+			<!-- 首页头部信息 -->
+			<view class="mainHead">
+        <!--头部日期信息-->
+				<view class="my-flex my-flex-align-end">
+					<view class="my-flex my-flex-col my-flex-align-end my-margin-left-m my-margin-right-s">
+						<view class="text-xxl text-bold my-color-theme">{{todayWeek}}</view>
+						<view class="my-text-font-s my-color-gray-1">星期</view>
+					</view>
+					<u-line direction="col" length="70rpx"></u-line>
+					<view class="my-flex my-flex-col  my-margin-left-s my-margin-right-m">
+						<view class="text-xxl text-bold my-color-theme">{{this.todayDate}}</view>
+						<view class="my-text-font-s my-color-gray-1">{{this.todayMonth}}月</view>
+					</view>
 				</view>
-				<view id="loverPic">
-					<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="loverPicUrl"></u-image>
+        <!--end 头部日期信息-->
+        
+        <!--头部头像-->
+				<view class="my-flex my-margin-right-m">
+					<view class="my-radius-top-100 my-border-width-sm my-border-solid my-border-color-theme">
+						<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="myPicUrl"></u-image>
+					</view>
+					<view class="my-radius-top-100 my-border-width-sm my-border-solid my-border-color-gray3">
+						<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="loverPicUrl"></u-image>
+					</view>
 				</view>
 			</view>
-		</view>
-		<!-- end 首页头部信息 -->
+      <!--end 头部头像-->
+      
+			<u-line></u-line>
+			<!-- end 首页头部信息 -->
 
-		<!-- 主页广告信息 -->
-		<view id="adView">
+			<!-- 主页广告信息 -->
+			<view id="adView">
 
-			<view v-for="(adItem,adIndex) in adList">
-				<view :style="{'margin-top':40 + 'rpx'}" @tap="navToDetail(detailUrl, adItem.detailData)">
-				<my-mask-image 
-				:imgTwoStyle="adItem.imgTwoStyle" 
-				:bottomTwoStyle="adItem.bottomTwoStyle" 
-				:imgWidth = "650"
-				:imgHeigh = "650"
-				:imgUrl="adItem.imgUrl"
-				:title="adItem.title" :desc="adItem.desc" :theme="adItem.theme"
-				></my-mask-image>
+				<view v-for="(adItem,adIndex) in adList">
+					<view :style="{'margin-top':40 + 'rpx'}" @tap="navToDetail(detailUrl, adItem.detailData)">
+						<my-mask-image :imgTwoStyle="adItem.imgTwoStyle" :bottomTwoStyle="adItem.bottomTwoStyle" :imgWidth="650"
+						 :imgHeigh="650" :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc" :theme="adItem.theme"></my-mask-image>
+					</view>
 				</view>
 			</view>
-		</view>
 		</scroll-view>
 		<!-- end 主页广告信息 -->
-		
+
 		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
 			<my-hover-menu width="90" height="90" :show="false" :bottom="200" :Rotation="iconRotation"></my-hover-menu>
 		</view>
@@ -85,15 +94,14 @@
 
 
 		onLoad: function(option) {
-			this.GetHomeMainCardList();
-			this.nowDate = new Date().toISOString().slice(0, 10);
+			
 		},
 		onShow() {
-			const {
-				windowWidth,
-				windowHeight
-			} = uni.getSystemInfoSync();
-			this.windowHeight = windowHeight
+			this.GetHomeMainCardList();
+			this.nowDate = new Date().toISOString().slice(0, 10);
+			this.todayWeek = this.GetWeekDay();
+			this.todayDate = this.GetDateDay();
+			this.todayMonth = this.GetMonthDay();
 		},
 		components: {
 			uniPopUp,
@@ -108,30 +116,33 @@
 				myPicUrl: "../../static/images/1.jpg",
 				loverPicUrl: "../../static/images/8.jpg",
 				nowDate: "20200912",
-				todayMsg: "今天",
-				detailUrl:"./homeDetail",
+				todayWeek: "",
+				todayDate: "",
+				todayMonth:"",
+				detailUrl: "./homeDetail",
 				//广告图片列表
 
 				adList: [{
-					imgUrl: "../../static/images/1.jpg",
-					title: "第一个广告",
-					desc: "第一个广告的描述",
-					theme: "第一个广告的主题",
-					detailData:"http://localhost/1/2/3.html"
-				},
-				{
-					imgUrl: "../../static/images/2.jpg",
-					title: "第二个广告",
-					desc: "第二个广告的描述",
-					theme: "第二个广告的主题",
-					detailUrl:"./homeDetail",
-				},
-				{
-					imgUrl: "../../static/images/4.jpg",
-					title: "第三个广告",
-					desc: "第三个广告的描述",
-					theme: "第三个广告的主题",
-				}],
+						imgUrl: "../../static/images/1.jpg",
+						title: "第一个广告",
+						desc: "第一个广告的描述",
+						theme: "第一个广告的主题",
+						detailData: "http://localhost/1/2/3.html"
+					},
+					{
+						imgUrl: "../../static/images/2.jpg",
+						title: "第二个广告",
+						desc: "第二个广告的描述",
+						theme: "第二个广告的主题",
+						detailUrl: "./homeDetail",
+					},
+					{
+						imgUrl: "../../static/images/4.jpg",
+						title: "第三个广告",
+						desc: "第三个广告的描述",
+						theme: "第三个广告的主题",
+					}
+				],
 				//悬浮菜单
 				iconRotation: 45,
 				showMenu: true, //显示悬浮菜单
@@ -190,40 +201,66 @@
 					}
 				],
 			}
-			
-			
+
+
 		},
 		methods: {
-						
+
 			//获取HomeMainCard
-			GetHomeMainCardList:function(){
-				this.$api.getHomeMainCard("", res=>{
-					if(res.data.content){
+			GetHomeMainCardList: function() {
+				this.$api.getHomeMainCard("", res => {
+					if (res.data.content) {
 						this.adList = res.data.content.MainCardInfo;
 						console.log(adList)
 					}
 				})
 			},
+
+			//获取今天星期几
+			GetWeekDay: function() {
+				var a = new Array("日", "一", "二", "三", "四", "五", "六");
+				var week = new Date().getDay();
+				return a[week];
+			},
+
+			//获取日期
+			GetDateDay: function(){
+				var date = new Date();
+				var tDay = date.getDate();
+				
+				if(tDay.toString().length == 1){
+					tDay = "0" + tDay;
+				}
+				return tDay;
+			},
 			
-			
-			
-			navToDetail:function(url,paramData){
+			//获取月份
+			GetMonthDay: function() {
+				var aMonth = new Array("一", "二", "三", "四", "五", "六", "七", "八", "九","十", "十一","十二");
+				var myDate = new Date();
+				var tMonth = myDate.getMonth();
+				return aMonth[tMonth];
+			},
+
+			navToDetail: function(url, paramData) {
 				uni.navigateTo({
-				  url: url,
-				  events: {
-				    // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-				    acceptDataFromOpenedPage: function(data) {
-				      console.log(data)
-				    },
-				    someEvent: function(data) {
-				      console.log(data)
-				    }
-				    
-				  },
-				  success: function(res) {
-				    // 通过eventChannel向被打开页面传送数据
-				    res.eventChannel.emit('acceptDataFromOpenerPage', { data: paramData })
-				  }
+					url: url,
+					events: {
+						// 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+						acceptDataFromOpenedPage: function(data) {
+							console.log(data)
+						},
+						someEvent: function(data) {
+							console.log(data)
+						}
+
+					},
+					success: function(res) {
+						// 通过eventChannel向被打开页面传送数据
+						res.eventChannel.emit('acceptDataFromOpenerPage', {
+							data: paramData
+						})
+					}
 				})
 			},
 			upPopChange: function(e) {
@@ -299,10 +336,10 @@
 	}
 
 	.mainDate {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin-left: 30rpx;
+		// display: flex;
+		// flex-direction: column;
+		// align-items: center;
+		// margin-left: 30rpx;
 	}
 
 	.nowDate {

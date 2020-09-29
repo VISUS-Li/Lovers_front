@@ -132,4 +132,6 @@
 	@import "common/colorui/main.css";
 	@import "common/colorui/icon.css";
 	@import "common/colorui/moyi.css";
+	@import "common/myCss/common.css";
+	@import "common/myCss/myColor.css";
 </style>
