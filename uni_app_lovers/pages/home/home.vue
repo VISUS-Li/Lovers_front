@@ -37,7 +37,7 @@
 		<scroll-view scroll-y="true">
 			<!-- 首页头部信息 -->
 			<view class="my-flex my-flex-between my-margin-bottom-sm my-margin-top-sm">
-        <!--头部日期信息-->
+				<!--头部日期信息-->
 				<view class="my-flex my-flex-align-end">
 					<view class="my-flex my-flex-col my-flex-align-end my-margin-left-mm my-margin-right-sm">
 						<view class="text-xxl text-bold my-color-theme">{{todayWeek}}</view>
@@ -49,20 +49,20 @@
 						<view class="my-text-font-s my-color-gray-1">{{this.todayMonth}}月</view>
 					</view>
 				</view>
-        <!--end 头部日期信息-->
-        
-        <!--头部头像-->
+				<!--end 头部日期信息-->
+
+				<!--头部头像-->
 				<view class="my-flex my-margin-right-mm">
-					<view class="my-radius-top-100 my-border-width-sm my-border-solid my-border-color-theme">
+					<view class="my-radius-all-100rpx my-border-width-sm my-border-solid my-border-color-theme">
 						<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="myPicUrl"></u-image>
 					</view>
-					<view class="my-radius-top-100 my-border-width-sm my-border-solid my-border-color-gray3">
+					<view class="my-radius-all-100rpx my-border-width-sm my-border-solid my-border-color-gray3">
 						<u-image shape="circle" :width="headPicWidth" :height="headPicHeight" :src="loverPicUrl"></u-image>
 					</view>
 				</view>
 			</view>
-      <!--end 头部头像-->
-      
+			<!--end 头部头像-->
+
 			<u-line></u-line>
 			<!-- end 首页头部信息 -->
 
@@ -71,16 +71,24 @@
 			<view class="my-margin-top-s my-height-900rpx">
 				<swiper class="my-height-900rpx" :current="currentTab" @change="swiperTab">
 					<swiper-item v-for="(listItem,listIndex) in mainCardList" :key="listIndex">
-						<scroll-view style="height: 100%;" scroll-y="false" @scrolltolower="lower1" scroll-with-animation :scroll-into-view="toView">
-							<!--  主卡片的图片-->
-						
+						<scroll-view style="height: 100%;" scroll-y="false" @scrolltolower="lower1" scroll-with-animation
+						 :scroll-into-view="toView">
+							<!--  主卡片是图片类型-->
+							<view v-if="listItem.MediaType == 0 ? true : false">
 								<u-image height="500rpx" mode="aspectFit" :src="listItem.imgUrl"></u-image>
-	
+							</view>
+
+							<!--主卡片是音频类型-->
+							<view v-if="listItem.MediaType == 1 ? true : false">
+                <view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
+								<ex-my-audio></ex-my-audio>
+                </view>
+							</view>
 							
 						</scroll-view>
 					</swiper-item>
 				</swiper>
-				
+
 			</view>
 			<!-- end 首页主卡片 -->
 			<!-- 主页广告信息 -->
@@ -106,35 +114,32 @@
 
 <script>
 	import uniPopUp from '../../components/uni-popup/uni-popup.vue'
-
 	export default {
-
-
+		components: {
+			uniPopUp,
+		},
 		onLoad: function(option) {
-			
-		},
-		onShow:function() {
 
 		},
-		
-		created:function(){
+		onShow: function() {
+
+		},
+
+		created: function() {
 			this.GetHomeMainCardList();
 			this.nowDate = new Date().toISOString().slice(0, 10);
 			this.todayWeek = this.GetWeekDay();
 			this.todayDate = this.GetDateDay();
 			this.todayMonth = this.GetMonthDay();
 		},
-		components: {
-			uniPopUp,
-		},
 
 		data() {
 			return {
 
-currentPage:'index',
-			toView:'',//回到顶部id
-			currentTab: 0, //sweiper所在页
-			
+				currentPage: 'index',
+				toView: '', //回到顶部id
+				currentTab: 0, //sweiper所在页
+
 
 
 
@@ -147,13 +152,14 @@ currentPage:'index',
 				nowDate: "20200912",
 				todayWeek: "",
 				todayDate: "",
-				todayMonth:"",
+				todayMonth: "",
 				detailUrl: "./homeDetail",
 				//广告图片列表
-				currentMainCardImgUrl:"", //主卡片url
+				currentMainCardImgUrl: "", //主卡片url
 				//mainCardList:[],
 				mainCardList: [{
 						imgUrl: "../../static/images/1.jpg",
+						MediaType: 1,
 						title: "第一个广告",
 						desc: "第一个广告的描述",
 						theme: "第一个广告的主题",
@@ -254,19 +260,19 @@ currentPage:'index',
 			},
 
 			//获取日期
-			GetDateDay: function(){
+			GetDateDay: function() {
 				var date = new Date();
 				var tDay = date.getDate();
-				
-				if(tDay.toString().length == 1){
+
+				if (tDay.toString().length == 1) {
 					tDay = "0" + tDay;
 				}
 				return tDay;
 			},
-			
+
 			//获取月份
 			GetMonthDay: function() {
-				var aMonth = new Array("一", "二", "三", "四", "五", "六", "七", "八", "九","十", "十一","十二");
+				var aMonth = new Array("一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二");
 				var myDate = new Date();
 				var tMonth = myDate.getMonth();
 				return aMonth[tMonth];
