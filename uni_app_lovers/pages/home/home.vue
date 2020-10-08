@@ -36,17 +36,17 @@
 
 		<scroll-view scroll-y="true">
 			<!-- 首页头部信息 -->
-			<view class="my-flex my-flex-between my-margin-bottom-sm my-margin-top-sm">
+			<view class="my-flex my-flex-between my-margin-bottom-sm my-margin-top-ml">
 				<!--头部日期信息-->
 				<view class="my-flex my-flex-align-end">
 					<view class="my-flex my-flex-col my-flex-align-end my-margin-left-mm my-margin-right-sm">
 						<view class="text-xxl text-bold my-color-theme">{{todayWeek}}</view>
-						<view class="my-text-font-s my-color-gray-1">星期</view>
+						<view class="my-text-font-m my-color-gray-1">星期</view>
 					</view>
 					<u-line direction="col" length="70rpx" margin="1rpx 0rpx 1rpx 0rpx"></u-line>
 					<view class="my-flex my-flex-col  my-margin-left-sm my-margin-right-mm">
 						<view class="text-xxl text-bold my-color-theme">{{this.todayDate}}</view>
-						<view class="my-text-font-s my-color-gray-1">{{this.todayMonth}}月</view>
+						<view class="my-text-font-m my-color-gray-1">{{this.todayMonth}}月</view>
 					</view>
 				</view>
 				<!--end 头部日期信息-->
@@ -80,9 +80,13 @@
 
 							<!--主卡片是音频类型-->
 							<view v-if="listItem.MediaType == 1 ? true : false">
-                <view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
-								<ex-my-audio></ex-my-audio>
-                </view>
+								<view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
+									<ex-my-audio :audioData="audioData"></ex-my-audio>
+								</view>
+								<view class="my-margin-top-mm">
+									<u-line color="#8799a3"></u-line>
+								</view>
+								<text></text>
 							</view>
 							
 						</scroll-view>
@@ -135,6 +139,16 @@
 
 		data() {
 			return {
+				audioData: {
+						file: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
+						id: 3,
+						longth: "02:49",
+						music_id: 1,
+						name: "妹妹背着洋娃娃",
+						num: 12,
+						view_image: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg"
+					},
+			
 
 				currentPage: 'index',
 				toView: '', //回到顶部id

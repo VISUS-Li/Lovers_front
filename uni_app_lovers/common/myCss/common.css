@@ -1024,6 +1024,18 @@
 /******
 Height Width
 ******/
+.my-width-10rpx{
+	width: 10rpx;
+}
+.my-width-20rpx{
+	width: 20rpx;
+}
+.my-width-30rpx{
+	width: 30rpx;
+}
+.my-width-40rpx{
+	width: 40rpx;
+}
 .my-width-50rpx{
 	width: 50rpx;
 }
@@ -1058,6 +1070,18 @@ Height Width
 	width: 900rpx;
 }
 
+.my-height-10rpx{
+	height: 10rpx;
+}
+.my-height-20rpx{
+	height: 20rpx;
+}
+.my-height-30rpx{
+	height: 30rpx;
+}
+.my-height-40rpx{
+	height: 40rpx;
+}
 .my-height-50rpx{
 	height: 50rpx;
 }

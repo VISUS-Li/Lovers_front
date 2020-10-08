@@ -88,7 +88,7 @@
 		</scroll-view>
 		</view>
 		<view v-else-if="cosmosMode == 'video'" class="video-view">
-			<myVideoStream2></myVideoStream2>
+			<!-- <myVideoStream2></myVideoStream2> -->
 		</view>
 	</view>
 </template>
