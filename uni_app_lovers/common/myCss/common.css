@@ -101,6 +101,9 @@
 .my-position-top-300rpx{
 	top:300rpx;
 }
+.my-position-top-320rpx{
+	top:320rpx;
+}
 .my-position-top-350rpx{
 	top:350rpx;
 }
@@ -155,6 +158,9 @@
 }
 .my-position-left-300rpx{
 	left:300rpx;
+}
+.my-position-left-320rpx{
+	left:320rpx;
 }
 .my-position-left-350rpx{
 	left:350rpx;
@@ -211,6 +217,9 @@
 .my-position-right-300rpx{
 	right:300rpx;
 }
+.my-position-right-320rpx{
+	right:320rpx;
+}
 .my-position-right-350rpx{
 	right:350rpx;
 }
@@ -265,6 +274,9 @@
 }
 .my-position-bottom-300rpx{
 	bottom:300rpx;
+}
+.my-position-bottom-320rpx{
+	bottom:320rpx;
 }
 .my-position-bottom-350rpx{
 	bottom:350rpx;
@@ -435,9 +447,67 @@
 .my-text-font-s{
 	font-size: 10rpx;
 }
-
 .my-text-font-m{
 	font-size:20rpx;
+}
+.my-text-font-mm{
+	font-size:35rpx;
+}
+.my-text-font-ml{
+	font-size:45rpx;
+}
+.my-text-font-ls{
+	font-size:55rpx;
+}
+.my-text-font-lm{
+	font-size:65rpx;
+}
+.my-text-font-ll{
+	font-size:75rpx;
+}
+
+.my-text-font-bold{
+	font-weight: bold;
+}
+.my-text-font-bolder{
+	font-weight: bolder;
+}
+.my-text-font-100{
+	font-weight: 100;
+}
+.my-text-font-200{
+	font-weight: 200;
+}
+.my-text-font-300{
+	font-weight: 300;
+}
+.my-text-font-400{
+	font-weight: 400;
+}
+.my-text-font-500{
+	font-weight: 500;
+}
+.my-text-font-600{
+	font-weight: 600;
+}
+.my-text-font-700{
+	font-weight: 700;
+}
+.my-text-font-800{
+	font-weight: 800;
+}
+.my-text-font-900{
+	font-weight: 900;
+}
+
+.my-text-align-center{
+	text-align: center;
+}
+.my-text-align-right{
+	text-align: right;
+}
+.my-text-align-justify{
+	text-align: justify;
 }
 
 

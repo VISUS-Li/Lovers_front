@@ -83,10 +83,24 @@
 								<view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
 									<ex-my-audio :audioData="audioData"></ex-my-audio>
 								</view>
-								<view class="my-margin-top-mm">
-									<u-line color="#8799a3"></u-line>
+								<view class="my-width-50rpx my-height-120rpx my-position-absolute my-position-top-320rpx my-position-left-50rpx">
+									<text class=" my-text-font-ml my-color-gray-1 my-text-font-bold">音</text>
+									
+									<view class="my-margin-top-sm">
+										<u-line color="#8799a3" length="630rpx"></u-line>
+									</view>
+									
+									<view class="my-margin-top-sm">
+										<text class=" my-text-font-ml my-color-gray-2 my-text-font-bold">乐</text>
+									</view>
 								</view>
-								<text></text>
+								<view class="my-width-400rpx my-position-absolute my-position-top-450rpx my-position-left-150rpx">
+									<text class="my-text-font-mm my-text-font-500">{{mainCardList[0].title}}</text>
+								</view>
+								
+								<view class="my-width-400rpx my-position-absolute my-position-top-500rpx my-position-left-200rpx">
+									<text class="my-text-font-sl my-text-font-100 my-color-gray-1">{{mainCardList[0].desc}}</text>
+								</view>
 							</view>
 							
 						</scroll-view>
@@ -172,10 +186,12 @@
 				currentMainCardImgUrl: "", //主卡片url
 				//mainCardList:[],
 				mainCardList: [{
-						imgUrl: "../../static/images/1.jpg",
+						file: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
+						longth: "02:49",
+						view_image: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
 						MediaType: 1,
 						title: "第一个广告",
-						desc: "第一个广告的描述",
+						desc: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
 						theme: "第一个广告的主题",
 						detailData: "http://localhost/1/2/3.html"
 					},
