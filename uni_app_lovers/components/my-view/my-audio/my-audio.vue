@@ -2,8 +2,8 @@
 	<view class="" @tap="playMusic">
 		<view class="my-width-300rpx my-height-300rpx my-radius-all-400rpx my-position-relative">
 			<image class="my-width-300rpx my-height-300rpx my-radius-all-400rpx my-border-width-m my-border-solid my-border-color-theme"
-			 :src="audioData.view_image" mode="aspectFit" :style="styleObj">
-				<view class="my-width-100rpx my-height-100rpx my-radius-all-100rpx my-border-width-m my-border-solid my-border-color-gray my-bg-color-white my-position-absolute my-position-top-100rpx my-position-left-100rpx">
+			 :src="audioData.HomeImgUrl" mode="aspectFit" :style="styleObj">
+				<view class="my-width-100rpx my-height-100rpx my-radius-all-100rpx my-border-width-s my-border-solid my-border-color-gray my-bg-color-white my-position-absolute my-position-top-100rpx my-position-left-100rpx">
 					<view v-if="isPlay == true">
 						<image src="../../../static/images/play.png" class="my-width-40rpx my-height-40rpx my-position-absolute my-position-top-20rpx my-position-left-20rpx"></image>
 					</view>
@@ -47,9 +47,9 @@
 		
 		created(e) {
 			let a = this
-			audioContext.src = a.audioData.file
+			audioContext.src = a.audioData.AudioFileUrl
 			audioContext.loop = true
-			a.longth = a.audioData.longth
+			a.longth = a.audioData.AudioLength
 			a.system = uni.getSystemInfoSync().platform
 			audioContext.onEnded((e) => {
 				clearInterval(a.timer)
@@ -98,8 +98,8 @@
 							audioContext.seek(0);
 							this.currentTime = '0'
 							this.audioCurTime = ['0', '00']
-							audioContext.src = this.audioData[0].file
-							this.longth = this.audioData[0].longth
+							audioContext.src = this.audioData[0].AudioFileUrl
+							this.longth = this.audioData[0].AudioLength
 							uni.setNavigationBarTitle({
 								title: this.audioData[0].name
 							})
@@ -110,8 +110,8 @@
 							audioContext.seek(0);
 							this.currentTime = '0'
 							this.audioCurTime = ['0', '00']
-							audioContext.src = this.audioData[index + 1].file
-							this.longth = this.audioData[index + 1].longth
+							audioContext.src = this.audioData[index + 1].AudioFileUrl
+							this.longth = this.audioData[index + 1].AudioLength
 							uni.setNavigationBarTitle({
 								title: this.audioData[index + 1].name
 							})
@@ -132,8 +132,8 @@
 							audioContext.seek(0);
 							this.currentTime = '0'
 							this.audioCurTime = ['0', '00']
-							audioContext.src = this.audioData[arr.length - 1].file
-							this.longth = this.audioData[arr.length - 1].longth
+							audioContext.src = this.audioData[arr.length - 1].AudioFileUrl
+							this.longth = this.audioData[arr.length - 1].AudioLength
 							uni.setNavigationBarTitle({
 								title: this.audioData[arr.length - 1].name
 							});
@@ -144,10 +144,10 @@
 							audioContext.seek(0);
 							this.currentTime = '0'
 							this.audioCurTime = ['0', '00']
-							audioContext.src = this.audioData[index - 1].file
-							this.longth = this.audioData[index - 1].longth
+							audioContext.src = this.audioData[index - 1].AudioFileUrl
+							this.longth = this.audioData[index - 1].AudioLength
 							uni.setNavigationBarTitle({
-								title: this.audioData[index - 1].name
+								title: this.audioData[index - 1].Title
 							});
 						}
 					} else {}

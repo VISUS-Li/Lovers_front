@@ -74,14 +74,14 @@
 						<scroll-view style="height: 100%;" scroll-y="false" @scrolltolower="lower1" scroll-with-animation
 						 :scroll-into-view="toView">
 							<!--  主卡片是图片类型-->
-							<view v-if="listItem.MediaType == 0 ? true : false">
-								<u-image height="500rpx" mode="aspectFit" :src="listItem.imgUrl"></u-image>
+							<view v-if="listItem.CardMediaType == 1 ? true : false">
+								<u-image height="500rpx" mode="aspectFit" :src="listItem.HomeImgUrl"></u-image>
 							</view>
 
 							<!--主卡片是音频类型-->
-							<view v-if="listItem.MediaType == 1 ? true : false">
+							<view v-if="listItem.CardMediaType == 2 ? true : false">
 								<view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
-									<ex-my-audio :audioData="audioData"></ex-my-audio>
+									<ex-my-audio :audioData="listItem"></ex-my-audio>
 								</view>
 								<view class="my-width-50rpx my-height-120rpx my-position-absolute my-position-top-320rpx my-position-left-50rpx">
 									<text class=" my-text-font-ml my-color-gray-1 my-text-font-bold">音</text>
@@ -95,11 +95,11 @@
 									</view>
 								</view>
 								<view class="my-width-400rpx my-position-absolute my-position-top-450rpx my-position-left-150rpx">
-									<text class="my-text-font-mm my-text-font-500">{{mainCardList[0].title}}</text>
+									<text class="my-text-font-mm my-text-font-500">{{listItem.Title}}</text>
 								</view>
 								
 								<view class="my-width-400rpx my-position-absolute my-position-top-500rpx my-position-left-200rpx">
-									<text class="my-text-font-sl my-text-font-100 my-color-gray-1">{{mainCardList[0].desc}}</text>
+									<text class="my-text-font-sl my-text-font-100 my-color-gray-1">{{listItem.Content}}</text>
 								</view>
 							</view>
 							
@@ -144,33 +144,19 @@
 		},
 
 		created: function() {
-			this.GetHomeMainCardList();
 			this.nowDate = new Date().toISOString().slice(0, 10);
 			this.todayWeek = this.GetWeekDay();
 			this.todayDate = this.GetDateDay();
 			this.todayMonth = this.GetMonthDay();
+			this.GetHomeMainCardList();
+		},
+		
+		mounted:function(){
+			//this.GetHomeMainCardList()
 		},
 
 		data() {
 			return {
-				audioData: {
-						file: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
-						id: 3,
-						longth: "02:49",
-						music_id: 1,
-						name: "妹妹背着洋娃娃",
-						num: 12,
-						view_image: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg"
-					},
-			
-
-				currentPage: 'index',
-				toView: '', //回到顶部id
-				currentTab: 0, //sweiper所在页
-
-
-
-
 
 				//头部信息
 				headPicWidth: 100,
@@ -186,21 +172,22 @@
 				currentMainCardImgUrl: "", //主卡片url
 				//mainCardList:[],
 				mainCardList: [{
-						file: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
-						longth: "02:49",
-						view_image: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
-						MediaType: 1,
-						title: "第一个广告",
-						desc: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
+						AudioFileUrl: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
+						AudioLength: "02:49",
+						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
+						CardMediaType: 1,
+						Title: "第一个广告",
+						Content: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
 						theme: "第一个广告的主题",
 						detailData: "http://localhost/1/2/3.html"
 					},
 					{
-						imgUrl: "../../static/images/2.jpg",
+						imgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
+						MediaType: 0,
 						title: "第二个广告",
 						desc: "第二个广告的描述",
 						theme: "第二个广告的主题",
-						detailUrl: "./homeDetail",
+						detailData: "http://localhost/1/2/3.html"
 					},
 					{
 						imgUrl: "../../static/images/4.jpg",
@@ -274,10 +261,11 @@
 
 			//获取HomeMainCard
 			GetHomeMainCardList: function() {
-				this.$api.getHomeMainCard("", res => {
+				var _this = this
+				_this.$api.getHomeMainCard("", res => {
 					if (res.data.content) {
-						this.mainCardList = res.data.content.MainCardInfo;
-						console.log(this.mainCardList)
+						_this.mainCardList = res.data.content.MainCardInfo;
+						console.log(_this.mainCardList)
 					}
 				})
 			},
