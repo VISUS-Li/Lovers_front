@@ -112,10 +112,9 @@
 			<!-- 主页广告信息 -->
 			<view id="adView">
 
-				<view v-for="(adItem,adIndex) in mainCardList">
-					<view :style="{'margin-top':40 + 'rpx'}" @tap="navToDetail(detailUrl, adItem.detailData)">
-						<my-mask-image :imgTwoStyle="adItem.imgTwoStyle" :bottomTwoStyle="adItem.bottomTwoStyle" :imgWidth="650"
-						 :imgHeigh="650" :imgUrl="adItem.imgUrl" :title="adItem.title" :desc="adItem.desc" :theme="adItem.theme"></my-mask-image>
+				<view v-for="(adItem,adIndex) in adCardList">
+					<view class="my-margin-top-ls" @tap="navToDetail(detailUrl, adItem.detailData)">
+						<my-mask-image :ImgType="adItem.ImgType" :ImgUrl = "adItem.HomeImgUrl" :Title="adItem.Title" :Content="adItem.Content" :TypeDesc="adItem.TypeDesc"></my-mask-image>
 					</view>
 				</view>
 			</view>
@@ -169,33 +168,33 @@
 				todayMonth: "",
 				detailUrl: "./homeDetail",
 				//广告图片列表
-				currentMainCardImgUrl: "", //主卡片url
-				//mainCardList:[],
-				mainCardList: [{
+				mainCardList: [],
+				adCardList:[{
 						AudioFileUrl: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
 						AudioLength: "02:49",
 						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
 						CardMediaType: 1,
 						Title: "第一个广告",
 						Content: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
-						theme: "第一个广告的主题",
+						TypeDesc: "第一个广告的主题",
 						detailData: "http://localhost/1/2/3.html"
 					},
 					{
-						imgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
+						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
 						MediaType: 0,
-						title: "第二个广告",
-						desc: "第二个广告的描述",
-						theme: "第二个广告的主题",
+						Title: "第二个广告",
+						Content: "第二个广告的描述",
+						TypeDesc: "第二个广告的主题",
+						ImgType:3,
 						detailData: "http://localhost/1/2/3.html"
 					},
 					{
-						imgUrl: "../../static/images/4.jpg",
-						title: "第三个广告",
-						desc: "第三个广告的描述",
-						theme: "第三个广告的主题",
-					}
-				],
+						HomeImgUrl: "../../static/images/4.jpg",
+						Title: "第三个广告",
+						Content: "第三个广告的描述",
+						TypeDesc: "第三个广告的主题",
+						ImgType:3
+					}],
 				//悬浮菜单
 				iconRotation: 45,
 				showMenu: true, //显示悬浮菜单

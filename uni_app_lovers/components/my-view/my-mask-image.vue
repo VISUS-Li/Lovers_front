@@ -1,13 +1,13 @@
 <template>
 	<view >
-		<view class="OneContainer" v-if="imgType == 1">
+		<view class="OneContainer" v-if="ImgType == 1">
 		<view class="imgView" >
 			<u-image class="imgOne" :src="imgUrl" :width="imgWidth" :height="imgHeigh"></u-image>
 			<view class="imgMask">
 				<view class="bottomMask">
 					<view class="maskTextView">
-						<text class="maskText Title">{{title}}</text>
-						<text class="maskText Desc">{{desc}}</text>
+						<text class="maskText Title">{{Title}}</text>
+						<text class="maskText Desc">{{Content}}</text>
 						<!-- <text class="maskText Date">{{date}}</text> -->
 					</view>
 				</view>
@@ -15,16 +15,29 @@
 		</view>
 		</view>
 
-		<view class="TwoContainer" v-if="imgType == 2" :style="{'width':imgWidth+'rpx','height':imgHeigh + 'rpx'}">
+		<view class="TwoContainer" v-if="ImgType == 2" :style="{'width':imgWidth+'rpx','height':imgHeigh + 'rpx'}">
 			<view class="imgViewTwo" :style="[GetImgTwoStyle]">
 				<u-image class="imgTwo" :src="imgUrl" :height="imgHeigh * 0.71" mode="aspectFit"></u-image>
 			</view>
 			<view class="bottomTwo" :style="[GetBottomTwoStyle]">
-				<text class="bottomTwoText Desc">{{desc}}</text>
-				<text class="bottomTwoText Title">{{title}}</text>
-				<text class="bottomTwoText Theme">{{theme}}</text>
+				<text class="bottomTwoText Desc">{{Content}}</text>
+				<text class="bottomTwoText Title">{{Title}}</text>
+				<text class="bottomTwoText Theme">{{TypeDesc}}</text>
 			</view>
-
+		</view>
+		
+		
+		<view v-if="ImgType == 3">
+			<view class="my-width-600rpx my-height-700rpx my-margin-auto 
+			my-border-width-s my-border-color-theme my-border-solid my-radius-all-100rpx 
+			my-shadow-bottom-m">
+				<image class="my-height-550rpx my-radius-top-left-100 my-radius-top-right-100" :src="ImgUrl" mode="aspectFill"></image>
+				<view class="my-flex my-flex-col">
+					<text>{{TypeDesc}}</text>
+					<text>{{Title}}</text>
+					<text>{{Content}}</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -40,7 +53,7 @@
 			}
 		},
 		props: {
-			imgType: {
+			ImgType: {
 				type: [String, Number],
 				default: 2
 			},
@@ -52,19 +65,19 @@
 				type: [String, Number],
 				default: 600
 			},
-			imgUrl: {
+			ImgUrl: {
 				type: String,
 				default: ""
 			},
-			title: {
+			Title: {
 				type: String,
 				default: ""
 			},
-			desc: {
+			Content: {
 				type: String,
 				default: ""
 			},
-			theme: {
+			TypeDesc : {
 				type: String,
 				default: ""
 			},

@@ -48,6 +48,20 @@
 	align-items: baseline;
 }
 
+/******
+	Display
+******/
+.my-display-inline{
+	display:inline;
+}
+
+.my-display-block{
+	display:block;
+}
+
+.my-display-inline-block{
+	display:inline-block;
+}
 
 /******
 	Position
@@ -1078,6 +1092,15 @@
 	border-color:#aaaaaa;
 }
 .my-border-color-gray3{
+	border-color:#cacaca;
+}
+.my-border-color-gray4{
+	border-color:#dcdcdc;
+}
+.my-border-color-gray5{
+	border-color:#ebebeb;
+}
+.my-border-color-gray6{
 	border-color:#4D4D4D;
 }
 .my-border-color-theme{
@@ -1087,9 +1110,38 @@
 	Shadow
 ******/
 .my-shadow-right-bottom-s{
-	box-shadow: 5rpx 5rpx 0rpx #4D4D4D;
+	box-shadow: 5rpx 5rpx 0rpx #aaaaaa;
 }
 
+.my-shadow-all-s{
+	box-shadow: 0rpx 0rpx 15rpx #aaaaaa;
+}
+.my-shadow-all-m{
+	box-shadow: 0rpx 0rpx 30rpx #aaaaaa;
+}
+.my-shadow-all-l{
+	box-shadow: 0rpx 0rpx 50rpx #aaaaaa;
+}
+
+.my-shadow-left-s{
+	box-shadow: 5rpx 0rpx 15rpx #aaaaaa;
+}
+.my-shadow-left-m{
+	box-shadow: 10rpx 0rpx 30rpx #aaaaaa;
+}
+.my-shadow-left-l{
+	box-shadow: 15rpx 0rpx 50rpx #aaaaaa;
+}
+
+.my-shadow-bottom-s{
+	box-shadow: 0rpx 5rpx 15rpx #aaaaaa;
+}
+.my-shadow-bottom-m{
+	box-shadow: 0rpx 10rpx 30rpx #aaaaaa;
+}
+.my-shadow-bottom-l{
+	box-shadow: 0rpx 15rpx 50rpx #aaaaaa;
+}
 
 /******
 Height Width
