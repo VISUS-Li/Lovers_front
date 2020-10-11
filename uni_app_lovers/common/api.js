@@ -34,9 +34,9 @@ const post = (method, data, success = () => {}, complete = () => {}) => {
 					db.del("userInfo");
 					//console.log('pluse login',getCurrentPages()[getCurrentPages().length - 1].route);
 					//
-					if(getCurrentPages()[getCurrentPages().length - 1].route != 'pages/startup/index'){
+					if (getCurrentPages()[getCurrentPages().length - 1].route != 'pages/startup/index') {
 						uni.reLaunch({
-							url:'/pages/user/login'
+							url: '/pages/user/login'
 						})
 					}
 					break;
@@ -59,7 +59,7 @@ const post = (method, data, success = () => {}, complete = () => {}) => {
 /******
 封装的通用Get请求
 ******/
-const get = (method, data, success = () => {}, complete = () => {}) => {
+const get = (method, data, success = () => {}, complete = () => {}, _timeout) => {
 	let userToken = '';
 	let auth = db.get("userInfo");
 	if (auth) {
@@ -76,6 +76,7 @@ const get = (method, data, success = () => {}, complete = () => {}) => {
 			'Token': userToken,
 		},
 		method: 'GET',
+		timeout: _timeout,
 		success: (response) => {
 			const result = response.data
 			switch (result.code) {
@@ -87,19 +88,21 @@ const get = (method, data, success = () => {}, complete = () => {}) => {
 					db.del("userInfo");
 					//console.log('pluse login',getCurrentPages()[getCurrentPages().length - 1].route);
 					//
-					if(getCurrentPages()[getCurrentPages().length - 1].route != 'pages/user/index'){
+					if (getCurrentPages()[getCurrentPages().length - 1].route != 'pages/user/index') {
 						uni.reLaunch({
-							url:'/pages/user/login'
+							url: '/pages/user/login'
 						})
 					}
 					break;
 				default:
-					uni.showToast({
-						title: result.msg,
-						icon: 'none',
-						duration: 2000,
-					});
-					console.log("GET,FAIL:"+result.msg);
+					if (result.msg.length > 0) {
+						uni.showToast({
+							title: result.msg,
+							icon: 'none',
+							duration: 2000,
+						});
+						console.log("GET,FAIL:" + result.msg);
+					}
 					break;
 			}
 		},
@@ -111,10 +114,10 @@ const get = (method, data, success = () => {}, complete = () => {}) => {
 /**
  * 
  */
-export const uploadFile = (filePath,success = () => {}, fail = () => {},type='image') => {
-	
+export const uploadFile = (filePath, success = () => {}, fail = () => {}, type = 'image') => {
+
 	let formData = {
-		file:filePath
+		file: filePath
 	}
 	let auth = db.get("userInfo");
 	let userToken = '';
@@ -211,4 +214,7 @@ export const logout = () => post('user/logout');
 //上面的是moyi的api，后面的是自己的api
 /***************/
 //export const getNoteList = (data, success, complete) => post('');
-export const getHomeMainCard = (data, success,complete) => get('/api/home/GetMainCard',data,success,complete);
+export const getHomeMainCard = (data, success, complete, timeout) => get('/api/home/GetMainCard', data, success,
+	complete, timeout);
+export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete,
+	timeout);

@@ -33,8 +33,17 @@
 			</view>
 		</uni-pop-up>
 
-
-		<scroll-view scroll-y="true">
+		<my-load-refresh 
+		ref="loadRefresh" 
+		:backgroundCover="'#FFFFFF'" 
+		:pageNo="currentAdCardIndex" 
+		:totalPageNo="adTotalCount" 
+		:isRefresh="true" 
+		@endRefresh= "afterRefresh"
+		:refreshTime="refreshDur" 
+		@loadMore="LoadMore" 
+		@refresh="Refresh">
+		<view slot="content-list">
 			<!-- 首页头部信息 -->
 			<view class="my-flex my-flex-between my-margin-bottom-sm my-margin-top-ml">
 				<!--头部日期信息-->
@@ -69,10 +78,9 @@
 
 			<!-- 首页主卡片 -->
 			<view class="my-margin-top-s my-height-900rpx">
-				<swiper class="my-height-900rpx" :current="currentTab" @change="swiperTab">
+				<swiper class="my-height-900rpx" @change="mainCardSwiperChange">
 					<swiper-item v-for="(listItem,listIndex) in mainCardList" :key="listIndex">
-						<scroll-view style="height: 100%;" scroll-y="false" @scrolltolower="lower1" scroll-with-animation
-						 :scroll-into-view="toView">
+
 							<!--  主卡片是图片类型-->
 							<view v-if="listItem.CardMediaType == 1 ? true : false">
 								<u-image height="500rpx" mode="aspectFit" :src="listItem.HomeImgUrl"></u-image>
@@ -102,23 +110,23 @@
 									<text class="my-text-font-sl my-text-font-100 my-color-gray-1">{{listItem.Content}}</text>
 								</view>
 							</view>
-							
-						</scroll-view>
 					</swiper-item>
 				</swiper>
-
+				<u-line></u-line>
 			</view>
 			<!-- end 首页主卡片 -->
 			<!-- 主页广告信息 -->
 			<view id="adView">
 
 				<view v-for="(adItem,adIndex) in adCardList">
-					<view class="my-margin-top-ls" @tap="navToDetail(detailUrl, adItem.detailData)">
+					<view class="my-margin-top-ls">
 						<my-mask-image :ImgType="adItem.ImgType" :ImgUrl = "adItem.HomeImgUrl" :Title="adItem.Title" :Content="adItem.Content" :TypeDesc="adItem.TypeDesc"></my-mask-image>
 					</view>
 				</view>
 			</view>
-		</scroll-view>
+			</view>
+		</my-load-refresh>
+		
 		<!-- end 主页广告信息 -->
 
 		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
@@ -135,19 +143,14 @@
 		components: {
 			uniPopUp,
 		},
-		onLoad: function(option) {
-
-		},
-		onShow: function() {
-
-		},
 
 		created: function() {
+			this.GetConfig();
 			this.nowDate = new Date().toISOString().slice(0, 10);
 			this.todayWeek = this.GetWeekDay();
 			this.todayDate = this.GetDateDay();
 			this.todayMonth = this.GetMonthDay();
-			this.GetHomeMainCardList();
+			this.LoadHomeCard();
 		},
 		
 		mounted:function(){
@@ -156,7 +159,12 @@
 
 		data() {
 			return {
-
+				//刷新
+				currentPage:1,
+				refreshDur:1000,
+				endRefresh:false,
+				tmpMainCardList:[],
+				tmpAdCardList:[],
 				//头部信息
 				headPicWidth: 100,
 				headPicHeight: 100,
@@ -168,7 +176,31 @@
 				todayMonth: "",
 				detailUrl: "./homeDetail",
 				//广告图片列表
-				mainCardList: [],
+				//mainCardList:[],
+				mainCardList: [{
+						AudioFileUrl: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
+						AudioLength: "02:49",
+						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
+						CardMediaType: 2,
+						Title: "第一个广告",
+						Content: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
+						TypeDesc: "第一个广告的主题",
+						detailData: "http://localhost/1/2/3.html",
+						ImgType:5,
+					},
+					{
+						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
+						CardMediaType: 1,
+						Title: "个广告第二个个广告第二个个广告第二个",
+						Content: "第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述",
+						TypeDesc: "第二个广告的主题",
+						ImgType:3,
+						detailData: "http://localhost/1/2/3.html"
+					}],
+				adCardGetCount:0,
+				adTotalCount:100,
+				currentAdCardIndex:0,
+				//adCardList:[],
 				adCardList:[{
 						AudioFileUrl: "http://app.tiantai.com.cn/uploads/20200819/a25100936ec5d372c6805e5b476dbd59.mp3",
 						AudioLength: "02:49",
@@ -177,23 +209,24 @@
 						Title: "第一个广告",
 						Content: "第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述第一个广告的描述",
 						TypeDesc: "第一个广告的主题",
-						detailData: "http://localhost/1/2/3.html"
+						detailData: "http://localhost/1/2/3.html",
+						ImgType:5,
 					},
 					{
 						HomeImgUrl: "http://app.tiantai.com.cn/uploads/20200818/7f62a7cc3ca42c3e0fb130e79aa8cb9f.jpg",
 						MediaType: 0,
-						Title: "第二个广告",
-						Content: "第二个广告的描述",
+						Title: "个广告第二个个广告第二个个广告第二个",
+						Content: "第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述第二个广告的描述",
 						TypeDesc: "第二个广告的主题",
 						ImgType:3,
 						detailData: "http://localhost/1/2/3.html"
 					},
 					{
 						HomeImgUrl: "../../static/images/4.jpg",
-						Title: "第三个广告",
-						Content: "第三个广告的描述",
+						Title: "第三个广告第三个广告第三个广告第三个广告第三个广告第三个广告",
+						Content: "第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述第三个广告的描述",
 						TypeDesc: "第三个广告的主题",
-						ImgType:3
+						ImgType:4
 					}],
 				//悬浮菜单
 				iconRotation: 45,
@@ -257,16 +290,118 @@
 
 		},
 		methods: {
-
+			GetConfig:function(){
+				let _this = this;
+				_this.refreshDur = _this.$config.refreshDur;
+			},
+			
+			//启动时加载
+			LoadHomeCard:function(){
+				let _this = this;
+				_this.GetCardData(1);
+				setTimeout(()=>{
+					_this.afterRefresh()
+					},1000);
+			},
+			
+			//刷新
+			Refresh:function(){
+				let _this = this;
+				_this.tmpMainCardList = [];
+				_this.tmpAdCardList = [];
+				_this.GetCardData(1);
+			},
+			
+			//加载更多
+			LoadMore:function(){
+				let _this = this;
+				_this.tmpMainCardList = [];
+				_this.tmpAdCardList = [];
+				_this.GetCardData(2);
+			},
+			
+			//请求服务器，获取首页卡片列表数据
+			GetCardData:function(type){
+				let _this = this;
+				/* type 1代表下拉刷新 2代表加载更多 */
+				setTimeout(()=>{
+					if(type == 1){
+						//请求服务器获取数据到tmpMainCardList
+						_this.GetHomeMainCardList()
+						
+						//请求服务器获取Ad列表数据到tmpAdCardList
+						var param={
+							"startIndex":0,
+							"endIndex":10,
+						};
+						_this.GetAdCardList(param)
+					}else if(type == 2){
+						//加载更多
+						var endIndex = _this.currentAdCardIndex + 10;
+						var param={
+							"startIndex":_this.currentAdCardIndex,
+							"endIndex":endIndex,
+						};
+						_this.GetAdCardList(param);
+						
+						//处理加载更多得到的数据
+						setTimeout(()=>{
+							if(_this.tmpAdCardList.length <= 0){
+								_this.adTotalCount = 0;
+							}else{
+								_this.adCardList = _this.adCardList.concat(_this.tmpAdCardList);
+								_this.currentAdCardIndex += _this.tmpAdCardList.length;
+							}
+							_this.$refs.loadRefresh.loadOver(_this.currentAdCardIndex, _this.adTotalCount);
+						},500);
+					}
+				},50);
+			},
+			
+			//刷新动画完成后填充从服务器获取的数据
+			afterRefresh:function(){
+				let _this = this;
+				if(_this.tmpMainCardList.length <= 0){
+					uni.showToast({
+						title: "请求主卡片失败，请重试",
+						icon: 'none',
+						duration: 2000,
+					});
+				}else{
+					_this.mainCardList = _this.tmpMainCardList;
+				}
+				if(_this.tmpAdCardList.length <= 0){
+					uni.showToast({
+						title: "请求流式卡片失败，请重试",
+						icon: 'none',
+						duration: 2000,
+					});
+				}else{
+					_this.adCardList = _this.tmpAdCardList;
+					_this.currentAdCardIndex = _this.tmpAdCardList.length;
+				}
+			},
+			
 			//获取HomeMainCard
-			GetHomeMainCardList: function() {
+			async GetHomeMainCardList() {
 				var _this = this
 				_this.$api.getHomeMainCard("", res => {
 					if (res.data.content) {
-						_this.mainCardList = res.data.content.MainCardInfo;
-						console.log(_this.mainCardList)
+						_this.tmpMainCardList = [].concat(res.data.content.MainCardInfo);
 					}
-				})
+				},_this.$config.reqTimeout)
+			},
+			
+			//获取AdCardList
+			async GetAdCardList(param) {
+				var _this = this
+				_this.$api.getHomeAdCard(param, res => {
+					if (res.data.content) {
+						_this.tmpAdCardList = res.data.content.AdCardList;
+						_this.adCardGetCount = res.data.content.Count;
+						_this.adTotalCount = res.data.content.totalCount;
+					}
+				},_this.$config.reqTimeout)
 			},
 
 			//获取今天星期几
@@ -293,6 +428,13 @@
 				var myDate = new Date();
 				var tMonth = myDate.getMonth();
 				return aMonth[tMonth];
+			},
+
+			//主卡片滑动变换时
+			mainCardSwiperChange:function(e){
+				let _this = this;
+				let curIndex = e.detail.current;
+				
 			},
 
 			navToDetail: function(url, paramData) {

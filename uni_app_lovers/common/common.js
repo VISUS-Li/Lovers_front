@@ -340,6 +340,14 @@ function testString(str, model = null) {
 }
 
 
+function setDelay(ms){
+	return new Promise(function(reslove,rejcet){
+		setTimeout(()=>{
+			reslove();
+		},ms);
+	})
+}
+
 
 
 export {
@@ -360,5 +368,8 @@ export {
 	addNewMessageList,
 	readNewMessageList,
 	isRoute,
-	testString
+	testString,
+	
+	//自己定义的方法
+	setDelay
 }

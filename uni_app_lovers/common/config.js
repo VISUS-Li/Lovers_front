@@ -33,4 +33,9 @@ export const pingInterval = 0;
 // 超时时间 超出时间段将重连系统 单位秒
 export const timeout = 30
 
+//请求超时时间，单位毫秒
+export const reqTimeout = 500
+
+//刷新持续时间
+export const refreshDur = 1000
 
