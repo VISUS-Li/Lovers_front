@@ -62,12 +62,12 @@
 					<view class="cu-form-group moyi-bg-b round">
 						<view class="title">账号:
 						</view>
-						<input class="text-right" placeholder="请输入ID或手机号" v-model="param.account"></input>
+						<input class="text-right" placeholder="请输入ID或手机号" v-model="param.UserName"></input>
 					</view>
 					<view class="cu-form-group moyi-bg-b round margin-top-xl">
 						<view class="title">密码:
 						</view>
-						<input class="text-right" type="password" placeholder="请输入密码" v-model="param.password"></input>
+						<input class="text-right" type="password" placeholder="请输入密码" v-model="param.PassWord"></input>
 					</view>
 
 					<view class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @tap="login">
@@ -85,19 +85,37 @@
 				
 				<swiper-item>
 					<view class="cu-form-group moyi-bg-b round">
-						<view class="title">手机号码:
+						<view class="title">用户名:
 						</view>
-						<input class="text-right" placeholder="请输入手机号" v-model="param.mobile"></input>
+						<input class="text-right" placeholder="请输入用户名" v-model="param.UserName"></input>
 					</view>
-					<view class="cu-form-group moyi-bg-b round margin-top-xl">
+					<!-- <view class="cu-form-group moyi-bg-b round margin-top-xl">
 						<view class="title">验证码:
 						</view>
 						<input class="text-right" placeholder="请输入验证码" v-model="param.captcha"></input>
 						<view class="cu-btn radius moyi-bg-b text-white" @tap="getCaptcha" v-show="!verifyTime">发送验证码</view>
 						<view class="cu-btn moyi-bg-b radius" v-show="verifyTime">{{verifyTime}}秒后重试</view>
+					</view> -->
+					<view class="cu-form-group moyi-bg-b round margin-top-xl">
+						<view class="title">密码:</view>
+						<input class="text-right" placeholder="请输入密码" v-model="param.PassWord"></input>
 					</view>
-				
-					<view class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @tap="mobileLogin">
+					<view class="cu-form-group moyi-bg-b round margin-top-xl">
+						<view class="title">确认密码:</view>
+						<input class="text-right" placeholder="请确认密码" v-model="param.verifyPassword"></input>
+					</view>
+					<view class="cu-form-group moyi-bg-b round margin-top-xl" @tap="upPicker">
+						<view class="title">性别:</view>
+						<view class="text-right" >{{selectedGender}}</view>
+					</view>
+					<u-picker
+						:mode="selectMode"
+						:safe-area-inset-bottom="true"
+						v-model="selectShow"
+						@confirm="selectConfirm"
+						:range="selectRange"
+					></u-picker>
+					<view class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @tap="register">
 						<view style="width: 100%" class="text-center" >
 							注册/登陆
 						</view>
@@ -128,24 +146,38 @@
 				modalName:'',
 				indexTab:0,
 				isRotate:false,
-				
+				selectedGender:"",
 				param: {
-					account: 'admin',
-					password: '123456',
-					mobile: '',
+					UserName: 'VISUS',
+					PassWord: '123456',
+					verifyPassword:'123456',
+					Phone: '15002326234',
 					captcha: '',
+					Sex:1
 				},
 				wechatPath: {
 					encryptedData: '',
 					iv: '',
 					code: false
-				}
+				},
+				
+				//性别选择器
+				selectShow:false,
+				selectMode:'selector',
+				selectRange:['男','女'],
+				
 			}
 		},
 		methods: {
-			
+			upPicker(){
+				this.selectShow = true;
+			},
+			selectConfirm(e){
+				this.param.Sex = e[0];
+				this.selectedGender = this.selectRange[e[0]];
+			},
 			getCaptcha(){
-				if (this.param.mobile == '' || this.param.mobile.length < 6) {
+				if (this.param.Phone == '' || this.param.Phone.length < 6) {
 					this.$common.errorToShow('手机号码错误');
 				} else {
 					// 显示等待
@@ -227,8 +259,32 @@
 				console.log('test')
 				this.indexTab=index;
 			},
+			register(){
+				if (this.param.Phone == '' ) {
+					this.$common.errorToShow('手机或验证码错误');
+				} else {
+					this.loadModal = true;
+					var form = new FormData();
+					form.append("UserName", this.param.UserName);
+					form.append("PassWord", this.param.PassWord);
+					form.append("Phone", this.param.Phone);
+					form.append("Sex", this.param.Sex);
+					setTimeout(() => {
+						this.$api.pwdRegister(form, res => {
+							console.log(res);
+							this.$common.errorToShow(res.msg);
+							if (res.code) {
+								this.$common.saveUserInfo(res.data);
+								this.loginSuccess();
+							}
+						}, () => {
+							this.loadModal = false;
+						});
+					}, 1000);
+				}
+			},
 			mobileLogin(){
-				if (this.param.mobile == '' || this.param.captcha.length < 4) {
+				if (this.param.Phone == '' || this.param.captcha.length < 4) {
 					this.$common.errorToShow('手机或验证码错误');
 				} else {
 					this.loadModal = true;
@@ -248,7 +304,7 @@
 			// 登录
 			login() {
 				// 判断是否加载中，避免重复点击请求
-				if (this.param.account == '' || this.param.password.length < 6) {
+				if (this.param.UserName == '' || this.param.PassWord.length < 6) {
 					this.$common.errorToShow('账号或密码错误');
 				} else {
 					// 显示等待

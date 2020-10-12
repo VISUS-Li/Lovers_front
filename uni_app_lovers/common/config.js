@@ -5,7 +5,7 @@
 // export const apiUrl = 'https://api.mymoyi.cn/api/moyichat/'
  //export const apiUrl = 'https://api.mymoyi.cn/api/moyicosmic/'
 // export const apiUrl = 'http://192.168.43.15/api/moyicosmic/'
- export const apiUrl = 'http://localhost:20050/'
+ export const apiUrl = 'http://39.97.117.137:20050'
 
 
 // cnd域名。没有就填写后端域名
