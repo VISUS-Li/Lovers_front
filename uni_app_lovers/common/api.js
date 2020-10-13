@@ -1,7 +1,9 @@
 import {
 	apiUrl,
 } from './config.js';
-import * as db from './db.js' //引入common
+import * as db from './db.js'  //引入数据库
+import * as common from './common.js' //引入common
+import * as define from './define.js' //引入枚举和宏定义
 
 /**
  * post请求
@@ -26,6 +28,7 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 			switch (result.code) {
 				case 0:
 				case 1:
+				case define.respStatus.SUCCESS:
 					success(result);
 					break;
 				case 401:
@@ -38,6 +41,7 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 						})
 					}
 					break;
+					
 				default:
 					uni.showToast({
 						title: result.msg,
@@ -60,7 +64,7 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 /******
 封装的通用Get请求
 ******/
-const get = (method, data, success = () => {}, complete = () => {}, _timeout) => {
+const get = (method, data, _success = () => {}, _complete = () => {}, _timeout) => {
 	let userToken = '';
 	let auth = db.get("userInfo");
 	if (auth) {
@@ -83,7 +87,7 @@ const get = (method, data, success = () => {}, complete = () => {}, _timeout) =>
 			switch (result.code) {
 				case 1000:
 				case 200:
-					success(result);
+					_success(result);
 					break;
 				case 1016: //token过期，需重新登录
 					db.del("userInfo");
@@ -96,7 +100,7 @@ const get = (method, data, success = () => {}, complete = () => {}, _timeout) =>
 					}
 					break;
 				default:
-					if (result.msg.length > 0) {
+					if (!common.isEmpty(result.msg)) {
 						uni.showToast({
 							title: result.msg,
 							icon: 'none',
@@ -107,11 +111,16 @@ const get = (method, data, success = () => {}, complete = () => {}, _timeout) =>
 					break;
 			}
 		},
-		complete: () => {
-			complete();
-		},
+		complete: _complete,
 		fail:(e) => {
-			console.log("Post Failed"+e);
+			if (!common.isEmpty(e)) {
+				uni.showToast({
+					title: e.msg,
+					icon: 'none',
+					duration: 2000,
+				});
+				console.log("GET,FAIL:" + e.msg);
+			}
 		}
 	});
 }

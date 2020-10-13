@@ -151,7 +151,7 @@
 					UserName: 'VISUS',
 					PassWord: '123456',
 					verifyPassword:'123456',
-					Phone: '15002326234',
+					Phone: '15002326237',
 					captcha: '',
 					Sex:1
 				},

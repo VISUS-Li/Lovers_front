@@ -340,6 +340,12 @@ function testString(str, model = null) {
 }
 
 
+
+
+/**************************************************/
+/******
+	设置延时
+******/
 function setDelay(ms){
 	return new Promise(function(reslove,rejcet){
 		setTimeout(()=>{
@@ -348,6 +354,16 @@ function setDelay(ms){
 	})
 }
 
+/******
+	判断对象是否为空
+******/
+function isEmpty(obj){
+    if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 export {
@@ -371,5 +387,6 @@ export {
 	testString,
 	
 	//自己定义的方法
-	setDelay
+	setDelay,
+	isEmpty
 }
