@@ -6,7 +6,7 @@ import * as db from './db.js' //引入common
 /**
  * post请求
  */
-const post = (router, data, success = () => {}, complete = () => {}) => {
+const post = (router, data, _header, success = () => {}, complete = () => {},_timeout) => {
 	let userToken = '';
 	let auth = db.get("userInfo");
 	if (auth) {
@@ -14,16 +14,13 @@ const post = (router, data, success = () => {}, complete = () => {}) => {
 			userToken = auth.token;
 		}
 	}
+	_header.Token = userToken;
 	uni.request({
 		url: apiUrl + router,
 		data: data,
-		header: {
-			'Accept': 'application/json',
-			//'Content-Type': 'application/json',
-			'Content-Type':'multipart/form-data',
-			'token': userToken,
-		},
+		header: _header,
 		method:"POST",
+		timeout: _timeout,
 		success: (response) => {
 			const result = response.data
 			switch (result.code) {
@@ -52,6 +49,9 @@ const post = (router, data, success = () => {}, complete = () => {}) => {
 		},
 		complete: () => {
 			complete();
+		},
+		fail:(e) => {
+			console.log("Post Failed:"+e.errMsg);
 		}
 	});
 }
@@ -109,6 +109,9 @@ const get = (method, data, success = () => {}, complete = () => {}, _timeout) =>
 		},
 		complete: () => {
 			complete();
+		},
+		fail:(e) => {
+			console.log("Post Failed"+e);
 		}
 	});
 }
@@ -220,5 +223,5 @@ export const getHomeMainCard = (data, success, complete, timeout) => get('/api/h
 export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete,
 	timeout);
 	
-export const pwdRegister = (data, success, complete, timeout) => post('/api/user/register', data, success, complete,
+export const pwdRegister = (data, success, complete, timeout) => post('/api/user/register', data, {'Content-Type': 'application/x-www-form-urlencoded'},success, complete,
 	timeout);

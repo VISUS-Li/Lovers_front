@@ -264,13 +264,8 @@
 					this.$common.errorToShow('手机或验证码错误');
 				} else {
 					this.loadModal = true;
-					var form = new FormData();
-					form.append("UserName", this.param.UserName);
-					form.append("PassWord", this.param.PassWord);
-					form.append("Phone", this.param.Phone);
-					form.append("Sex", this.param.Sex);
 					setTimeout(() => {
-						this.$api.pwdRegister(form, res => {
+						this.$api.pwdRegister(this.param, res => {
 							console.log(res);
 							this.$common.errorToShow(res.msg);
 							if (res.code) {
