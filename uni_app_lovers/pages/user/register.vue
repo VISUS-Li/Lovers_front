@@ -99,8 +99,21 @@
 					case code.CODE_ERR_SERVER_INTERNAL:
 						_this.$common.errorToShow('注册失败，服务器内部错误');
 						break;
+					case code.SUCCESS:
+						param = {
+							'Phone': _this.param.Phone,
+							'Password': _this.param.PassWord,
+							'autoLogin':true
+						};
+						_this.$u.route({
+							type: "navigateTo",
+							params: param,
+							url: 'pages/user/login',
+							animationType: 'slide-in-bottom'
+						});
+						break;
 					default:
-
+						_this.$common.errorToShow(resp.msg)
 						break;
 				}
 			}

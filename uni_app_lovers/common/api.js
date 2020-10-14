@@ -152,8 +152,7 @@ export const uploadFile = (filePath, success = () => {}, fail = () => {}, type =
 // 初始化
 export const init = (data, success, complete) => post('app/init', data, success, complete);
 
-// 登陆
-export const login = (data, success, complete) => post('user/login', data, success, complete);
+
 
 // 手机登陆
 export const mobileLogin = (data, success, complete) => post('user/mobileLogin', data, success, complete)
@@ -220,11 +219,15 @@ export const logout = () => post('user/logout');
 /***************/
 //上面的是moyi的api，后面的是自己的api
 /***************/
-//export const getNoteList = (data, success, complete) => post('');
-export const getHomeMainCard = (data, success, complete, timeout) => get('/api/home/GetMainCard', data, success,
-	complete, timeout);
-export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete,
-	timeout);
-	
-export const pwdRegister = (data, success, complete, timeout) => post('/api/user/register', data, {'Content-Type': 'application/x-www-form-urlencoded'},success, complete,
-	timeout);
+
+//获取首页主卡片列表
+export const getHomeMainCard = (data, success, complete, timeout) => get('/api/home/GetMainCard', data, success, complete, timeout);
+
+//获取首页广告卡片	
+export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete, timeout);
+
+//采用密码注册
+export const pwdRegister = (data, success, complete, timeout) => post('/api/user/register', data, {'Content-Type': 'application/x-www-form-urlencoded'},success, complete, timeout);
+
+//采用密码登录
+export const pwdLogin = (data, success, complete, timeout) => post('/api/user/login', data, {'Content-Type': 'application/x-www-form-urlencoded'},success, complete, timeout);

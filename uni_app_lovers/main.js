@@ -18,7 +18,7 @@ Vue.prototype.$audio = Audio;
 Vue.prototype.$mysocket = mySocket;
 Vue.prototype.$define = Define;
 
-Vue.prototype.$WebDomain = "http://localhost"
+Vue.prototype.$WebDomain = "http://localhost";
 /*************/
 ////页面引入
 /*************/

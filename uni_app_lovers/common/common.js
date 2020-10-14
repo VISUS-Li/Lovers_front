@@ -67,14 +67,6 @@ function userInfo() {
 	return db.get('userInfo'); 
 }
 
-/**
- * 保存登陆状态
- * @param {Array} data 用户数据
- */
-function saveUserInfo(data) {
-	data.userInfo.avatar = CDN(data.userInfo.avatar);
-	db.set('userInfo', data.userInfo);
-}
 
 /**
  * 添加聊天记录
@@ -144,28 +136,9 @@ function updateRecordState(data){
 	}
 }
 
-function getUserInfo(id){
-	let rec = db.get('uid_'+id);
-	if(rec){
-		return rec;
-	}else{
-		let info = userInfo();
-		if(id == info.id){
-			return info
-		}else{
-			return {'id':0};
-		}
-	}
-}
 
 
-function addUserInfo(arr){
-	// let rec = db.get('uid_'+arr.id);
-	// if(arr.user_id){
-	// 	arr.id = user_id
-	// }
-	db.set('uid_'+arr.id,arr);
-}
+
 
 
 function addNewMessageList(id='1',value="消灭人类暴政！世界属于三体！",type="text",time = new Date().getTime(),count=1){
@@ -365,6 +338,35 @@ function isEmpty(obj){
     }
 }
 
+
+/**
+ * 保存登陆状态
+ * @param {Array} data 用户数据
+ */
+function saveUserInfo(data) {
+	let userInfo = data.UserInfo;
+	userInfo.Token = data.Token;
+	db.set('userInfo', userInfo);
+}
+
+
+//添加用户信息到缓存
+function addUserInfo(data){
+	let userInfo = data.UserInfo;
+	userInfo.Token = data.Token;
+	let userId = data.UserInfo.UserId;
+	
+	let rec = db.get(userId);
+	if(!isEmpty(rec)){
+		db.del(userId);
+	}
+	db.set(userId,userInfo);
+}
+
+//从缓存获取用户信息
+function getUserInfo(){
+	return db.get('userInfo');
+}
 
 export {
 	timeToDate,
