@@ -25,23 +25,13 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 		timeout: _timeout,
 		success: (response) => {
 			const result = response.data
-			switch (result.code) {
+			switch (response.statusCode) {
 				case 0:
 				case 1:
-				case define.respStatus.SUCCESS:
-					success(result);
+				case 400:
+				case 200:
+					success(result)
 					break;
-				case 401:
-					db.del("userInfo");
-					//console.log('pluse login',getCurrentPages()[getCurrentPages().length - 1].route);
-					//
-					if (getCurrentPages()[getCurrentPages().length - 1].route != 'pages/startup/index') {
-						uni.reLaunch({
-							url: '/pages/user/login'
-						})
-					}
-					break;
-					
 				default:
 					uni.showToast({
 						title: result.msg,
@@ -55,7 +45,11 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 			complete();
 		},
 		fail:(e) => {
-			console.log("Post Failed:"+e.errMsg);
+			uni.showToast({
+				title: e.errMsg,
+				icon: 'none',
+				duration: 2000,
+			});
 		}
 	});
 }

@@ -8,12 +8,16 @@ import * as Common from './common/common.js'
 import * as Socket from './common/socket.js'
 import * as Audio from './common/audio.js'
 import * as mySocket from './common/mysocket.js'
+import * as Define from './common/define.js'
+
 Vue.prototype.$api = Api;
 Vue.prototype.$common = Common;
 Vue.prototype.$db = Db;
 Vue.prototype.$socket = Socket;
 Vue.prototype.$audio = Audio;
 Vue.prototype.$mysocket = mySocket;
+Vue.prototype.$define = Define;
+
 Vue.prototype.$WebDomain = "http://localhost"
 /*************/
 ////页面引入

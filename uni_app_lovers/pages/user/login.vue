@@ -318,7 +318,7 @@
 				}
 			},
 		},
-		onLoad() {			
+		onLoad(option) {			
 			// #ifdef MP-WEIXIN
 			this.getCode();
 			// #endif
