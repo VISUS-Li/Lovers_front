@@ -90,7 +90,7 @@
 							'Phone': _this.param.Phone
 						};
 						_this.$u.route({
-							type: "navigateTo",
+							type: "reLaunch",
 							params: param,
 							url: 'pages/user/login',
 							animationType: 'slide-in-bottom'
@@ -102,15 +102,10 @@
 					case code.SUCCESS:
 						param = {
 							'Phone': _this.param.Phone,
-							'Password': _this.param.PassWord,
-							'autoLogin':true
+							'PassWord': _this.param.PassWord,
+							'bNavToHome':true //登录成功后是否跳转到首页
 						};
-						_this.$u.route({
-							type: "navigateTo",
-							params: param,
-							url: 'pages/user/login',
-							animationType: 'slide-in-bottom'
-						});
+						_this.$common.autoLogin(param)
 						break;
 					default:
 						_this.$common.errorToShow(resp.msg)

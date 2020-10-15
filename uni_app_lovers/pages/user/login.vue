@@ -33,10 +33,17 @@
 					Phone: '15002326237',
 					PassWord: '123456',
 				},
+				autoLoginParam:{
+					Phone:'',
+					PassWord:''
+				}
 			}
 		},
-		onLoad:function(){
-			
+		onLoad:function(e){
+			let _this = this;
+			if(!_this.$common.isEmpty(e) && !_this.$common.isEmpty(e.Phone)){
+				_this.param.Phone = e.Phone
+			}
 		},
 		methods:{
 		
@@ -53,26 +60,19 @@
 						_this.loadModal = true;
 						setTimeout(() => {
 							_this.$api.pwdLogin(_this.param, res => {
-								_this.$common.errorToShow(res.msg);
-								if (res.code) {
-									_this.$common.saveUserInfo(res.data);
-									this.loginSuccess();
+								switch(res.code){
+									case _this.$define.respStatus.SUCCESS:
+										_this.$common.loginSuccess(res.data);
+										break;
+									default:
+										_this.$common.errorToShow(res.msg);
+									break;
 								}
 							}, () => {
 								_this.loadModal = false;
 							},_this.$config.reqTimeout);
 						}, 1000);
 					}
-				},
-				loginSuccess:function(){
-					let _this = this;
-					_this.$u.route({
-						type: "navigateTo",
-						params: "",
-						url: 'pages/index/index',
-						animationType: 'slide-in-bottom'
-					});
-					_this.$common.errorToShow('登录成功!');
 				},
 			},
 			

@@ -1,5 +1,8 @@
-import * as db from './db.js' 
-import * as api from './api.js' 
+import * as db from './db.js'
+import * as api from './api.js'
+import uviewRoute from '../components/uview-ui/libs/function/route.js'
+import * as config from './config.js'
+import * as define from './define.js'
 //引入数据库操作
 import {
 	cdnUrl,
@@ -64,7 +67,7 @@ function CDN(srcUrl) {
  * @param {Array} data 用户数据
  */
 function userInfo() {
-	return db.get('userInfo'); 
+	return db.get('userInfo');
 }
 
 
@@ -72,15 +75,15 @@ function userInfo() {
  * 添加聊天记录
  */
 
-function addRecord(id,data){
-	let name = 'Record_'+id; 
+function addRecord(id, data) {
+	let name = 'Record_' + id;
 	let rec = db.get(name)
 	console.log('新增聊天记录addRecord')
-	if(rec){
+	if (rec) {
 		rec.push(data);
-		db.set('Record_'+id,rec)
-	}else{
-		db.set('Record_'+id,[data])
+		db.set('Record_' + id, rec)
+	} else {
+		db.set('Record_' + id, [data])
 	}
 }
 
@@ -89,14 +92,14 @@ function addRecord(id,data){
  * 添加聊天记录
  */
 
-function getRecord(id){
-	
+function getRecord(id) {
+
 	console.log('getRecord')
-	let rec = db.get('Record_'+id);
-	if(rec){
-		console.log('recc',rec)
+	let rec = db.get('Record_' + id);
+	if (rec) {
+		console.log('recc', rec)
 		return rec;
-	}else{
+	} else {
 		return [];
 	}
 }
@@ -105,13 +108,13 @@ function getRecord(id){
  * 更新聊天记录状态
  */
 
-function updateRecordState(data){
+function updateRecordState(data) {
 	console.log('试图更新聊天记录状态')
 	let id = userInfo().id;
-	console.log('updateRecordState',data)
-	let record = db.get('Record_'+data.form);
-	console.log('record',record)
-	
+	console.log('updateRecordState', data)
+	let record = db.get('Record_' + data.form);
+	console.log('record', record)
+
 	if (data.to == chat.id || data.form == chat.id) {
 		let record = this.record;
 		for (var i = record.length - 1; i >= 0; i--) {
@@ -122,14 +125,14 @@ function updateRecordState(data){
 			}
 		}
 	}
-	
-	if(record){
+
+	if (record) {
 		// 开始查找数据
-		for (var i = record.length - 1; i >= 0; i--){
-			if(record[i].id == data.id){
+		for (var i = record.length - 1; i >= 0; i--) {
+			if (record[i].id == data.id) {
 				console.log('找到数据更新完成')
 				record[i].state = data.value
-				db.set('Record_'+data.form,record)
+				db.set('Record_' + data.form, record)
 				i = 0;
 			}
 		}
@@ -141,24 +144,26 @@ function updateRecordState(data){
 
 
 
-function addNewMessageList(id='1',value="消灭人类暴政！世界属于三体！",type="text",time = new Date().getTime(),count=1){
+function addNewMessageList(id = '1', value = "消灭人类暴政！世界属于三体！", type = "text", time = new Date().getTime(), count = 1) {
 	let user = getUserInfo(id);
-	console.log('试图添加NewMessageList',user);
+	console.log('试图添加NewMessageList', user);
 	let tips = {
 		count: count,
-		value:value,
-		type:type,
+		value: value,
+		type: type,
 		time: time
 	}
-	if(user.id == 0){
-		api.getUserInfo({id:id},(res)=>{
-			if(res.code){
+	if (user.id == 0) {
+		api.getUserInfo({
+			id: id
+		}, (res) => {
+			if (res.code) {
 				db.set('uid_' + id, res.data);
-				addNewmsg(res.data,tips);
+				addNewmsg(res.data, tips);
 			}
-		});	
-	}else{
-		addNewmsg(user,tips);
+		});
+	} else {
+		addNewmsg(user, tips);
 		// if(list){
 		// 	for (var i = list.length - 1; i >= 0; i--){
 		// 		if(user.id == list[i].user.id){
@@ -175,47 +180,54 @@ function addNewMessageList(id='1',value="消灭人类暴政！世界属于三体
 		// 	db.set('NewMessageList',[{user:user,tips:tips}]);
 		// }
 	}
-	
+
 
 }
 
-function addNewmsg(user,tips){
+function addNewmsg(user, tips) {
 	let list = db.get('NewMessageList');
-	if(list){
-		for (var i = list.length - 1; i >= 0; i--){
-			if(user.id == list[i].user.id){
+	if (list) {
+		for (var i = list.length - 1; i >= 0; i--) {
+			if (user.id == list[i].user.id) {
 				tips.count += list[i].tips.count;
-				if(tips.type=='tips'){
+				if (tips.type == 'tips') {
 					tips.time = list[i].tips.time;
 				}
 				list.splice(i, 1);
 			}
 		}
-		list.unshift({user:user,tips:tips})
-		db.set('NewMessageList',list);
-	}else{
-		db.set('NewMessageList',[{user:user,tips:tips}]);
+		list.unshift({
+			user: user,
+			tips: tips
+		})
+		db.set('NewMessageList', list);
+	} else {
+		db.set('NewMessageList', [{
+			user: user,
+			tips: tips
+		}]);
 	}
 }
 
-function getNewMessageList(){
+function getNewMessageList() {
 	console.log('NewMessageList')
 	let list = db.get('NewMessageList');
-	if(list){
+	if (list) {
 		return list;
-	}else{
+	} else {
 		return [];
 	}
 }
-function readNewMessageList(id){
+
+function readNewMessageList(id) {
 	let list = db.get('NewMessageList');
-	if(list){
-		for (var i = list.length - 1; i >= 0; i--){
-			if(id == list[i].user.id){
+	if (list) {
+		for (var i = list.length - 1; i >= 0; i--) {
+			if (id == list[i].user.id) {
 				list[i].tips.count = 0;
 			}
 		}
-		db.set('NewMessageList',list);
+		db.set('NewMessageList', list);
 	}
 	uni.$emit('reMessgaeList');
 }
@@ -223,34 +235,35 @@ function readNewMessageList(id){
 /**
  * 判断当前路由
  */
-function isRoute(route="/pages/index/index"){
+function isRoute(route = "/pages/index/index") {
 	let pages = getCurrentPages();
 	let page = pages[pages.length - 1];
-	if(route == page.route){
+	if (route == page.route) {
 		return true;
-	}else{
+	} else {
 		return false;
 	}
 }
-	
-function getBase(){
+
+function getBase() {
 	// let arr ;
 	return {
-		cdnUrl:cdnUrl,
-		};
+		cdnUrl: cdnUrl,
+	};
 }
 
-function exitLogin(){
+function exitLogin() {
 	db.del('userInfo')
-	console.log('尝试关闭socket')	
+	console.log('尝试关闭socket')
 	uni.onSocketClose((res) => {
-	  console.log('WebSocket 已关闭！');
+		console.log('WebSocket 已关闭！');
 	});
 	uni.reLaunch({
-		url:'/pages/user/login'
+		url: '/pages/user/login'
 	})
 }
-function timeToDate(time,t = 0 ){
+
+function timeToDate(time, t = 0) {
 	if (time < 9999999999) {
 		time = time * 1000;
 	}
@@ -319,23 +332,23 @@ function testString(str, model = null) {
 /******
 	设置延时
 ******/
-function setDelay(ms){
-	return new Promise(function(reslove,rejcet){
-		setTimeout(()=>{
+function setDelay(ms) {
+	return new Promise(function(reslove, rejcet) {
+		setTimeout(() => {
 			reslove();
-		},ms);
+		}, ms);
 	})
 }
 
 /******
 	判断对象是否为空
 ******/
-function isEmpty(obj){
-    if(typeof obj == "undefined" || obj == null || obj == ""){
-        return true;
-    }else{
-        return false;
-    }
+function isEmpty(obj) {
+	if (typeof obj == "undefined" || obj == null || obj == "") {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 
@@ -344,30 +357,81 @@ function isEmpty(obj){
  * @param {Array} data 用户数据
  */
 function saveUserInfo(data) {
-	let userInfo = data.UserInfo;
-	userInfo.Token = data.Token;
 	db.set('userInfo', userInfo);
 }
 
 
 //添加用户信息到缓存
-function addUserInfo(data){
+function addUserInfo(data) {
 	let userInfo = data.UserInfo;
 	userInfo.Token = data.Token;
 	let userId = data.UserInfo.UserId;
-	
+
 	let rec = db.get(userId);
-	if(!isEmpty(rec)){
+	if (!isEmpty(rec)) {
 		db.del(userId);
 	}
-	db.set(userId,userInfo);
+	db.set(userId, userInfo);
 }
 
 //从缓存获取用户信息
-function getUserInfo(){
+function getUserInfo() {
 	return db.get('userInfo');
 }
 
+
+//自动登录
+function autoLogin(e) {
+	let param = {
+		'Phone': e.Phone,
+		'PassWord': e.PassWord,
+	};
+	let bNavToHome = e.bNavToHome;
+	setTimeout(() => {
+		api.pwdLogin(param, res => {
+			switch (res.code) {
+				case define.respStatus.SUCCESS:
+					let e = res.data;
+					e.bNavToHome = bNavToHome;
+					loginSuccess(e);
+					break;
+				default:
+					errorToShow(res.msg);
+					break;
+			}
+
+		}, () => {}, config.reqTimeout);
+	}, 1000);
+}
+
+//登录成功的操作
+function loginSuccess(e) {
+	let userInfo = e.UserInfo;
+	userInfo.Token = e.Token;
+	userInfo.TokenExpire = e.TokenExpire;
+	saveUserInfo(userInfo);
+	if (!isEmpty(e.bNavToHome)) {
+		if (e.bNavToHome) {
+			//需要跳转到首页
+			uviewRoute({
+				type: "navigateTo",
+				params: '',
+				url: 'pages/index/index',
+				animationType: 'slide-in-bottom'
+			});
+		}
+		errorToShow('登录成功!');
+	} else {
+		//需要跳转到首页
+		uviewRoute({
+			type: "navigateTo",
+			params: '',
+			url: 'pages/index/index',
+			animationType: 'slide-in-bottom'
+		});
+		errorToShow('登录成功!');
+	}
+}
 export {
 	timeToDate,
 	exitLogin,
@@ -387,8 +451,10 @@ export {
 	readNewMessageList,
 	isRoute,
 	testString,
-	
+
 	//自己定义的方法
 	setDelay,
-	isEmpty
+	isEmpty,
+	autoLogin,
+	loginSuccess,
 }
