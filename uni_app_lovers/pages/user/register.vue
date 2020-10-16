@@ -18,11 +18,23 @@
 			<view class="text-right">{{selectedGender}}</view>
 		</view>
 		<u-picker :mode="selectMode" :safe-area-inset-bottom="true" v-model="selectShow" @confirm="selectConfirm" :range="selectRange"></u-picker>
-		<view class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @tap="register">
-			<view style="width: 100%" class="text-center">
-				注册/登陆
-			</view>
-		</view>
+
+		<u-button class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @click="register" data-name="3333" :customStyle="{'background-color':'#ffd250','box-shadow':'2rpx 7rpx 10rpx #aaaaaa'}"
+		 type="primary" shape="square" :ripple="true" :hairLine="true">
+			<text class="my-text-font-bolder">注册/登陆</text>
+		</u-button>
+		
+		<u-popup border-radius="10" v-model="bPopupShow"
+			@close="closePopup" @open="openPopup" mode="center" 
+			length="70%"
+			:closeable="true"
+			close-icon-pos="bottom-right"
+		>
+			<view class="my-color-theme my-margin-top-sm my-margin-left-sm">提示</view>
+			<view class="my-margin-top-ls"></view>
+					<view class="my-margin-auto">登录失败</view>
+			<view class="my-margin-top-ls"></view>
+		</u-popup>
 	</view>
 </template>
 
@@ -42,6 +54,9 @@
 					PassWord: '123456',
 					Sex: 1
 				},
+				
+				//弹出提示
+				bPopupShow:true,
 			}
 		},
 
@@ -103,7 +118,7 @@
 						param = {
 							'Phone': _this.param.Phone,
 							'PassWord': _this.param.PassWord,
-							'bNavToHome':true //登录成功后是否跳转到首页
+							'bNavToHome': true //登录成功后是否跳转到首页
 						};
 						_this.$common.autoLogin(param)
 						break;
