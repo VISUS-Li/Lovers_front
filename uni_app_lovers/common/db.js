@@ -1,4 +1,5 @@
 //取值
+import {isEmpty} from './common.js'
 function get(key,sync = true,defaults = false) {
     try {
 		if(sync){
@@ -7,7 +8,7 @@ function get(key,sync = true,defaults = false) {
 				return data.data
 			}
 			console.log(key,data)
-			if(data){
+			if(!isEmpty(data)){
 				console.log('noNULL')
 				return data;
 			}else{
@@ -40,7 +41,9 @@ function get(key,sync = true,defaults = false) {
 function set(key, value, sync = true) {
     try {
         if (sync) {
-            return uni.setStorageSync(key, value);
+			let res = uni.setStorageSync(key, value);
+			console.log("set storage res:"+res);
+            return res;
         } else {
             uni.setStorage({
                 key: key,

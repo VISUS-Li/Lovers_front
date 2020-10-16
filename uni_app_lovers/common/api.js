@@ -226,6 +226,9 @@ export const getHomeMainCard = (data, success, complete, timeout) => get('/api/h
 //获取首页广告卡片	
 export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete, timeout);
 
+//获取随机一张图片
+export const getRandImg = (data, success, complete, timeout) => get('/api/common/GetRandImg', data, success, complete, timeout);
+
 //采用密码注册
 export const pwdRegister = (data, success, complete, timeout) => post('/api/user/register', data, {'Content-Type': 'application/x-www-form-urlencoded'},success, complete, timeout);
 

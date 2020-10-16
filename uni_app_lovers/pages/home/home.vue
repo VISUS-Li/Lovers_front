@@ -146,11 +146,17 @@
 
 		created: function() {
 			this.GetConfig();
+			
+			//计算当前日期
 			this.nowDate = new Date().toISOString().slice(0, 10);
 			this.todayWeek = this.GetWeekDay();
 			this.todayDate = this.GetDateDay();
 			this.todayMonth = this.GetMonthDay();
+			//获取用户信息
+			this.GetUserInfo();
+			//加载首页卡片
 			this.LoadHomeCard();
+			
 		},
 		
 		mounted:function(){
@@ -295,7 +301,21 @@
 				_this.refreshDur = _this.$config.refreshDur;
 			},
 			
-			//启动时加载
+			//启动时加载用户信息
+			GetUserInfo:function(){
+				let _this = this;
+				let userInfo = _this.$common.getUserInfo();
+				_this.myPicUrl = userInfo.Sculpture;
+				_this.loverPicUrl = userInfo.Sculpture;
+				if(_this.$common.isEmpty(_this.myPicUrl)){
+					_this.myPicUrl = _this.$common.getRandImg();
+				}
+				if(_this.$common.isEmpty(_this.loverPicUrl)){
+					_this.myPicUrl = _this.$common.getRandImg();
+				}
+			},
+			
+			//启动时加载主页卡片
 			LoadHomeCard:function(){
 				let _this = this;
 				_this.GetCardData(1);
@@ -310,6 +330,7 @@
 				_this.tmpMainCardList = [];
 				_this.tmpAdCardList = [];
 				_this.GetCardData(1);
+				_this.GetUserInfo();
 			},
 			
 			//加载更多

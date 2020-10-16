@@ -357,7 +357,7 @@ function isEmpty(obj) {
  * @param {Array} data 用户数据
  */
 function saveUserInfo(data) {
-	db.set('userInfo', userInfo);
+	return db.set('userInfo', data);
 }
 
 
@@ -408,8 +408,9 @@ function autoLogin(e) {
 function loginSuccess(e) {
 	let userInfo = e.UserInfo;
 	userInfo.Token = e.Token;
-	userInfo.TokenExpire = e.TokenExpire;
-	saveUserInfo(userInfo);
+	userInfo.TokenExpire = e.TokenExpireTime;
+	userInfo.LoginTime = e.LoginTime;
+	let res = saveUserInfo(userInfo);
 	if (!isEmpty(e.bNavToHome)) {
 		if (e.bNavToHome) {
 			//需要跳转到首页
@@ -431,6 +432,22 @@ function loginSuccess(e) {
 		});
 		errorToShow('登录成功!');
 	}
+}
+
+//从服务器获取随机图片的Url
+function getRandImg(){
+	setTimeout(() => {
+		api.getRandImg("", res => {
+			switch(res.code){
+				case _this.$define.respStatus.SUCCESS:
+					return res.ImgUrl;
+					break;
+				default:
+					_this.$common.errorToShow(res.msg);
+				break;
+			}
+		}, () => {},config.reqTimeout);
+	}, 200);
 }
 export {
 	timeToDate,
@@ -457,4 +474,5 @@ export {
 	isEmpty,
 	autoLogin,
 	loginSuccess,
+	getRandImg,
 }
