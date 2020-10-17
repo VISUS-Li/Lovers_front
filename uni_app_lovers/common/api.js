@@ -46,7 +46,7 @@ const post = (router, data, _header, success = () => {}, complete = () => {},_ti
 		},
 		fail:(e) => {
 			uni.showToast({
-				title: e.errMsg,
+				title: "请求服务器失败!",
 				icon: 'none',
 				duration: 2000,
 			});
@@ -223,8 +223,8 @@ export const logout = () => post('user/logout');
 //获取首页主卡片列表
 export const getHomeMainCard = (data, success, complete, timeout) => get('/api/home/GetMainCard', data, success, complete, timeout);
 
-//获取首页广告卡片	
-export const getHomeAdCard = (data, success, complete, timeout) => get('/api/home/GetAdCard', data, success, complete, timeout);
+//通过下标获取首页卡片	
+export const getCardByIndex = (data, success, complete, timeout) => get('/api/home/GetCardByIndex', data, success, complete, timeout);
 
 //获取随机一张图片
 export const getRandImg = (data, success, complete, timeout) => get('/api/common/GetRandImg', data, success, complete, timeout);

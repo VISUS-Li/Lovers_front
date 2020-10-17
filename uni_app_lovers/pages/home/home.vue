@@ -353,12 +353,12 @@
 						//请求服务器获取Ad列表数据到tmpAdCardList
 						var param={
 							"startIndex":0,
-							"endIndex":10,
+							"endIndex":_this.$config.reqHomeCardCount,
 						};
 						_this.GetAdCardList(param)
 					}else if(type == 2){
 						//加载更多
-						var endIndex = _this.currentAdCardIndex + 10;
+						var endIndex = _this.currentAdCardIndex + _this.$config.reqHomeCardCount;
 						var param={
 							"startIndex":_this.currentAdCardIndex,
 							"endIndex":endIndex,
@@ -416,7 +416,7 @@
 			//获取AdCardList
 			async GetAdCardList(param) {
 				var _this = this
-				_this.$api.getHomeAdCard(param, res => {
+				_this.$api.getCardByIndex(param, res => {
 					if (res.data.content) {
 						_this.tmpAdCardList = res.data.content.AdCardList;
 						_this.adCardGetCount = res.data.content.Count;

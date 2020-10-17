@@ -19,22 +19,13 @@
 		</view>
 		<u-picker :mode="selectMode" :safe-area-inset-bottom="true" v-model="selectShow" @confirm="selectConfirm" :range="selectRange"></u-picker>
 
-		<u-button class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @click="register" data-name="3333" :customStyle="{'background-color':'#ffd250','box-shadow':'2rpx 7rpx 10rpx #aaaaaa'}"
-		 type="primary" shape="square" :ripple="true" :hairLine="true">
+		<u-button class="cu-form-group moyi-bg-c moyi-te-c round margin-top-xl" @click="register" data-name="3333"
+		 :customStyle="{'background-color':'#ffd250','box-shadow':'2rpx 7rpx 10rpx #aaaaaa'}" type="primary" shape="square"
+		 :ripple="true" :hairLine="true">
 			<text class="my-text-font-bolder">注册/登陆</text>
 		</u-button>
-		
-		<u-popup border-radius="10" v-model="bPopupShow"
-			@close="closePopup" @open="openPopup" mode="center" 
-			length="70%"
-			:closeable="true"
-			close-icon-pos="bottom-right"
-		>
-			<view class="my-color-theme my-margin-top-sm my-margin-left-sm">提示</view>
-			<view class="my-margin-top-ls"></view>
-					<view class="my-margin-auto">登录失败</view>
-			<view class="my-margin-top-ls"></view>
-		</u-popup>
+
+		<my-pop-image :show="bPopupShow" :title="popupTitle" :content="popupCotent" @open="popupOpen" @close="popupClose"></my-pop-image>
 	</view>
 </template>
 
@@ -54,9 +45,12 @@
 					PassWord: '123456',
 					Sex: 1
 				},
-				
+
 				//弹出提示
-				bPopupShow:true,
+				bPopupShow: false,
+				popupTitle: '提示', //提示框的抬头
+				popupCotent: '', //提示框的消息
+				popupClosed: true, //提示框是否关闭
 			}
 		},
 
@@ -69,20 +63,35 @@
 				this.selectedGender = this.selectRange[e[0]];
 			},
 
+			popupOpen: function() {
+				let _this = this;
+				_this.bPopupShow = true;
+			},
+			popupClose: function() {
+				let _this = this;
+				_this.bPopupShow = false;
+
+				let param = {
+					'Phone': _this.param.Phone
+				};
+				setTimeout(()=>{
+					_this.$u.route({
+					type: "reLaunch",
+					params: param,
+					url: 'pages/user/login',
+					animationType: 'slide-in-bottom'
+				});},1000);
+				
+			},
+
 			register: function() {
 				let _this = this;
 				if (_this.param.Phone == '' || !/^1\d{10}$/.test(_this.param.Phone)) {
 					_this.$common.errorToShow('手机号不正确');
 				} else {
-					_this.loadModal = true;
 					setTimeout(() => {
 						_this.$api.pwdRegister(_this.param, res => {
 							_this.registerRespHandler(res);
-							// _this.$common.errorToShow(res.msg);
-							// if (res.code) {
-							// 	_this.$common.saveUserInfo(res.data);
-							// 	_this.loginSuccess();
-							// }
 						}, () => {
 							_this.loadModal = false;
 						});
@@ -97,19 +106,13 @@
 						_this.$common.errorToShow('手机或密码为空');
 						break;
 					case code.CODE_ERR_REG_PHONE_ERR:
+
 						_this.$common.errorToShow('手机号格式错误');
 						break;
 					case code.CODE_ERR_REG_PHONE_EXIST:
-						_this.$common.errorToShow('手机号已注册,请登录');
-						let param = {
-							'Phone': _this.param.Phone
-						};
-						_this.$u.route({
-							type: "reLaunch",
-							params: param,
-							url: 'pages/user/login',
-							animationType: 'slide-in-bottom'
-						});
+						_this.bPopupShow = true;
+						_this.popupCotent = '手机号已注册，请登录';
+
 						break;
 					case code.CODE_ERR_SERVER_INTERNAL:
 						_this.$common.errorToShow('注册失败，服务器内部错误');
@@ -123,6 +126,8 @@
 						_this.$common.autoLogin(param)
 						break;
 					default:
+						_this.bPopupShow = true;
+						_this.popupCotent = '手机号已注册，请登录';
 						_this.$common.errorToShow(resp.msg)
 						break;
 				}
