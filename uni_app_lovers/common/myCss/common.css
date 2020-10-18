@@ -118,6 +118,18 @@
 .my-position-top-100rpx{
 	top:100rpx;
 }
+.my-position-top-110rpx{
+	top:110rpx;
+}
+.my-position-top-120rpx{
+	top:120rpx;
+}
+.my-position-top-130rpx{
+	top:130rpx;
+}
+.my-position-top-140rpx{
+	top:140rpx;
+}
 .my-position-top-150rpx{
 	top:150rpx;
 }
@@ -150,6 +162,12 @@
 }
 .my-position-top-600rpx{
 	top:600rpx;
+}
+.my-position-top-700rpx{
+	top:700rpx;
+}
+.my-position-top-800rpx{
+	top:800rpx;
 }
 
 .my-position-left-0rpx{
@@ -1385,6 +1403,49 @@
 /******
 Height Width
 ******/
+.my-width-10pre{
+	width:10%;
+}
+.my-width-20pre{
+	width:20%;
+}
+.my-width-30pre{
+	width:30%;
+}
+.my-width-40pre{
+	width:40%;
+}
+.my-width-50pre{
+	width:50%;
+}
+.my-width-60pre{
+	width:60%;
+}
+.my-width-70pre{
+	width:70%;
+}
+.my-width-80pre{
+	width:80%;
+}
+.my-width-90pre{
+	width:90%;
+}
+.my-width-92pre{
+	width:92%;
+}
+.my-width-95pre{
+	width:95%;
+}
+.my-width-96pre{
+	width:96%;
+}
+.my-width-97pre{
+	width:97%;
+}
+.my-width-100pre{
+	width:100%;
+}
+
 .my-width-10rpx{
 	width: 10rpx;
 }
@@ -1399,6 +1460,18 @@ Height Width
 }
 .my-width-50rpx{
 	width: 50rpx;
+}
+.my-width-60rpx{
+	width: 60rpx;
+}
+.my-width-70rpx{
+	width: 70rpx;
+}
+.my-width-80rpx{
+	width: 80rpx;
+}
+.my-width-90rpx{
+	width: 90rpx;
 }
 .my-width-100rpx{
 	width: 100rpx;
@@ -1473,6 +1546,49 @@ Height Width
 	width: 900rpx;
 }
 
+.my-height-10pre{
+	height:10%;
+}
+.my-height-20pre{
+	height:20%;
+}
+.my-height-30pre{
+	height:30%;
+}
+.my-height-40pre{
+	height:40%;
+}
+.my-height-50pre{
+	height:50%;
+}
+.my-height-60pre{
+	height:60%;
+}
+.my-height-70pre{
+	height:70%;
+}
+.my-height-80pre{
+	height:80%;
+}
+.my-height-90pre{
+	height:90%;
+}
+.my-height-92pre{
+	height:92%;
+}
+.my-height-95pre{
+	height:95%;
+}
+.my-height-96pre{
+	height:96%;
+}
+.my-height-97pre{
+	height:97%;
+}
+.my-height-100pre{
+	height:100%;
+}
+
 .my-height-10rpx{
 	height: 10rpx;
 }
@@ -1487,6 +1603,18 @@ Height Width
 }
 .my-height-50rpx{
 	height: 50rpx;
+}
+.my-height-60rpx{
+	height: 60rpx;
+}
+.my-height-70rpx{
+	height: 70rpx;
+}
+.my-height-80rpx{
+	height: 80rpx;
+}
+.my-height-90rpx{
+	height: 90rpx;
 }
 .my-height-100rpx{
 	height: 100rpx;

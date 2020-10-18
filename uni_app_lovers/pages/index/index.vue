@@ -1,11 +1,9 @@
 <template>
 	<view >
-		
 			<home :style="PageCur=='home'?'':'display: none;'"></home>
 			<rainbow :style="PageCur=='rainbow'?'':'display: none;'"></rainbow>
 			<message :style="PageCur=='message'?'':'display: none;'"></message>
 			<center :style="PageCur=='center'?'':'display: none;'"></center>
-
 
 		<view class="menu-main shadow moyi-bg-b moyi-te-a">
 			<view class="my-tab-item text-xxl" :class="[PageCur == 'home' ? 'active moyi-te-b' : '']" @tap="NavChange"

@@ -198,7 +198,7 @@
 	.hollow-dots-spinner .dot {
 	  width: 15px;
 	  height: 15px;
-	  margin: 0 calc(15px / 2);
+	  margin: 55px calc(25px / 2) 0px 0px;
 	  border: calc(15px / 5) solid #04C4C4;
 	  border-radius: 50%;
 	  float: left;
@@ -237,7 +237,8 @@
 				font-size: 20rpx;
 				text-align: center;
 				color: #AAAAAA;
-				padding: 16rpx;
+				padding: 25rpx;
+				padding-bottom: 150rpx;
 			}
 		}
 	}

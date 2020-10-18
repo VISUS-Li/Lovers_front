@@ -78,21 +78,14 @@ const get = (method, data, _success = () => {}, _complete = () => {}, _timeout) 
 		timeout: _timeout,
 		success: (response) => {
 			const result = response.data
-			switch (result.code) {
-				case 1000:
+			switch (response.statusCode) {
+				case 0:
+				case 1:
+				case 400:
 				case 200:
 					_success(result);
 					break;
-				case 1016: //token过期，需重新登录
-					db.del("userInfo");
-					//console.log('pluse login',getCurrentPages()[getCurrentPages().length - 1].route);
-					//
-					if (getCurrentPages()[getCurrentPages().length - 1].route != 'pages/user/index') {
-						uni.reLaunch({
-							url: '/pages/user/login'
-						})
-					}
-					break;
+				
 				default:
 					if (!common.isEmpty(result.msg)) {
 						uni.showToast({
@@ -100,7 +93,6 @@ const get = (method, data, _success = () => {}, _complete = () => {}, _timeout) 
 							icon: 'none',
 							duration: 2000,
 						});
-						console.log("GET,FAIL:" + result.msg);
 					}
 					break;
 			}
@@ -109,15 +101,68 @@ const get = (method, data, _success = () => {}, _complete = () => {}, _timeout) 
 		fail:(e) => {
 			if (!common.isEmpty(e)) {
 				uni.showToast({
-					title: e.msg,
+					title: "请求服务器失败!",
 					icon: 'none',
 					duration: 2000,
 				});
-				console.log("GET,FAIL:" + e.msg);
 			}
 		}
 	});
 }
+
+/******
+封装的通用Get请求,用户自定义header
+******/
+const get_userHeader = (method, data, _header, _success = () => {}, _complete = () => {}, _timeout) => {
+	let userToken = '';
+	let auth = db.get("userInfo");
+	if (auth) {
+		if (auth.expiretime > (new Date()) / 1000) {
+			userToken = auth.token;
+		}
+	}
+	_header.Token = userToken;
+	
+	uni.request({
+		url: apiUrl + method,
+		data: data,
+		header:_header,
+		method: 'GET',
+		timeout: _timeout,
+		success: (response) => {
+			const result = response.data
+			switch (response.statusCode) {
+				case 0:
+				case 1:
+				case 400:
+				case 200:
+					_success(result);
+					break;
+				
+				default:
+					if (!common.isEmpty(result.msg)) {
+						uni.showToast({
+							title: result.msg,
+							icon: 'none',
+							duration: 2000,
+						});
+					}
+					break;
+			}
+		},
+		complete: _complete,
+		fail:(e) => {
+			if (!common.isEmpty(e)) {
+				uni.showToast({
+					title: "请求服务器失败!",
+					icon: 'none',
+					duration: 2000,
+				});
+			}
+		}
+	});
+}
+
 /**
  * 
  */
@@ -224,7 +269,7 @@ export const logout = () => post('user/logout');
 export const getHomeMainCard = (data, success, complete, timeout) => get('/api/home/GetMainCard', data, success, complete, timeout);
 
 //通过下标获取首页卡片	
-export const getCardByIndex = (data, success, complete, timeout) => get('/api/home/GetCardByIndex', data, success, complete, timeout);
+export const getCardByIndex = (data, success, complete, timeout) => get_userHeader('/api/home/GetCardByIndex', data, {'Accept': 'application/json',	'Content-Type': 'application/json'},success, complete, timeout);
 
 //获取随机一张图片
 export const getRandImg = (data, success, complete, timeout) => get('/api/common/GetRandImg', data, success, complete, timeout);

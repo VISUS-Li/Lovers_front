@@ -1,5 +1,5 @@
 <template>
-	<view calss="content">
+	<view calss="my-margin-bottom-300rpx">
 		<uni-pop-up ref="showpopup" type="bottom" @change="upPopChange" v-model="bMenuOpened">
 			<view class="content">
 				<view class="header" style="">
@@ -32,9 +32,10 @@
 				</scroll-view>
 			</view>
 		</uni-pop-up>
-
+		
 		<my-load-refresh 
 		ref="loadRefresh" 
+		:heightReduce= "refreshHeight"
 		:backgroundCover="'#FFFFFF'" 
 		:pageNo="currentAdCardIndex" 
 		:totalPageNo="adTotalCount" 
@@ -77,24 +78,28 @@
 
 
 			<!-- 首页主卡片 -->
-			<view class="my-margin-top-s my-height-900rpx">
-				<swiper class="my-height-900rpx" @change="mainCardSwiperChange">
+			<view>
+				<swiper :style="{'height':mainCardHeight + 'px'}" @change="mainCardSwiperChange">
 					<swiper-item v-for="(listItem,listIndex) in mainCardList" :key="listIndex">
 
 							<!--  主卡片是图片类型-->
-							<view v-if="listItem.CardMediaType == 1 ? true : false">
-								<u-image height="500rpx" mode="aspectFit" :src="listItem.HomeImgUrl"></u-image>
+							<view v-if="listItem.CardMediaType == 0 ? true : false">
+								<!-- <image class="my-width-100pre my-height-700rpx  my-shadow-bottom-s"  mode="aspectFill" :src="listItem.HomeImgUrl"></image> -->
+								<view class="my-flex my-flex-col">
+								<my-mask-image ImgType="5" :ImgUrl = "listItem.HomeImgUrl" :Title="listItem.Title" :Content="listItem.Content" :TypeDesc="listItem.TypeDesc"></my-mask-image>
+								<text class="my-margin-auto my-margin-top-120rpx text-align-justify my-width-90pre my-color-gray-1 my-text-font-mm">{{listItem.Content}}</text>
+								</view>
 							</view>
 
 							<!--主卡片是音频类型-->
-							<view v-if="listItem.CardMediaType == 2 ? true : false">
-								<view class="my-margin-auto my-width-300rpx my-height-300rpx my-margin-top-ml">
+							<view v-if="listItem.CardMediaType == 1 ? true : false">
+								<view class="my-margin-auto my-width-400rpx my-height-400rpx my-margin-top-ml">
 									<ex-my-audio :audioData="listItem"></ex-my-audio>
 								</view>
-								<view class="my-width-50rpx my-height-120rpx my-position-absolute my-position-top-320rpx my-position-left-50rpx">
+								<view class="my-width-50rpx my-height-120rpx my-position-absolute my-position-top-400rpx my-position-left-50rpx">
 									<text class=" my-text-font-ml my-color-gray-1 my-text-font-bold">音</text>
 									
-									<view class="my-margin-top-sm">
+									<view class="my-margin-top-ll">
 										<u-line color="#8799a3" length="630rpx"></u-line>
 									</view>
 									
@@ -102,12 +107,12 @@
 										<text class=" my-text-font-ml my-color-gray-2 my-text-font-bold">乐</text>
 									</view>
 								</view>
-								<view class="my-width-400rpx my-position-absolute my-position-top-450rpx my-position-left-150rpx">
-									<text class="my-text-font-mm my-text-font-500">{{listItem.Title}}</text>
+								<view class="my-width-70pre my-position-absolute my-position-top-450rpx my-position-left-150rpx">
+									<text class="my-text-font-ls my-text-font-500">{{listItem.Title}}</text>
 								</view>
 								
-								<view class="my-width-400rpx my-position-absolute my-position-top-500rpx my-position-left-200rpx">
-									<text class="my-text-font-sl my-text-font-100 my-color-gray-1">{{listItem.Content}}</text>
+								<view class="my-width-70pre my-position-absolute my-position-top-700rpx my-position-left-200rpx">
+									<text class="my-text-font-mm my-text-font-100 my-color-gray-1">{{listItem.Content}}</text>
 								</view>
 							</view>
 					</swiper-item>
@@ -126,7 +131,6 @@
 			</view>
 			</view>
 		</my-load-refresh>
-		
 		<!-- end 主页广告信息 -->
 
 		<view @tap="hoverMenuHandle" v-model="iconRotation" v-if="showMenu">
@@ -145,6 +149,7 @@
 		},
 
 		created: function() {
+			//获取配置信息，屏幕信息等
 			this.GetConfig();
 			
 			//计算当前日期
@@ -165,12 +170,17 @@
 
 		data() {
 			return {
+				//屏幕宽高
+				windowHeight:0,
+				windowWidth:0,
+
 				//刷新
 				currentPage:1,
 				refreshDur:1000,
 				endRefresh:false,
 				tmpMainCardList:[],
 				tmpAdCardList:[],
+				refreshHeight:0,
 				//头部信息
 				headPicWidth: 100,
 				headPicHeight: 100,
@@ -295,6 +305,21 @@
 
 
 		},
+		computed:{
+			mainCardHeight(){
+				//获取屏幕宽高信息
+				var windowHeight;
+				var windowWidth;
+				uni.getSystemInfo({
+				    success: function (res) {
+						windowHeight= res.windowHeight;				
+						windowWidth = res.windowWidth;
+				    }
+				});
+				
+				return windowHeight * 0.84;
+			},
+			},
 		methods: {
 			GetConfig:function(){
 				let _this = this;
@@ -352,16 +377,16 @@
 						
 						//请求服务器获取Ad列表数据到tmpAdCardList
 						var param={
-							"startIndex":0,
-							"endIndex":_this.$config.reqHomeCardCount,
+							"StartIndex":0,
+							"EndIndex":_this.$config.reqHomeCardCount,
 						};
 						_this.GetAdCardList(param)
 					}else if(type == 2){
 						//加载更多
 						var endIndex = _this.currentAdCardIndex + _this.$config.reqHomeCardCount;
 						var param={
-							"startIndex":_this.currentAdCardIndex,
-							"endIndex":endIndex,
+							"StartIndex":_this.currentAdCardIndex,
+							"EndIndex":endIndex,
 						};
 						_this.GetAdCardList(param);
 						
@@ -418,9 +443,9 @@
 				var _this = this
 				_this.$api.getCardByIndex(param, res => {
 					if (res.data.content) {
-						_this.tmpAdCardList = res.data.content.AdCardList;
-						_this.adCardGetCount = res.data.content.Count;
-						_this.adTotalCount = res.data.content.totalCount;
+						_this.tmpAdCardList = res.data.content.CardList;
+						_this.adCardGetCount = res.data.content.GetCardCount;
+						_this.adTotalCount = res.data.content.TotalCardCount;
 					}
 				},_this.$config.reqTimeout)
 			},
@@ -534,9 +559,6 @@
 			}
 
 		},
-		computed: {
-
-		}
 	}
 </script>
 

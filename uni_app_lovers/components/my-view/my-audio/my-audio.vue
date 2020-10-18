@@ -1,14 +1,14 @@
 <template>
 	<view class="" @tap="playMusic">
-		<view class="my-width-300rpx my-height-300rpx my-radius-all-400rpx my-position-relative">
-			<image class="my-width-300rpx my-height-300rpx my-radius-all-400rpx my-border-width-m my-border-solid my-border-color-theme"
+		<view class="my-width-400rpx my-height-400rpx my-radius-all-400rpx my-position-relative">
+			<image class="my-width-400rpx my-height-400rpx my-radius-all-400rpx my-border-width-m my-border-solid my-border-color-theme"
 			 :src="audioData.HomeImgUrl" mode="aspectFit" :style="styleObj">
-				<view class="my-width-100rpx my-height-100rpx my-radius-all-100rpx my-border-width-s my-border-solid my-border-color-gray my-bg-color-white my-position-absolute my-position-top-100rpx my-position-left-100rpx">
+				<view class="my-width-200rpx my-height-200rpx my-radius-all-100rpx my-border-width-s my-border-solid my-border-color-gray my-bg-color-white my-position-absolute my-position-top-100rpx my-position-left-100rpx">
 					<view v-if="isPlay == true">
-						<image src="../../../static/images/play.png" class="my-width-40rpx my-height-40rpx my-position-absolute my-position-top-20rpx my-position-left-20rpx"></image>
+						<image src="../../../static/images/play.png" class="my-width-90rpx my-height-90rpx my-position-absolute my-position-top-120rpx my-position-left-120rpx"></image>
 					</view>
 					<view v-if="isPlay == false">
-						<image src="../../../static/images/pause.png" class="my-width-40rpx my-height-40rpx my-position-absolute my-position-top-20rpx my-position-left-20rpx"></image>
+						<image src="../../../static/images/pause.png" class="my-width-90rpx my-height-90rpx my-position-absolute my-position-top-120rpx my-position-left-120rpx"></image>
 					</view>
 				</view>
 			</image>

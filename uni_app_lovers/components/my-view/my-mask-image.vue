@@ -1,73 +1,61 @@
 <template>
 	<view >
-		<view class="OneContainer" v-if="ImgType == 1">
-		<view class="imgView" >
-			<u-image class="imgOne" :src="imgUrl" :width="imgWidth" :height="imgHeigh"></u-image>
-			<view class="imgMask">
-				<view class="bottomMask">
-					<view class="maskTextView">
-						<text class="maskText Title">{{Title}}</text>
-						<text class="maskText Desc">{{Content}}</text>
-						<!-- <text class="maskText Date">{{date}}</text> -->
-					</view>
-				</view>
-			</view>
-		</view>
-		</view>
-
-		<view class="TwoContainer" v-if="ImgType == 2" :style="{'width':imgWidth+'rpx','height':imgHeigh + 'rpx'}">
-			<view class="imgViewTwo" :style="[GetImgTwoStyle]">
-				<u-image class="imgTwo" :src="imgUrl" :height="imgHeigh * 0.71" mode="aspectFit"></u-image>
-			</view>
-			<view class="bottomTwo" :style="[GetBottomTwoStyle]">
-				<text class="bottomTwoText Desc">{{Content}}</text>
-				<text class="bottomTwoText Title">{{Title}}</text>
-				<text class="bottomTwoText Theme">{{TypeDesc}}</text>
-			</view>
-		</view>
 		
 		
-		<view v-if="ImgType == 3">
-			<view class="my-width-650rpx my-height-700rpx my-margin-auto 
-			my-border-width-s my-border-color-theme my-border-solid my-radius-all-100rpx 
+		<view v-if="ImgType == 0">
+			<view class="my-width-97pre my-height-700rpx my-margin-auto 
+			my-border-width-s my-border-color-theme my-border-solid my-radius-all-50rpx 
 			my-shadow-bottom-m my-flex my-flex-col">
-				<image class="my-width-650rpx my-height-500rpx my-radius-top-left-100 my-radius-top-right-100 my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill"></image>
-				<view class="my-position-relative my-flex my-flex-col my-flex-center my-margin-left-mm my-height-190rpx ">
-					<text class="my-position-absolute my-position-top-10rpx my-width-600rpx my-color-gray-1 my-text-font-m">{{TypeDesc}}</text>
-					<text class="my-position-absolute my-position-top-50rpx my-width-560rpx my-text-font-ml my-text-font-bold">{{Title}}</text>
-					<text class="my-position-absolute my-position-top-100rpx my-width-560rpx my-color-gray-3 my-text-font-s ">{{Content}}</text>
+				<image class="my-width-100pre my-height-500rpx my-radius-top-left-50 my-radius-top-right-50 my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill"></image>
+				<view class="my-position-relative my-width-90pre my-flex my-flex-col my-flex-center my-margin-left-mm my-height-190rpx ">
+					<text class="my-position-absolute my-position-top-10rpx my-width-100pre my-color-gray-1 my-text-font-mm">{{TypeDesc}}</text>
+					<text class="my-position-absolute my-position-top-50rpx my-width-100pre my-text-font-ls my-text-font-bold">{{Title}}</text>
+					<text class="my-position-absolute my-position-top-120rpx my-width-100pre my-color-gray-3 my-text-font-s ">{{Content}}</text>
 				</view>
 			</view>
 		</view>
 		
-		<view v-if="ImgType == 4">
-			<view class="my-width-650rpx my-height-700rpx my-margin-auto 
-			my-border-width-s my-border-color-theme my-border-solid my-radius-all-100rpx 
+		<view v-if="ImgType == 1">
+			<view class="my-width-97pre my-height-700rpx my-margin-auto 
+			my-border-width-s my-border-color-theme my-border-solid my-radius-all-50rpx 
 			my-shadow-bottom-m">
-				<image class="my-position-absolute my-width-650rpx my-height-690rpx my-radius-all-100rpx my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill">
+				<image class="my-position-absolute my-width-96pre my-height-690rpx my-radius-all-50rpx my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill">
 					<view class="my-position-absolute my-flex my-flex-col my-margin-left-ls my-margin-top-mm my-height-700rpx">
-						<text class="my-color-gray-5 my-text-font-m">{{TypeDesc}}</text>
-						<text class="my-width-500rpx my-color-white my-text-font-ml my-margin-top-sl my-text-font-bold">{{Title}}</text>
-						<text class="my-position-absolute my-position-bottom-100rpx my-width-500rpx my-color-white my-text-font-s">{{Content}}</text>
+						<text class="my-color-gray-5 my-text-font-mm">{{TypeDesc}}</text>
+						<text class="my-width-600rpx my-color-white my-text-font-ls my-margin-top-sl my-text-font-bold">{{Title}}</text>
+						<text class="my-position-absolute my-position-bottom-100rpx my-width-100pre my-color-white my-text-font-mm">{{Content}}</text>
 					</view>
 				</image>
 			</view>
 		</view>
+		
+		<view v-if="ImgType == 2">
+			<view class="my-position-relative my-width-97pre my-height-700rpx my-margin-auto 
+			my-border-width-s my-border-color-theme my-border-solid my-radius-all-50rpx 
+			my-shadow-bottom-m">
+				<image class="my-position-absolute my-width-100pre my-height-690rpx my-radius-all-50rpx my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill">
+					<view class="my-position-absolute my-width-90pre my-flex my-flex-col my-margin-left-ls my-margin-top-mm my-height-700rpx">
+						<text class="my-color-gray-5 my-text-font-mm">{{TypeDesc}}</text>
+						<text class="my-width-100pre my-color-white my-text-font-ls my-margin-top-sl my-text-font-bold">{{Title}}</text>
+					</view>
+				</image>
+				<view class="my-position-absolute my-width-100pre my-position-bottom-0rpx my-bg-color-white my-height-180rpx 
+				my-radius-bottom-left-50 my-radius-bottom-right-50 my-opacity-6">
+					<text class="my-position-absolute my-width-90pre my-position-left-50rpx my-position-top-30rpx my-color-black my-text-font-mm">{{Content}}</text>
+				</view>
+			</view>
+		</view>
+		
 		
 		<view v-if="ImgType == 5">
-			<view class="my-position-relative my-width-650rpx my-height-700rpx my-margin-auto 
-			my-border-width-s my-border-color-theme my-border-solid my-radius-all-100rpx 
-			my-shadow-bottom-m">
-				<image class="my-position-absolute my-width-650rpx my-height-690rpx my-radius-all-100rpx my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill">
+			<view class="my-position-relative  my-height-700rpx my-margin-auto">
+				<image class="my-position-absolute my-width-100pre my-height-690rpx my-shadow-bottom-s"  :src="ImgUrl" mode="aspectFill">
 					<view class="my-position-absolute my-flex my-flex-col my-margin-left-ls my-margin-top-mm my-height-700rpx">
 						<text class="my-color-gray-5 my-text-font-m">{{TypeDesc}}</text>
-						<text class="my-width-500rpx my-color-white my-text-font-ml my-margin-top-sl my-text-font-bold">{{Title}}</text>
+						<text class="my-width-600rpx my-color-white my-text-font-ml my-margin-top-sl my-text-font-bold">{{Title}}</text>
 					</view>
 				</image>
-				<view class="my-position-absolute my-position-bottom-0rpx my-bg-color-white my-height-180rpx my-width-650rpx 
-				my-radius-bottom-left-100 my-radius-bottom-right-100 my-opacity-6">
-					<text class="my-position-absolute my-position-left-50rpx my-position-top-30rpx my-width-550rpx my-color-black my-text-font-s">{{Content}}</text>
-				</view>
+				
 			</view>
 		</view>
 	</view>
